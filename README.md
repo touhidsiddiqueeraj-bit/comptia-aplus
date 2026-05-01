@@ -2,7 +2,7 @@
 
 A self-contained, single-file progressive web app for studying the CompTIA A+ certification (220-1101 Core 1 & 220-1102 Core 2).
 
-🔗 **Live:** https://comptiacore.netlify.app/
+🔗 **Live:** https://touhidsiddiqueeraj-bit.github.io/comptia-aplus/
 
 ## Features
 - 90-day structured study plan with Professor Messer video embeds
