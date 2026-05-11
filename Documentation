@@ -1,0 +1,415 @@
+CompTIA A+ Zero to Hero — Documentation
+Exam Series: 220-1201 (Core 1) & 220-1202 (Core 2) Version 2.0 — May 2026
+
+Table of Contents
+    1. Project Overview
+    2. File Structure
+    3. What Changed: 220-1101/1102 → 220-1201/1202
+    4. File Reference: index.html
+    5. File Reference: styles.css
+    6. File Reference: data.js
+    7. File Reference: app.js
+    8. Deployment Guide
+    9. Configuration
+    10. Data Architecture
+    11. Feature Reference
+    12. Extending the App
+
+1. Project Overview
+CompTIA A+ Zero to Hero is a 90-day structured self-study web application for passing the CompTIA A+ certification exams. It features:
+    • 90 structured study days covering both Core 1 and Core 2 objectives
+    • Embedded Professor Messer video lessons (YouTube)
+    • Per-day checklists, note-taking objectives, acronym drills
+    • 240 practice questions across 12 test sets (6 Core 1 + 6 Core 2)
+    • Full glossary/notes reference with search
+    • Gamification: XP, levels, achievements, streaks
+    • Dark mode, notifications, cloud sync via Google Apps Script
+    • Multi-user authentication (GAS-backed or local fallback)
+The app is a 3-file static web app — no server, no build step, no npm. Deploy by serving the three files from any web server or opening index.html locally.
+
+2. File Structure
+comptia-app/
+├── index.html          # HTML shell: layout, nav, modals, auth overlay
+├── styles.css          # All CSS: layout, components, dark mode, new topic styles
+├── data.js             # All data: PHASES, DAYS, VIDEO_SEARCHES, TESTS,
+│                       #           ABBREVS, EXTRA, ALL_NOTES, DAY_NOTES,
+│                       #           NEW_TESTS, NEW_ABBREVS (new 1201/1202 content)
+├── app.js              # All JavaScript logic: auth, gamification, UI, quiz engine
+└── DOCUMENTATION.md    # This file
+Load order matters: data.js must load before app.js since app.js reads constants defined in data.js. The HTML loads them in the correct order.
+
+3. What Changed
+Exam Series Update
+The CompTIA A+ exam series changed from 220-1101/1102 to 220-1201/1202 (released March 25, 2025; old series retired September 25, 2025).
+New Topics Added (220-1201 Core 1)
+Topic	Where Added
+eSIM (Embedded SIM)	Day 32 notes, new test set, NEW_ABBREVS
+Mini-LED display technology	Day 11 notes, new test set, NEW_ABBREVS
+Display attributes: pixel density (PPI), refresh rate, color gamut	Day 11 notes, new test set, NEW_ABBREVS
+Wi-Fi 6 GHz band (Wi-Fi 6E)	Day 21 notes, new test set, NEW_ABBREVS
+Channel selection and width	Day 21 notes, new test set, NEW_ABBREVS
+SOHO network configuration	New test set, NEW_ABBREVS
+Internet connection types (DSL, fiber, satellite, WISP, cellular)	New test set, NEW_ABBREVS
+CNAME records, DHCP Exclusions	New test set, NEW_ABBREVS
+Database servers and NTP as server roles	New test set, NEW_ABBREVS
+
+New Topics Added (220-1202 Core 2)
+Topic	Where Added
+AI Basics (what AI is, limitations, hallucination, privacy)	Day 1 notes, new test set, NEW_ABBREVS
+Zero Trust security model	Day 1 notes, new test set, NEW_ABBREVS
+Micro-segmentation	New test set, NEW_ABBREVS
+Continuous verification	New test set, NEW_ABBREVS
+Windows 11 specific features and requirements	Day 1 notes, new test set, NEW_ABBREVS
+ReFS (Resilient File System)	New test set, NEW_ABBREVS
+XFS (Linux file system)	New test set, NEW_ABBREVS
+Cloud productivity tools (M365, Google Workspace)	Day 29 notes, new test set, NEW_ABBREVS
+Browser security settings and hardening	New test set, NEW_ABBREVS
+Conditional Access (Azure AD/Entra)	New test set, NEW_ABBREVS
+AI ethics and privacy for IT professionals	New test set, NEW_ABBREVS
+
+Removed from Exam Objectives
+The 7-step troubleshooting methodology was removed from 220-1201/1202 objectives (though still good practice). The app retains this content as it remains valuable for real-world IT work.
+
+4. index.html
+Purpose
+The HTML shell. Contains the layout structure, navigation, modals, auth overlay, and toast elements. Contains no inline CSS or JavaScript — everything is external.
+Key Sections
+Element	ID/Class	Purpose
+<header class="topbar">	#topbar	Top bar with brand, streak/XP pills, dark mode, notifications, user menu
+<div class="tab" id="tab-dashboard">	Dashboard tab	Overview, stats, heatmap, quick actions
+<div class="tab" id="tab-study">	Study tab	Sidebar day list + day card content area
+<div class="tab" id="tab-notes">	Notes tab	Searchable glossary/reference tables
+<div class="tab" id="tab-tests">	Tests tab	Practice test grid + quiz area
+<nav class="sidenav">	Desktop sidebar	52px icon sidebar (≥769px screens)
+<nav class="bottom-nav">	Mobile bottom nav	4-tab bottom navigation (≤768px screens)
+<div class="auth-overlay">	Auth screen	Login/register overlay shown on first visit
+<div class="modal" id="streak-modal">	Streak modal	Animated streak celebration sheet
+<div class="exam-version-banner">	Dashboard banner	Shows current exam series (220-1201/1202)
+
+Script Loading
+<script src="data.js"></script>   <!-- Load data first (globals) -->
+<script src="app.js"></script>    <!-- Then load logic -->
+
+5. styles.css
+CSS Variables (:root)
+All colors, spacing, and shadows use CSS custom properties:
+--bg         Background color
+--surface    Card/panel background
+--surface2   Subtle surface (hover states, code backgrounds)
+--surface3   Input backgrounds
+--border     Default border
+--border2    Stronger border
+--text       Primary text
+--text2      Secondary text
+--text3      Muted/label text
+--accent     Primary blue (#2355E8 light / #4d8ef0 dark)
+--green      Success color
+--red        Error/danger color
+--amber      Warning/streak color
+--purple     XP/level color
+Dark Mode
+Applied via html.dark-mode class (toggled by toggleDarkMode()). All variables are overridden in the dark mode block:
+html.dark-mode { --bg: #0e1117; --surface: #161b22; ... }
+New Classes (v2.0 additions)
+Class	Purpose
+.exam-version-banner	Dashboard banner showing current exam series
+.ai-note	Green-gradient info box for AI/new topic callouts
+.zt-note	Amber-gradient info box for Zero Trust callouts
+.badge-new	Small "NEW" badge for new exam objectives
+.new-tag	Inline "NEW" tag for table entries
+
+Responsive Breakpoints
+    • ≥769px (Desktop): Side nav (52px) visible, bottom nav hidden
+    • ≤768px (Mobile): Bottom nav visible, side nav hidden (slide-in on demand), study sidebar hidden (slide-in from left)
+
+6. data.js
+Overview
+The largest file (~2,844 lines). Contains all study content as JavaScript constants in global scope. All constants are const declarations — no IIFE wrapping.
+Data Structures
+PHASES (Array)
+Defines the 6 study phases and their day ranges:
+const PHASES = [
+  {id:'c1',   label:'Core 1',        days:[1,40],  cls:'c1'},
+  {id:'c1r',  label:'Core 1 Review', days:[41,45], cls:'c1r'},
+  {id:'c2',   label:'Core 2',        days:[46,80], cls:'c2'},
+  {id:'c2r',  label:'Core 2 Review', days:[81,85], cls:'c2r'},
+  {id:'pbq',  label:'PBQ Sprint',    days:[86,89], cls:'pbq'},
+  {id:'final',label:'Final Audit',   days:[90,90], cls:'final'}
+];
+DAYS (Array, 90 items)
+Each day object:
+{
+  day: 1,                          // Day number (1-90)
+  topic: "string",                 // Day title (shown in sidebar and day header)
+  links: [{label:"", url:""}],     // External resource links
+  checklist: ["item1", "item2"],   // Task list items (+2 XP each when checked)
+  note: "string",                  // Note-taking objective prompt
+  practice: "KEY=val | KEY2=val2"  // Pipe-separated acronym/term pairs for chips
+}
+VIDEO_SEARCHES (Object)
+Maps day numbers to Professor Messer YouTube video IDs:
+const VIDEO_SEARCHES = {
+  "1": [{id: "T8UQp6lD9eo", title: "How to Pass 220-1201 & 220-1202"}],
+  "2": [{id: "BpKw2u_aDzo", title: "Motherboard Form Factors"}, ...],
+  ...
+}
+TESTS (Object)
+Contains two arrays: TESTS.core1 and TESTS.core2. Each is an array of test sets:
+const TESTS = {
+  core1: [
+    {
+      title: "Core 1 (220-1201) — Set 1: Hardware & Components",
+      questions: [
+        {
+          q: "Question text",
+          opts: ["A", "B", "C", "D"],
+          ans: 2,           // 0-indexed correct answer
+          exp: "Explanation shown after answering"
+        },
+        ...  // 20 questions per set
+      ]
+    },
+    ...  // 6 sets total (Sets 1-5 original + Set 6 new 1201 content)
+  ],
+  core2: [...]  // Same structure, 6 sets
+};
+After the NEW_TESTS block in data.js, the new sets are merged:
+TESTS.core1.push(...NEW_TESTS.core1_new);
+TESTS.core2.push(...NEW_TESTS.core2_new);
+ABBREVS and EXTRA (Arrays)
+Reference tables for the Notes tab. Each item:
+{
+  title: "Section Title",
+  items: [["Term", "Definition"], ...]
+}
+ALL_NOTES = [...ABBREVS, ...EXTRA] merges both for the notes tab.
+DAY_NOTES (Object)
+HTML string content for each day's "Class Notes" card:
+const DAY_NOTES = {
+  1: `<h3>Title</h3><p>Content...</p>`,
+  2: `...`,
+  ...
+}
+New content is injected via Object.assign(DAY_NOTES, {...}) at the bottom of data.js. Day notes for days 1, 11, 21, 29, 32, 34 have new 1201/1202 content appended.
+NEW_ABBREVS (Array)
+Two new sections added to ALL_NOTES:
+    • "220-1201 — New Core 1 Topics" — 17 new terms
+    • "220-1202 — New Core 2 Topics" — 20 new terms
+
+7. app.js
+Overview
+~1,010 lines. Wrapped in an IIFE (function(){ ... })() to avoid global namespace pollution. Reads from data.js globals.
+State Variables
+let completed = new Set(...)   // Set of completed day numbers
+let subChecks = {}             // {dayNum_checkIdx: true/false} checklist state
+let testScores = {}            // {"c1_0": 18, "c2_1": 14, ...} test results
+let totalXP = 0                // Total experience points
+let achievements = []          // Array of earned achievement IDs
+let currentTab = 'dashboard'  // Active tab
+let currentDay = null         // Currently displayed day number
+let activeQuiz = null         // {core, idx} of active quiz
+let quizAnswers = {}          // {questionIdx: optionIdx} answers given
+let quizCorrect = 0           // Count of correct answers in current quiz
+let currentUser = null        // {username, name, prefix} auth state
+Key Functions
+Function	Description
+switchTab(t)	Switch between dashboard/study/notes/tests tabs
+goToDay(d)	Navigate to a specific study day
+toggleComplete(d)	Mark/unmark a day as complete (+50 XP)
+toggleSub(d, i)	Toggle a checklist item (+2 XP)
+buildSidebar()	Render the study day sidebar
+buildDayCard(d)	Lazily render a day's content card
+buildNotes()	Render the notes/glossary tab
+buildTests()	Render the practice test grid
+startQuiz(core, idx)	Initialize and render a quiz
+answerQ(qIdx, optIdx)	Handle a quiz answer
+finaliseQuiz(...)	Calculate and show quiz results
+giveXP(n, label)	Award XP and trigger level-up check
+checkAchs()	Check and award any newly earned achievements
+getStreak()	Calculate current study streak in days
+updateStats()	Refresh all UI stat displays
+toggleDarkMode()	Toggle dark/light mode
+doLogin()	Handle login form submission
+doRegister()	Handle registration form submission
+loginUser(username, userData)	Set current user and initialize app
+skipLogin()	Continue as guest user
+exportData()	Download progress as JSON
+gasCall(action, payload)	Make a call to Google Apps Script backend
+save()	Persist progress to localStorage + cloud
+switchVideoPane(btn, day, idx)	Switch embedded video tab
+toggleNotifPanel(e)	Open/close notification panel
+toggleNotifPerm()	Enable/disable browser push notifications
+
+Gamification System
+    • XP: +50 per day completed, +2 per checklist item, +10 per correct quiz answer, +25/+50 bonus for 80%+/100% quiz scores
+    • Levels: Every 500 XP = 1 level
+    • Achievements: 14 defined in ACHS array (first day, 7-day streak, perfect score, etc.)
+    • Streak: Consecutive days with at least one completed activity, tracked via localStorage.cpt_dates
+Authentication
+The app supports two modes:
+    1. Cloud mode (GAS): If GAS_URL is configured, login/register/progress sync via Google Apps Script
+    2. Local mode: Falls back to localStorage if GAS is unreachable or not configured
+    3. Guest mode: skipLogin() creates a guest account with local-only storage
+User data is stored with user-scoped keys: cpt_{username}_{datatype} (e.g., cpt_john_done).
+
+8. Deployment Guide
+Option A: Local Use (Simplest)
+    1. Place index.html, styles.css, data.js, app.js in the same folder
+    2. Open index.html in any modern browser
+    3. Progress saves to localStorage (browser-specific)
+Note: YouTube embeds may not work with file:// protocol in some browsers. Use a local server for full functionality.
+Option B: Local Server (Recommended for Development)
+# Python 3
+python3 -m http.server 8080
+
+# Node.js
+npx serve .
+
+# VS Code: Install Live Server extension, click "Go Live"
+Then open http://localhost:8080
+Option C: Static Hosting (Production)
+Upload all 4 files to any static host:
+    • GitHub Pages: Push to repo, enable Pages
+    • Netlify: Drag-and-drop the folder
+    • Vercel: vercel deploy
+    • Your own web server: Copy files to /var/www/html/
+No build process, no dependencies, no Node.js required.
+Option D: Android APK (Capacitor)
+The app was previously wrapped with Capacitor for Android:
+com.touhid.comptiaplus
+Min SDK: 24 (Android 7.0)
+Target SDK: 36
+Capacitor: 8.3.0
+See original build scripts for Capacitor setup. The web app works in mobile browsers without an APK.
+
+9. Configuration
+Google Apps Script Cloud Sync
+To enable cloud sync (multi-device progress), deploy a Google Apps Script:
+    1. Open script.google.com → New project
+    2. Implement doGet(e) and doPost(e) handlers for actions:
+        ◦ login — verify username/password hash, return user data
+        ◦ register — create new user record
+        ◦ saveProgress — save done/subs/xp/ach/scores to Sheets
+    3. Deploy as Web App (anyone can access)
+    4. In app.js, update:
+const GAS_URL = 'https://script.google.com/macros/s/YOUR_DEPLOYMENT_ID/exec';
+The existing GAS URL in the app is a pre-configured backend — replace with your own for a private deployment.
+Customizing the GAS URL
+The GAS URL is in app.js at approximately line 537:
+const GAS_URL = 'https://script.google.com/macros/s/AKfycb.../exec';
+Set to '' or 'YOUR_GAS_WEB_APP_URL_HERE' to disable cloud sync and use local-only mode.
+
+10. Data Architecture
+localStorage Key Schema
+All keys prefixed with cpt_ (global) or cpt_{username}_ (user-scoped):
+Key	Type	Content
+cpt_current_user	JSON	{username, name, prefix}
+cpt_users	JSON	{username: {name, hash, prefix, created}}
+cpt_{prefix}_done	JSON	Array of completed day numbers
+cpt_{prefix}_subs	JSON	{"dayIdx_checkIdx": true}
+cpt_{prefix}_xp	String	Total XP number
+cpt_{prefix}_ach	JSON	Array of earned achievement IDs
+cpt_{prefix}_scores	JSON	{"c1_0": 18, "c2_3": 20, ...}
+cpt_{prefix}_notif_on	String	"1" or "0"
+cpt_{prefix}_notif_time	String	"HH:MM"
+cpt_{prefix}_notifications	JSON	Array of notification objects
+cpt_{prefix}_last_seen	String	Last visit date string
+cpt_dates	JSON	Array of date strings (for streak)
+cpt_lastdate	String	Last activity date
+cpt_darkmode	String	"1" or "0"
+cpt_level	String	Current level number
+cpt_streak_shown	String	Date streak modal was last shown
+
+Data Flow
+User action → UI event → app.js function
+→ Update in-memory state (completed, totalXP, etc.)
+→ save() → localStorage (immediate) + gasCall() (debounced 2s)
+→ updateStats() → DOM updates
+
+11. Feature Reference
+Study Day Card Sections (in order)
+    1. Day Header — phase badge, title, day number, exam series label
+    2. Professor Messer Video — embedded YouTube (privacy-enhanced mode), tab switcher if multiple videos
+    3. Class Notes — HTML notes from DAY_NOTES[d], includes new AI/Zero Trust callouts for relevant days
+    4. Today's Checklist — interactive checkboxes (+2 XP each)
+    5. Note-Taking Objective — prompt question for self-study notes
+    6. Acronyms & Terms — clickable chip-style term/definition pairs
+    7. External Resources — links to Professor Messer, ExamCompass, Crucial Exams, CompTIA.org
+    8. Complete Row — "Mark Day Complete" button + Prev/Next navigation
+Notes Tab
+    • Searchable via real-time text filter (filterNotes())
+    • Shows all sections from ALL_NOTES (ABBREVS + EXTRA + NEW_ABBREVS)
+    • Search covers both term and definition columns
+    • Empty sections auto-hide when filtered
+Tests Tab
+    • 12 test sets total (6 Core 1, 6 Core 2) × 20 questions = 240 questions
+    • Sets 1-5 cover original 220-1101/1102 content (still valid for 1201/1202)
+    • Set 6 covers new 220-1201/1202 specific objectives
+    • Keyboard shortcut: press 1, 2, 3, or 4 to answer while in quiz
+    • Each correct answer shows explanation immediately
+    • Results card shows score, XP earned, performance message
+Dark Mode
+    • Persists in localStorage.cpt_darkmode
+    • Applied at document level: html.dark-mode
+    • All colors use CSS variables so dark mode is purely CSS
+    • System preference not automatically applied — must be toggled manually
+Notifications
+    • Uses browser Notification API (permission required)
+    • Daily reminder at configurable time (default 09:00)
+    • In-app notification feed (bell icon, red badge)
+    • Notifications persist per user in localStorage
+
+12. Extending the App
+Adding a New Test Set
+In data.js, add to TESTS.core1 or TESTS.core2:
+TESTS.core1.push({
+  title: "Core 1 (220-1201) — Set 7: Advanced Topics",
+  questions: [
+    {q: "...", opts: ["A","B","C","D"], ans: 0, exp: "..."},
+    // ... 20 questions recommended
+  ]
+});
+Adding New Notes Sections
+In data.js, push to ALL_NOTES:
+ALL_NOTES.push({
+  title: "My New Topic Section",
+  items: [
+    ["Term", "Definition"],
+    ["Term2", "Definition2"]
+  ]
+});
+Adding New Day Notes
+In data.js, add to DAY_NOTES or extend existing entries:
+DAY_NOTES[15] = DAY_NOTES[15] + `
+<div class="ai-note">
+  <strong>New content:</strong> Your HTML here...
+</div>`;
+Modifying a Study Day
+Edit the corresponding entry in the DAYS array in data.js. Each day has: day, topic, links, checklist, note, practice.
+Adding a New Achievement
+In app.js, add to the ACHS array:
+{id:'custom1', icon:'🎯', name:'My Achievement', desc:'Description',
+ check:()=> /* condition returning true/false */ }
+Updating the GAS Backend
+The app communicates with GAS via URL parameters for GET and form data for POST. Actions:
+    • login — params: username, password (hashed)
+    • register — params: username, name, password
+    • saveProgress — params: username, done, subs, xp, ach, scores
+GAS returns JSON: {ok: true/false, data: {...}, error: "message"}.
+
+Changelog
+v2.0 (May 2026)
+    • BREAKING: Updated exam series from 220-1101/1102 to 220-1201/1202
+    • Added 40 new practice questions (2 new test sets)
+    • Added 37 new abbreviation entries (NEW_ABBREVS)
+    • Added new content to day notes: Days 1, 11, 21, 29, 32, 34
+    • Added exam version banner on dashboard
+    • Split from single index.html into index.html + styles.css + data.js + app.js
+    • Added CSS classes: .exam-version-banner, .ai-note, .zt-note, .badge-new, .new-tag
+v1.0 (April 2025)
+    • Initial release targeting 220-1101/1102
+    • 90-day study plan, 5 test sets each core, full notes reference
+    • Cloud sync via Google Apps Script
+    • Multi-user auth, dark mode, notifications, gamification
+
+For questions or updates, refer to the CompTIA A+ official exam objectives at comptia.org.
