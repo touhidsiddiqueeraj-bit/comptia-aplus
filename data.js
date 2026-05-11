@@ -1,0 +1,2844 @@
+// ============================================================
+// CompTIA A+ Zero to Hero — data.js
+// Exam series: 220-1201 (Core 1) & 220-1202 (Core 2) — v15
+// Last updated: May 2026
+// ============================================================
+
+// ── PHASES ────────────────────────────────────────────────────
+const PHASES=[
+  {id:'c1',   label:'Core 1',        days:[1,40],  cls:'c1'},
+  {id:'c1r',  label:'Core 1 Review', days:[41,45], cls:'c1r'},
+  {id:'c2',   label:'Core 2',        days:[46,80], cls:'c2'},
+  {id:'c2r',  label:'Core 2 Review', days:[81,85], cls:'c2r'},
+  {id:'pbq',  label:'PBQ Sprint',    days:[86,89], cls:'pbq'},
+  {id:'final',label:'Final Audit',   days:[90,90], cls:'final'}
+];
+const DAYS=[
+{day:1,topic:"CompTIA A+ Exam Overview & 220-1201/1202 Objectives",
+ links:[{label:"How to Pass Your 220-1201 & 220-1202",url:"https://www.youtube.com/results?search_query=professor+messer+how+to+pass+220-1201+1102+a+plus"}],
+ checklist:["Download the official CompTIA 220-1201 Exam Objectives PDF from comptia.org","Highlight all 5 domain names and memorize their percentage weights","Download the official CompTIA 220-1202 Exam Objectives PDF as well","Bookmark: Professor Messer (professormesser.com), ExamCompass, Crucial Exams","Create a dedicated study notebook or digital folder for all notes"],
+ note:"What are the 5 domains of Core 1 and what percentage of the exam does each represent?",
+ practice:"CompTIA = Computing Technology Industry Association | Core 1 passing score = 675 | Core 2 passing score = 700 | 90 min / 90 questions max"},
+
+{day:2,topic:"1.1 — Motherboard Form Factors (ATX, mATX, ITX)",
+ links:[{label:"Motherboard Form Factors – 220-1201",url:"https://www.youtube.com/results?search_query=professor+messer+motherboard+form+factors+220-1201"},{label:"Motherboard Connectors – 220-1201",url:"https://www.youtube.com/results?search_query=professor+messer+motherboard+connectors+220-1201"}],
+ checklist:["Watch both Professor Messer videos above","Find a real motherboard via iFixit teardown photos and identify its form factor","Label on paper or digital diagram: CPU socket, RAM slots, PCIe slots, SATA connectors","Write the physical dimensions of ATX (305×244mm), Micro-ATX (244×244mm), Mini-ITX (170×170mm)","Take the motherboard quiz on ExamCompass"],
+ note:"What are the physical size differences between ATX, Micro-ATX, and Mini-ITX, and which is most common in desktop builds?",
+ practice:"ATX = Advanced Technology eXtended | PCIe = Peripheral Component Interconnect Express | CPU socket | SATA = Serial ATA"},
+
+{day:3,topic:"1.1 — CPU Types, Sockets (Intel LGA vs AMD AM4/AM5), Cooling",
+ links:[{label:"CPU Features – 220-1201",url:"https://www.youtube.com/results?search_query=professor+messer+cpu+features+220-1201"},{label:"Cooling the System – 220-1201",url:"https://www.youtube.com/results?search_query=professor+messer+cooling+system+220-1201"}],
+ checklist:["Watch both Professor Messer videos above","Go to crucial.com and identify the CPU socket type for two systems","Write down TDP, core count, and thread count for one Intel and one AMD CPU","Sketch the difference between LGA (pins on socket) and PGA (pins on chip) from memory","Note the correct way to apply thermal paste (pea-sized dot in center)"],
+ note:"What is the difference between an LGA socket (Intel) and a PGA socket (AMD), and why does it matter during installation?",
+ practice:"CPU = Central Processing Unit | TDP = Thermal Design Power | LGA = Land Grid Array | PGA = Pin Grid Array | AM4 | AM5 | LGA1700"},
+
+{day:4,topic:"1.1 — RAM: DDR4 vs DDR5, DIMM vs SO-DIMM, Single vs Dual Channel",
+ links:[{label:"RAM and Memory – 220-1201",url:"https://www.youtube.com/results?search_query=professor+messer+ram+memory+220-1201"}],
+ checklist:["Watch the Professor Messer video above","Run the Crucial memory scanner at crucial.com to identify your RAM type","Note DDR4 speeds (2133–3200 MHz) vs DDR5 speeds (4800+ MHz)","Write the difference between single-channel and dual-channel and how to enable dual-channel (matching slots)","Take the RAM quiz on ExamCompass","Confirm: can your machine's RAM be upgraded? (socketed vs soldered)"],
+ note:"What is the practical difference between single-channel and dual-channel RAM configurations, and how do you enable dual-channel?",
+ practice:"RAM = Random Access Memory | DIMM = Dual Inline Memory Module | SO-DIMM = Small Outline DIMM | ECC = Error-Correcting Code | DDR = Double Data Rate"},
+
+{day:5,topic:"1.1 — Storage: HDD, SSD (SATA, NVMe, M.2), eMMC",
+ links:[{label:"Storage Devices – 220-1201",url:"https://www.youtube.com/results?search_query=professor+messer+storage+devices+220-1201"}],
+ checklist:["Watch the Professor Messer video above","Open Device Manager (Windows) or Disk Utility (Mac) and identify your storage type","Write the sequential read speeds: SATA SSD (~550 MB/s) vs NVMe SSD (~3500 MB/s) vs HDD (~150 MB/s)","Document the 3 M.2 connector types: SATA (B-key), NVMe (M-key), and SATA+NVMe (B+M key)","Look up what eMMC is and where it is typically found (tablets, Chromebooks)"],
+ note:"What are the three physical connectors an M.2 slot can support, and which protocols do they each use?",
+ practice:"HDD = Hard Disk Drive | SSD = Solid State Drive | NVMe = Non-Volatile Memory Express | eMMC = embedded MultiMediaCard | RPM = Revolutions Per Minute"},
+
+{day:6,topic:"1.1 — Power Supplies: Wattage, Connectors, 80 PLUS Ratings",
+ links:[{label:"Computer Power – 220-1201",url:"https://www.youtube.com/results?search_query=professor+messer+computer+power+220-1201"}],
+ checklist:["Watch the Professor Messer video above","Find an 80 PLUS Gold PSU on pcpartpicker.com — list all its connectors and wattage","Sketch the 24-pin ATX connector layout from memory and label voltage rails","Write the 80 PLUS efficiency tiers: Bronze 82%, Silver 85%, Gold 87%, Platinum 89%, Titanium 92%","Learn the difference between modular, semi-modular, and non-modular PSU design"],
+ note:"What does the 80 PLUS rating system measure, and what efficiency percentage corresponds to Bronze, Gold, and Platinum?",
+ practice:"PSU = Power Supply Unit | EPS = Enhanced Power Supply | 24-pin ATX | 8-pin EPS | PCIe 6-pin/8-pin | AC = Alternating Current | DC = Direct Current"},
+
+{day:7,topic:"1.1 — GPU, Expansion Cards (PCIe x1/x4/x8/x16), Riser Cards",
+ links:[{label:"Expansion Cards – 220-1201",url:"https://www.youtube.com/results?search_query=professor+messer+expansion+cards+220-1201"},{label:"Motherboard Expansion Slots – 220-1201",url:"https://www.youtube.com/results?search_query=professor+messer+expansion+slots+220-1201"}],
+ checklist:["Watch both Professor Messer videos above","Open Device Manager and identify which PCIe slots are in use on your machine","Write out the bandwidth for PCIe 3.0: x1=1GB/s, x4=4GB/s, x8=8GB/s, x16=16GB/s","List 3 devices that use PCIe x1 (NIC, sound card, Wi-Fi) and 1 that uses x16 (GPU)","Research what a riser card is and when you would use one"],
+ note:"What is the difference between PCIe x1, x4, x8, and x16 slots in terms of bandwidth and physical size?",
+ practice:"GPU = Graphics Processing Unit | VRAM = Video RAM | NIC = Network Interface Card | PCIe = PCI Express | x1/x4/x8/x16 = lane count"},
+
+{day:8,topic:"1.1 — Connectors: SATA, Molex, Berg, PCIe Power, USB Headers",
+ links:[{label:"Connectors and Cables – 220-1201",url:"https://www.youtube.com/results?search_query=professor+messer+connectors+cables+220-1201"}],
+ checklist:["Watch the Professor Messer video above","Draw and label from memory: SATA 15-pin power, SATA 7-pin data, Molex 4-pin, Berg 4-pin","Draw a PCIe 6-pin power connector and label which pins are +12V and ground","Draw a USB 2.0 9-pin header and label all pin functions (VCC, D-, D+, GND, key)","Note: Molex provides +12V and +5V; Berg provides +5V only"],
+ note:"Which connector powers an older optical drive, and what voltage rails does a Molex connector provide?",
+ practice:"SATA = Serial ATA | Molex = 4-pin 12V/5V legacy power | Berg = 4-pin floppy connector | PCIe 6-pin = 75W | PCIe 8-pin = 150W"},
+
+{day:9,topic:"1.1 — Ports: USB 2.0/3.x/4, Thunderbolt, DisplayPort, HDMI, VGA, DVI",
+ links:[{label:"USB 2.0 and 3.0 – 220-1201",url:"https://www.youtube.com/results?search_query=professor+messer+usb+2+3+220-1201"},{label:"Video Cables and Connectors – 220-1201",url:"https://www.youtube.com/results?search_query=professor+messer+video+cables+connectors+220-1201"}],
+ checklist:["Watch both Professor Messer videos above","Physically inspect a laptop or desktop and identify every port type","Create a table: port name, max speed, connector color code, USB version identifier","Write: USB 3.0=Blue, USB 3.1 Gen2=Teal/Red, USB 3.2 Gen2x2=20Gbps","Note the difference between Thunderbolt 3 (40Gbps, USB-C shape) and Thunderbolt 4"],
+ note:"What is the maximum data transfer rate of USB 3.2 Gen 2x2, and how does Thunderbolt 4 differ from USB4?",
+ practice:"USB = Universal Serial Bus | HDMI = High-Definition Multimedia Interface | DP = DisplayPort | DVI = Digital Visual Interface | VGA = Video Graphics Array | TB = Thunderbolt"},
+
+{day:10,topic:"1.1 — BIOS/UEFI: POST, Boot Order, Secure Boot, TPM",
+ links:[{label:"The BIOS – 220-1201",url:"https://www.youtube.com/results?search_query=professor+messer+bios+uefi+220-1201"},{label:"BIOS Settings – 220-1201",url:"https://www.youtube.com/results?search_query=professor+messer+bios+settings+220-1201"}],
+ checklist:["Watch both Professor Messer videos above","Reboot your machine and enter BIOS/UEFI setup (Del, F2, or F10 on most boards)","Screenshot or note down the current boot order","Verify Secure Boot status and TPM status (tpm.msc in Windows)","Research and write: what does UEFI do that legacy BIOS cannot?","Reset BIOS to defaults after inspection"],
+ note:"What is the difference between Legacy BIOS and UEFI, and what role does Secure Boot play in protecting the boot process?",
+ practice:"BIOS = Basic Input/Output System | UEFI = Unified Extensible Firmware Interface | POST = Power-On Self-Test | TPM = Trusted Platform Module | CMOS = Complementary Metal-Oxide Semiconductor"},
+
+{day:11,topic:"1.2 — Laptop Displays: IPS, TN, OLED, Inverters, Digitizers",
+ links:[{label:"Laptop Displays – 220-1201",url:"https://www.youtube.com/results?search_query=professor+messer+laptop+displays+220-1201"}],
+ checklist:["Watch the Professor Messer video above","Find a laptop teardown on iFixit.com and identify the LCD connector, inverter, and digitizer","Write the pros/cons: IPS (wide color gamut, slow response) vs TN (fast response, poor angles) vs OLED","Document what a digitizer does and where it sits relative to the LCD","Research: which laptops still need an inverter and which do not (LED vs CCFL backlight)"],
+ note:"What is the function of a digitizer in a laptop touchscreen, and how is it physically positioned relative to the LCD panel?",
+ practice:"IPS = In-Plane Switching | TN = Twisted Nematic | OLED = Organic Light-Emitting Diode | LCD = Liquid Crystal Display | CCFL = Cold Cathode Fluorescent Lamp | LED backlight"},
+
+{day:12,topic:"1.2 — Laptop Internals: Keyboard, Trackpad, Wi-Fi Card, RAM, Storage",
+ links:[{label:"Laptop Hardware – 220-1201",url:"https://www.youtube.com/results?search_query=professor+messer+laptop+hardware+220-1201"}],
+ checklist:["Watch the Professor Messer video above","Look up upgrade options for a specific laptop model on iFixit.com","Determine if the RAM is socketed (SO-DIMM) or soldered to the board","Identify the Wi-Fi card slot type (M.2 2230 vs mini PCIe)","Write the tools needed to replace a laptop keyboard (spudger, JIS screwdriver, prying tools)","Note which M.2 lengths are common in laptops: 2230, 2242, 2280"],
+ note:"What is the difference between a socketed SO-DIMM slot and soldered RAM? What tools are typically needed to replace a laptop keyboard?",
+ practice:"SO-DIMM = Small Outline DIMM | WWAN = Wireless Wide Area Network | M.2 2230 | M.2 2242 | M.2 2280 | mini PCIe"},
+
+{day:13,topic:"1.2 — Laptop Battery, USB-C PD Charging, Docking Stations",
+ links:[{label:"Laptop Power – 220-1201",url:"https://www.youtube.com/results?search_query=professor+messer+laptop+power+220-1201"}],
+ checklist:["Watch the Professor Messer video above","Check your laptop's battery specs: mAh rating and Wh rating in device settings","Research USB-C Power Delivery wattage tiers: 15W, 27W, 45W, 65W, 100W, 240W (PD 3.1)","Look up two Thunderbolt 4 docking stations and list their port counts","Write the difference between USB-C PD charging and proprietary barrel connector charging"],
+ note:"What is USB Power Delivery (PD), and what is the maximum wattage deliverable under USB-C PD 3.1?",
+ practice:"PD = Power Delivery | USB-C = USB Type-C | mAh = milliamp-hour | Wh = Watt-hour | Thunderbolt 4 | 240W = PD 3.1 max"},
+
+{day:14,topic:"1.3 — Printer Types: Laser, Inkjet, Thermal, Impact; 7-Step Laser Process",
+ links:[{label:"Laser Printers – 220-1201",url:"https://www.youtube.com/results?search_query=professor+messer+laser+printers+220-1201"},{label:"Inkjet Printers – 220-1201",url:"https://www.youtube.com/results?search_query=professor+messer+inkjet+printers+220-1201"}],
+ checklist:["Watch both Professor Messer videos above","Write and memorize the 7 laser printing steps IN ORDER: Processing → Charging → Exposing → Developing → Transferring → Fusing → Cleaning","Draw the laser print process drum lifecycle from memory","Write what physically happens to toner at the Fusing step (heat + pressure melts toner to paper)","Do a 15-question printer quiz on ExamCompass","Note: thermal printers use heat-sensitive paper (no ink/toner)"],
+ note:"Describe all 7 steps of the laser printing process in the correct order and explain what physically happens to the toner at each step.",
+ practice:"EP = Electrophotographic | OPC drum = Organic Photoconductor | MFP = Multifunction Printer | PCL = Printer Control Language | PostScript | Fuser | Transfer roller"},
+
+{day:15,topic:"1.3 — Printer Drivers, Print Queue Management, Cloud Printing",
+ links:[{label:"Printer Configuration – 220-1201",url:"https://www.youtube.com/results?search_query=professor+messer+printer+configuration+220-1201"}],
+ checklist:["Watch the Professor Messer video above","Open Devices and Printers > right-click a printer > view print queue","Install Microsoft Print to PDF if not already installed","Practice clearing a stuck job: open services.msc → Print Spooler → Stop → delete files in C:\\Windows\\System32\\spool\\PRINTERS → Start","Write the difference between IPP (port 631) and RAW printing (port 9100)","Research what Google Cloud Print was replaced with (CUPS / vendor cloud)"],
+ note:"How do you manually clear a stuck print job when the standard cancel option in the print queue is unresponsive?",
+ practice:"Spooler = Simultaneous Peripheral Operations On-Line | IPP = Internet Printing Protocol | Port 631 = IPP | Port 9100 = RAW printing | CUPS = Common Unix Printing System"},
+
+{day:16,topic:"2.1 — OSI Model (7 Layers) and TCP/IP Model (4 Layers)",
+ links:[{label:"OSI Model and Data Encapsulation – 220-1201",url:"https://www.youtube.com/results?search_query=professor+messer+osi+model+220-1201"}],
+ checklist:["Watch the Professor Messer video above","Memorize mnemonic: Please Do Not Throw Sausage Pizza Away (Physical→Application)","For each of the 7 OSI layers, write ONE protocol and ONE device that operates at that layer","Map the 4 TCP/IP layers to the OSI layers they encompass","Write which layer uses frames (L2), packets (L3), segments (L4)","Take the OSI model quiz on ExamCompass"],
+ note:"At which OSI layer do switches operate vs routers, and what is the primary difference between them in terms of addressing?",
+ practice:"L1=Physical | L2=Data Link (MAC) | L3=Network (IP) | L4=Transport (TCP/UDP) | L5=Session | L6=Presentation | L7=Application | Switches=L2 | Routers=L3"},
+
+{day:17,topic:"2.1 — Network Protocols and Port Numbers (Critical List)",
+ links:[{label:"Common Network Ports – 220-1201",url:"https://www.youtube.com/results?search_query=professor+messer+network+ports+220-1201"},{label:"ExamCompass Port Quiz",url:"https://www.examcompass.com/comptia/a-plus-certification/free-a-plus-practice-tests"}],
+ checklist:["Watch the Professor Messer video above","Create a two-column flashcard sheet: Protocol | Port + TCP/UDP","Drill all 14 required ports until you can write them without looking","Go to ExamCompass and complete the network ports practice quiz","Write which ports use TCP only, UDP only, or both (e.g., DNS uses both 53 TCP+UDP)"],
+ note:"What are the port numbers for FTP, SSH, Telnet, SMTP, DNS, DHCP, HTTP, HTTPS, POP3, IMAP, RDP, SNMP, SMB, and LDAP? Which use TCP vs UDP?",
+ practice:"FTP=20/21 | SSH=22 | Telnet=23 | SMTP=25 | DNS=53 | DHCP=67/68 | HTTP=80 | HTTPS=443 | POP3=110 | IMAP=143 | RDP=3389 | SNMP=161/162 | SMB=445 | LDAP=389"},
+
+{day:18,topic:"2.1 — IPv4 Addressing, Subnetting, CIDR Notation",
+ links:[{label:"IPv4 Addressing – 220-1201",url:"https://www.youtube.com/results?search_query=professor+messer+ipv4+addressing+220-1201"},{label:"Crucial Exams IP Practice",url:"https://crucialexams.com/exams/comptia/a-plus/"}],
+ checklist:["Watch the Professor Messer video above","Convert these CIDR notations to subnet masks: /8, /16, /24, /25, /26, /27, /28","Calculate usable hosts for each: /24=254, /25=126, /26=62, /27=30, /28=14","Write the private IP ranges: 10.x, 172.16-31.x, 192.168.x.x","Identify the loopback range: 127.0.0.1","Complete an IP addressing quiz on Crucial Exams"],
+ note:"What is the formula for calculating usable hosts per subnet (2ⁿ - 2), and how many usable hosts does a /26 subnet provide?",
+ practice:"CIDR = Classless Inter-Domain Routing | /24=254 hosts | /25=126 | /26=62 | /27=30 | /28=14 | Loopback=127.0.0.1 | Private: 10.x / 172.16-31.x / 192.168.x"},
+
+{day:19,topic:"2.1 — IPv6 Addressing, Address Types, Link-Local vs Global",
+ links:[{label:"IPv6 Addressing – 220-1201",url:"https://www.youtube.com/results?search_query=professor+messer+ipv6+addressing+220-1201"}],
+ checklist:["Watch the Professor Messer video above","Run 'ipconfig /all' (Windows) or 'ip a' (Linux) and identify your IPv6 link-local address","Write out the full 128-bit IPv6 structure: 8 groups of 4 hex digits separated by colons","Note IPv6 abbreviation rules: leading zeros omitted, one double-colon allowed","Identify: fe80::/10 = link-local | ::1 = loopback | ff00::/8 = multicast | 2000::/3 = global unicast"],
+ note:"What is the difference between a link-local IPv6 address (fe80::/10) and a global unicast address (2000::/3), and when would each be used?",
+ practice:"IPv6 = 128-bit | fe80::/10 = link-local | ::1 = loopback | ff00::/8 = multicast | 2000::/3 = global unicast | NDP = Neighbor Discovery Protocol | EUI-64"},
+
+{day:20,topic:"2.1 — Network Devices: Hub, Switch, Router, AP, Firewall, Modem",
+ links:[{label:"Network Devices – 220-1201",url:"https://www.youtube.com/results?search_query=professor+messer+network+devices+220-1201"}],
+ checklist:["Watch the Professor Messer video above","Draw a home network diagram with: modem → router → managed switch → wireless AP → 3 clients","Label which OSI layer each device operates at (hub=L1, switch=L2, router=L3)","Write: hub repeats to ALL ports; switch learns MAC addresses and sends to specific port only","Define what a UTM (Unified Threat Management) appliance combines"],
+ note:"What is the functional difference between a hub and a switch in terms of how they forward frames, and which is used in modern networks?",
+ practice:"AP = Access Point | WAP = Wireless Access Point | UTM = Unified Threat Management | IDS = Intrusion Detection System | IPS = Intrusion Prevention System | Hub=L1 | Switch=L2 | Router=L3"},
+
+{day:21,topic:"2.2 — Wireless: 802.11 Standards (a/b/g/n/ac/ax), Frequencies, Channels",
+ links:[{label:"Wireless Networking Standards – 220-1201",url:"https://www.youtube.com/results?search_query=professor+messer+wireless+standards+220-1201"}],
+ checklist:["Watch the Professor Messer video above","On your laptop, open Wi-Fi settings and identify which 802.11 standard and frequency band","Create a comparison table: standard, year, frequency, max speed, key feature for a/b/g/n/ac/ax","Write: 2.4GHz = better range/penetration; 5GHz = faster/less interference","Note: 802.11ax (Wi-Fi 6) adds OFDMA and MU-MIMO improvements"],
+ note:"What are the key differences between 802.11ac (Wi-Fi 5) and 802.11ax (Wi-Fi 6) in terms of frequency band support, MU-MIMO, and OFDMA?",
+ practice:"802.11a=5GHz/54Mbps | 802.11b=2.4GHz/11Mbps | 802.11g=2.4GHz/54Mbps | 802.11n=600Mbps(2.4+5GHz) | 802.11ac=3.5Gbps(5GHz) | 802.11ax=9.6Gbps(2.4+5+6GHz)"},
+
+{day:22,topic:"2.2 — Wireless Security: WEP, WPA, WPA2, WPA3, TKIP, AES, 802.1X",
+ links:[{label:"Wireless Encryption – 220-1201",url:"https://www.youtube.com/results?search_query=professor+messer+wireless+encryption+220-1201"}],
+ checklist:["Watch the Professor Messer video above","Log into your home router admin panel and verify WPA2 or WPA3 is enabled","Confirm AES (CCMP) encryption is selected (NOT TKIP)","Disable WPS if enabled — find the setting and disable it now","Document why WEP is broken (IV collision attack) and why WPA3 SAE is stronger","Research what 802.1X (RADIUS) is used for in enterprise Wi-Fi"],
+ note:"Why is WEP considered cryptographically broken, and what specific vulnerability does WPA3's SAE protocol prevent (offline dictionary attack)?",
+ practice:"WEP = Wired Equivalent Privacy (broken) | WPA = Wi-Fi Protected Access | TKIP = deprecated | CCMP = Counter Mode CBC-MAC Protocol | SAE = Simultaneous Authentication of Equals | WPS = disable!"},
+
+{day:23,topic:"2.3 — DHCP (DORA Process), DNS (A, AAAA, MX, CNAME, PTR Records)",
+ links:[{label:"DHCP and Dynamic Addressing – 220-1201",url:"https://www.youtube.com/results?search_query=professor+messer+dhcp+220-1201"},{label:"DNS and IP Addressing – 220-1201",url:"https://www.youtube.com/results?search_query=professor+messer+dns+220-1201"}],
+ checklist:["Watch both Professor Messer videos above","Run 'ipconfig /all' and identify your DHCP server IP and DNS server IP","Run 'nslookup google.com' — document the response","Run 'nslookup -type=MX gmail.com' — document what MX records return","Write the full DORA process: which packets are broadcast vs unicast","Create a DNS record cheat sheet: A, AAAA, MX, CNAME, PTR, TXT"],
+ note:"Describe the full DORA process of DHCP lease acquisition, including which messages are broadcast vs unicast.",
+ practice:"DHCP = Dynamic Host Configuration Protocol | DORA = Discover/Offer/Request/Acknowledge | DNS = Domain Name System | A=IPv4 | AAAA=IPv6 | MX=mail | CNAME=alias | PTR=reverse | TTL = Time To Live"},
+
+{day:24,topic:"2.3 — Network Tools: ping, tracert, nslookup, ipconfig, netstat, pathping, arp",
+ links:[{label:"Network Command Line Tools – 220-1201",url:"https://www.youtube.com/results?search_query=professor+messer+network+command+line+tools+220-1201"}],
+ checklist:["Watch the Professor Messer video above","Run: ping 8.8.8.8 — note RTT and packet loss","Run: tracert google.com — identify each hop","Run: nslookup amazon.com — note the IP returned","Run: ipconfig /all — locate default gateway, DHCP server, DNS","Run: netstat -an — find ESTABLISHED connections","Run: arp -a — view MAC-to-IP mappings","Screenshot and annotate what each output means in your notes"],
+ note:"What does 'arp -a' display, and how would you use 'netstat -an' to detect an unauthorized network connection?",
+ practice:"ARP = Address Resolution Protocol | TTL = Time To Live | ICMP = Internet Control Message Protocol | RTT = Round Trip Time | ipconfig /all | /release | /renew | /flushdns"},
+
+{day:25,topic:"2.4 — Cable Types: Cat5e, Cat6, Cat6a, Cat8; T568A vs T568B",
+ links:[{label:"Ethernet Cables – 220-1201",url:"https://www.youtube.com/results?search_query=professor+messer+ethernet+cables+220-1201"}],
+ checklist:["Watch the Professor Messer video above","Create a table: Cat5e/Cat6/Cat6a/Cat8 — max speed, max distance, MHz, shielding","Draw the T568A pinout from memory: GW-G-OW-B-BW-O-BrW-Br","Draw the T568B pinout from memory: OW-O-GW-B-BW-G-BrW-Br","Write: T568B is more common in North American commercial installs","Research crossover vs straight-through cable use cases"],
+ note:"What is the maximum distance and speed of Cat6a, and what is the key wiring difference between T568A and T568B?",
+ practice:"UTP = Unshielded Twisted Pair | STP = Shielded Twisted Pair | Cat5e=1Gbps/100m | Cat6=10Gbps/55m | Cat6a=10Gbps/100m | Cat8=40Gbps/30m | T568A | T568B"},
+
+{day:26,topic:"2.4 — Fiber Optic: SMF vs MMF, LC/SC/ST Connectors, SFP Modules",
+ links:[{label:"Fiber Optic Cables – 220-1201",url:"https://www.youtube.com/results?search_query=professor+messer+fiber+optic+cables+220-1201"}],
+ checklist:["Watch the Professor Messer video above","Write: SMF core=8–10µm (single laser, long distance) vs MMF core=50–62.5µm (LED, short range)","Draw LC, SC, and ST connector shapes from memory and note which uses a locking latch","Look up OM1, OM2, OM3, OM4 fiber specifications: core size, max distance at 10Gbps","Research what an SFP (Small Form-factor Pluggable) module is used for in switches"],
+ note:"What is the core diameter difference between SMF and MMF, and what does this mean for maximum transmission distance?",
+ practice:"SMF = Single-Mode Fiber | MMF = Multi-Mode Fiber | LC = Lucent Connector | SC = Subscriber Connector | ST = Straight Tip | SFP = Small Form-factor Pluggable | OM1-OM4"},
+
+{day:27,topic:"2.5 — Network Troubleshooting Methodology (CompTIA 7-Step Process)",
+ links:[{label:"Troubleshooting Methodology – 220-1201",url:"https://www.youtube.com/results?search_query=professor+messer+troubleshooting+methodology+220-1201"}],
+ checklist:["Watch the Professor Messer video above","Write all 7 steps WITHOUT looking: Identify → Theory → Test Theory → Action Plan → Implement → Verify → Document","Apply the 7 steps to: 'User cannot access the internet but can ping 192.168.1.1'","Note: Step 3 (test theory) — if confirmed, proceed to step 4; if not confirmed, establish new theory","Write: documentation (step 7) includes what was done, why, and the outcome","Take a practice troubleshooting scenario quiz on Crucial Exams"],
+ note:"Write the 7 steps of the CompTIA troubleshooting methodology in order. At which step do you test whether your solution actually worked?",
+ practice:"7 Steps: 1-Identify | 2-Theory | 3-Test Theory | 4-Action Plan | 5-Implement | 6-Verify | 7-Document | Step 6 = verify the fix worked"},
+
+{day:28,topic:"2.5 — Network Troubleshooting: Physical Layer Tools",
+ links:[{label:"Network Tools – 220-1201",url:"https://www.youtube.com/results?search_query=professor+messer+network+tools+220-1201"}],
+ checklist:["Watch the Professor Messer video above","For each tool, write what problem it solves and its OSI layer: cable tester, toner probe, loopback adapter, OTDR, Wi-Fi analyzer","Write: OTDR sends a pulse of light down fiber and measures reflections to find breaks","Write: a toner/probe (Fox & Hound) traces cable runs through walls","Research what PoE (Power over Ethernet) is and which IEEE standard defines it (802.3af, 802.3at, 802.3bt)"],
+ note:"What is an OTDR used for, and how does it differ from a simple cable continuity tester in diagnosing fiber optic faults?",
+ practice:"OTDR = Optical Time Domain Reflectometer | PoE = Power over Ethernet | 802.3af=15.4W | 802.3at=30W | 802.3bt=90W | MDI | MDIX | Auto-MDIX"},
+
+{day:29,topic:"3.1 — Cloud Computing: IaaS, PaaS, SaaS, Public/Private/Hybrid",
+ links:[{label:"Cloud Computing – 220-1201",url:"https://www.youtube.com/results?search_query=professor+messer+cloud+computing+220-1201"}],
+ checklist:["Watch the Professor Messer video above","On AWS Free Tier page, identify services as IaaS (EC2), PaaS (Elastic Beanstalk), SaaS (WorkMail)","Write a real-world business example for each of IaaS, PaaS, SaaS","Define what distinguishes public, private, hybrid, and community cloud models","Write: CapEx (buy hardware) vs OpEx (pay monthly) and why cloud = OpEx model"],
+ note:"What is the fundamental operational difference between IaaS, PaaS, and SaaS from a customer management responsibility perspective?",
+ practice:"IaaS = Infrastructure as a Service | PaaS = Platform as a Service | SaaS = Software as a Service | DaaS = Desktop as a Service | VDI = Virtual Desktop Infrastructure | CapEx | OpEx"},
+
+{day:30,topic:"3.1 — Cloud Characteristics: NIST 5 Essentials",
+ links:[{label:"Cloud Characteristics – 220-1201",url:"https://www.youtube.com/results?search_query=professor+messer+cloud+characteristics+220-1201"}],
+ checklist:["Watch the Professor Messer video above","Read NIST SP 800-145 (it is one page — google it and read the full definition)","Write and memorize the 5 NIST essential cloud characteristics","Map each characteristic to a real cloud service behavior","Write: 'measured service' = pay-per-use billing meters; prevents surprise overspend","Note: SLA = Service Level Agreement; this guarantees uptime from the provider"],
+ note:"What are the 5 NIST essential cloud characteristics, and how does 'measured service' protect the customer from unexpected costs?",
+ practice:"NIST = National Institute of Standards and Technology | 5 characteristics: On-demand self-service / Broad network access / Resource pooling / Rapid elasticity / Measured service | SLA | CDN"},
+
+{day:31,topic:"3.2 — Virtualization: Type 1 vs Type 2 Hypervisors, VMs, Containers",
+ links:[{label:"Virtualization – 220-1201",url:"https://www.youtube.com/results?search_query=professor+messer+virtualization+220-1201"}],
+ checklist:["Watch the Professor Messer video above","Download and install VirtualBox (free Type 2 hypervisor) from virtualbox.org","Create a new VM configuration: set 2GB RAM, 2 CPU cores, 20GB disk — do not install OS yet","Write: Type 1 = bare-metal (VMware ESXi, Hyper-V, KVM) = enterprise","Write: Type 2 = hosted (VirtualBox, VMware Workstation) = personal/development","Research what Docker containers are and how they differ from full VMs"],
+ note:"What is the key architectural difference between Type 1 and Type 2 hypervisors, and which would you use in an enterprise data center?",
+ practice:"VM = Virtual Machine | VMM = Virtual Machine Monitor | VDI = Virtual Desktop Infrastructure | Type 1 = Bare-metal | Type 2 = Hosted | Container | Docker | Snapshot"},
+
+{day:32,topic:"3.3 — Mobile Hardware: Android vs iOS, SoC, Biometrics",
+ links:[{label:"Mobile Device Hardware – 220-1201",url:"https://www.youtube.com/results?search_query=professor+messer+mobile+device+hardware+220-1201"}],
+ checklist:["Watch the Professor Messer video above","On Android: Settings > About Phone — note SoC model, Android version, baseband version","On iOS: Settings > General > About — note chip model (e.g., A17 Pro)","Write: SoC integrates CPU + GPU + modem + memory controller on one chip","Write: biometric types on mobile: fingerprint (optical/capacitive/ultrasonic), face recognition, iris scanner","Research MDM and why corporations require it for BYOD devices"],
+ note:"What is a System-on-Chip (SoC) and why is this architecture preferred in mobile devices over discrete components?",
+ practice:"SoC = System on Chip | MDM = Mobile Device Management | EMM = Enterprise Mobility Management | BYOD = Bring Your Own Device | COPE = Corporate-Owned Personally-Enabled"},
+
+{day:33,topic:"3.3 — Mobile Connectivity: Bluetooth, NFC, IR, 4G LTE, 5G",
+ links:[{label:"Mobile Device Connectivity – 220-1201",url:"https://www.youtube.com/results?search_query=professor+messer+mobile+connectivity+220-1201"}],
+ checklist:["Watch the Professor Messer video above","Pair a Bluetooth device to your phone — note the version used","Enable NFC on your phone if available and document what it is currently configured to do","Write: 5G Sub-6GHz (FR1) = wide coverage, <6GHz, ~1Gbps typical vs 5G mmWave (FR2) = short range, >24GHz, 10Gbps+","Write: Bluetooth Class 1=100m, Class 2=10m, Class 3=1m","Note: NFC operates at 13.56 MHz, max range ~20cm"],
+ note:"What is the maximum range of Bluetooth Class 2, and what distinguishes 5G mmWave (FR2) from Sub-6GHz (FR1) in real-world deployment?",
+ practice:"NFC = Near Field Communication | BLE = Bluetooth Low Energy | IR = Infrared | LTE = Long Term Evolution | mmWave = millimeter wave | FR1 = Sub-6GHz | FR2 = mmWave"},
+
+{day:34,topic:"3.4 — Mobile Synchronization: iCloud, Google, Exchange ActiveSync, MDM",
+ links:[{label:"Mobile Device Synchronization – 220-1201",url:"https://www.youtube.com/results?search_query=professor+messer+mobile+synchronization+220-1201"}],
+ checklist:["Watch the Professor Messer video above","On your phone, open account sync settings — document which data types are syncing","Write what Exchange ActiveSync (EAS) synchronizes: email, contacts, calendar, tasks, notes","Write: EAS allows admins to push security policies (PIN, encryption, remote wipe)","Research what a SCEP certificate is and why MDM uses it","Note: OTA = Over The Air update/enrollment"],
+ note:"What data categories does Exchange ActiveSync synchronize, and what security policies can an IT admin enforce through an EAS profile?",
+ practice:"EAS = Exchange ActiveSync | OTA = Over The Air | MAM = Mobile Application Management | SCEP = Simple Certificate Enrollment Protocol | MDM | EMM"},
+
+{day:35,topic:"4.1 — Hardware Troubleshooting: POST Codes, Beep Codes, BIOS Errors",
+ links:[{label:"POST and BIOS – 220-1201",url:"https://www.youtube.com/results?search_query=professor+messer+post+bios+errors+220-1201"}],
+ checklist:["Watch the Professor Messer video above","Look up the AMI BIOS beep code table online","Create a reference sheet: 1 short beep = POST OK | 2 short = general error | 1 long + 2 short = video error | 1 long + 3 short = video/RAM error | continuous = RAM/CPU failure","Write what a POST card does (plugs into PCIe slot, displays 2-digit POST hex code)","Research the difference between a Power-On Self-Test and a full hardware diagnostic"],
+ note:"A system powers on but emits 3 long beeps and displays no video. Based on AMI BIOS beep codes, what component is most likely failing?",
+ practice:"POST = Power-On Self-Test | BIOS | CMOS | RTC = Real-Time Clock | AMI = American Megatrends Inc. | Phoenix BIOS | POST card"},
+
+{day:36,topic:"4.1 — RAM Failures: BSOD, MemTest86",
+ links:[{label:"Troubleshooting Memory – 220-1201",url:"https://www.youtube.com/results?search_query=professor+messer+troubleshooting+memory+220-1201"}],
+ checklist:["Watch the Professor Messer video above","Download the MemTest86 bootable ISO from memtest86.com","Write the process to create a bootable USB for MemTest86","Write these BSOD stop codes related to RAM: 0x0000001A (MEMORY_MANAGEMENT), 0x0000000A (IRQL_NOT_LESS_OR_EQUAL), 0x00000050 (PAGE_FAULT_IN_NONPAGED_AREA)","Research: single-bit error (ECC can correct) vs multi-bit error (ECC cannot correct)"],
+ note:"What specific Windows Stop Code (BSOD) is most commonly associated with a RAM failure, and how does MemTest86 test for faulty RAM?",
+ practice:"BSOD = Blue Screen of Death | ECC = Error-Correcting Code | WHEA = Windows Hardware Error Architecture | Stop code 0x0000001A = MEMORY_MANAGEMENT | MemTest86"},
+
+{day:37,topic:"4.1 — Storage Troubleshooting: S.M.A.R.T., chkdsk, Bad Sectors",
+ links:[{label:"Troubleshooting Storage – 220-1201",url:"https://www.youtube.com/results?search_query=professor+messer+troubleshooting+storage+hard+drives+220-1201"}],
+ checklist:["Watch the Professor Messer video above","Download CrystalDiskInfo (free) and run a S.M.A.R.T. health scan on your drive","In elevated cmd, run: chkdsk C: (no flags first — read-only report)","Write: /f = fix errors, /r = locate bad sectors and recover data (requires reboot)","Document S.M.A.R.T. attribute meanings: Reallocated Sector Count, Pending Sector Count, Uncorrectable Sector Count","Note: a clicking HDD = mechanical head failure — STOP USING IT immediately"],
+ note:"What does a S.M.A.R.T. reallocated sector count attribute indicate, and at what threshold does this become a critical failure warning?",
+ practice:"SMART = Self-Monitoring Analysis Reporting Technology | chkdsk /f /r | RAID = Redundant Array of Independent Disks | Reallocated sectors | Bad sectors"},
+
+{day:38,topic:"4.1 — Overheating: Thermal Paste, Fan Failures, GPU Artifacts",
+ links:[{label:"Troubleshooting CPUs – 220-1201",url:"https://www.youtube.com/results?search_query=professor+messer+troubleshooting+cpu+cooling+220-1201"}],
+ checklist:["Watch the Professor Messer video above","Download HWMonitor (free) and record idle temps for CPU and GPU","Stress the system (play a YouTube 4K video) and record load temps","Write safe temperature ranges: CPU idle <50°C, load <80°C; GPU load <85°C","Write correct thermal paste application: pea-sized dot in center of CPU IHS","List GPU artifact symptoms: color glitches, screen tearing, flickering, blocky geometry"],
+ note:"What is the correct procedure for applying thermal paste, and what visual symptoms indicate GPU overheating vs permanent GPU failure?",
+ practice:"TIM = Thermal Interface Material | TDP = Thermal Design Power | Throttling = clock speed reduction under heat | IHS = Integrated Heat Spreader | Artifacts = visual GPU errors"},
+
+{day:39,topic:"4.2 — Network Troubleshooting: No Connectivity, Limited Connectivity, APIPA",
+ links:[{label:"Troubleshooting IP Settings – 220-1201",url:"https://www.youtube.com/results?search_query=professor+messer+troubleshooting+ip+settings+220-1201"}],
+ checklist:["Watch the Professor Messer video above","Set a static IP on the wrong subnet on your PC — observe the connectivity error","Switch to DHCP and run: ipconfig /release, then ipconfig /renew","Run: ipconfig /all and confirm the new DHCP-assigned IP","Write: APIPA range is 169.254.0.1 to 169.254.255.254 (169.254.0.0/16)","Write: if you see a 169.254.x.x address, DHCP failed — troubleshoot DHCP server or cable"],
+ note:"What is APIPA, what address range does it use, and under what DHCP failure condition does Windows self-assign an APIPA address?",
+ practice:"APIPA = Automatic Private IP Addressing | Range 169.254.0.0/16 | ipconfig /release | /renew | /flushdns | /registerdns | DHCP server unreachable"},
+
+{day:40,topic:"4.2 — Printer Troubleshooting: Ghosting, Toner Smear, Paper Jams, Faded Prints",
+ links:[{label:"Troubleshooting Printers – 220-1201",url:"https://www.youtube.com/results?search_query=professor+messer+troubleshooting+printers+220-1201"},{label:"Crucial Exams Printer Quiz",url:"https://crucialexams.com/exams/comptia/a-plus/"}],
+ checklist:["Watch the Professor Messer video above","Create a fault-to-cause reference table in your notes with these faults and causes:","  ↳ Ghost image offset ~1 inch → worn/dirty OPC drum","  ↳ Toner smears off page → fuser not heating properly","  ↳ Blank pages (laser) → empty toner or failed corona wire","  ↳ Vertical white lines → scratched OPC drum","  ↳ Color bleed/wrong colors → wrong ICC profile or misaligned color heads","Do the printer troubleshooting quiz on Crucial Exams"],
+ note:"A laser printer produces a ghosted secondary image offset about 1 inch from the primary print. Which component is most likely failing, and why?",
+ practice:"OPC drum = Organic Photoconductor | Fuser = heat+pressure rollers | Corona wire = charges drum | Transfer roller = moves toner to paper | ICC = International Color Consortium"},
+
+// CORE 1 REVIEW
+{day:41,topic:"Core 1 Review — Domains 1 & 2 Hardware + Mobile Drill",
+ links:[{label:"Crucial Exams – Core 1 Practice",url:"https://crucialexams.com/exams/comptia/a-plus/"},{label:"ExamCompass – Core 1 Practice",url:"https://www.examcompass.com/comptia/a-plus-certification/free-a-plus-practice-tests"}],
+ checklist:["Take a 90-question Core 1 practice exam on Crucial Exams — set a 90-minute timer","Grade your results — write down every wrong answer","Look up every wrong answer in Professor Messer's videos or notes","List your 3 weakest hardware/mobile device sub-objectives by topic name","Review acronyms from Days 1–15 on your flashcard sheet"],
+ note:"Which 3 hardware or mobile device sub-objectives gave you the lowest score on today&#39;s practice exam?",
+ practice:"Review: ATX | PCIe | DIMM | NVMe | SATA | POST | TDP | SO-DIMM | SoC | MDM | EAS | OPC drum | Fuser"},
+
+{day:42,topic:"Core 1 Review — Domain 2 Networking Drill",
+ links:[{label:"ExamCompass – Networking Practice",url:"https://www.examcompass.com/comptia/a-plus-certification/free-a-plus-practice-tests"},{label:"Crucial Exams – Core 1 Practice",url:"https://crucialexams.com/exams/comptia/a-plus/"}],
+ checklist:["Take a 90-question ExamCompass Core 1 networking exam","After scoring, open cmd and reproduce ALL commands from Day 24 from memory (no notes)","Write all 14 port numbers from Day 17 without looking — then verify","Recite the 7-step troubleshooting methodology out loud from memory","Rewatch any Professor Messer networking video where you missed questions"],
+ note:"Without looking at your notes, write all 14 port numbers from Day 17. Which ones did you get wrong?",
+ practice:"FTP=20/21 | SSH=22 | Telnet=23 | SMTP=25 | DNS=53 | DHCP=67/68 | HTTP=80 | HTTPS=443 | POP3=110 | IMAP=143 | RDP=3389 | SNMP=161 | SMB=445 | LDAP=389"},
+
+{day:43,topic:"Core 1 Review — Domains 3 & 4 Cloud + Troubleshooting",
+ links:[{label:"Professor Messer Core 1 Full Playlist",url:"https://www.youtube.com/results?search_query=professor+messer+220-1201+core+1+full+course+playlist"},{label:"Crucial Exams – Core 1 Practice",url:"https://crucialexams.com/exams/comptia/a-plus/"}],
+ checklist:["Take a 50-question cloud/virtualization quiz on Crucial Exams","Take a 50-question hardware troubleshooting quiz","For every wrong answer write a one-sentence explanation of the correct answer","Watch one Professor Messer video for your lowest-scoring topic","Write your 5 weakest sub-topics by CompTIA objective number"],
+ note:"What are your 5 weakest sub-topics after today&#39;s quiz results? List them by CompTIA objective number.",
+ practice:"Hypervisor Type 1/2 | IaaS/PaaS/SaaS | SMART attributes | POST beep codes | 7-step troubleshooting | APIPA | RAID levels"},
+
+{day:44,topic:"Core 1 Full Simulation Exam #2",
+ links:[{label:"Crucial Exams Full Simulation",url:"https://crucialexams.com/exams/comptia/a-plus/"},{label:"ExamCompass Full Practice",url:"https://www.examcompass.com/comptia/a-plus-certification/free-a-plus-practice-tests"}],
+ checklist:["Set a strict 90-minute timer — no notes, no phone, exam conditions only","Take the full 90-question Core 1 simulation on Crucial Exams or ExamCompass","Grade your results — target 80%+ overall and 80%+ per domain","Go back through every wrong answer and write the correct reasoning","Re-watch any Professor Messer module where you scored below 80% on that domain"],
+ note:"What is your score? Compare to Day 41. Which domain improved and which still needs work?",
+ practice:"Comprehensive review — all Core 1 acronyms, all ports, OSI layers, wireless standards, cloud models"},
+
+{day:45,topic:"Core 1 Weakness Audit + Acronym Lock-In",
+ links:[{label:"CompTIA 220-1201 Exam Objectives",url:"https://www.comptia.org/certifications/a"}],
+ checklist:["Review all flagged incorrect answers from Days 41–44","Re-read the CompTIA 220-1201 objectives for each weak area","Create a one-page Core 1 Cheat Sheet — list your personal weak spots only","Write from pure memory: 7-step process, all OSI layers, all 14 ports, all 802.11 standards","Verify each answer after writing — correct any mistakes","Set this cheat sheet aside — you will combine it with Core 2 on Day 85"],
+ note:"Write the 7-step troubleshooting process, all 7 OSI layers, all 14 port numbers, and all 802.11 standards from memory — no looking.",
+ practice:"Full speed acronym test — 10 minutes, write as many A+ acronyms as possible from memory"},
+
+// CORE 2
+{day:46,topic:"Core 2 Exam Overview — 220-1202 Domains and Weights",
+ links:[{label:"How to Pass Your 220-1202",url:"https://www.youtube.com/results?search_query=professor+messer+220-1202+core+2+training+course"},{label:"CompTIA 220-1202 Exam Objectives",url:"https://www.comptia.org/certifications/a"}],
+ checklist:["Download the official CompTIA 220-1202 exam objectives PDF from comptia.org","Highlight the 4 domain names and annotate their percentage weights","Watch Professor Messer's Core 2 introduction video","Identify which domain has the highest weight (OS = 31%) — plan to spend more time here","Create a Core 2 study notebook section or folder"],
+ note:"What are the 4 domains of Core 2 and their exact percentage weights? Which domain deserves the most study time?",
+ practice:"Core 2 domains: 1.0 OS=31% | 2.0 Security=25% | 3.0 Software Troubleshooting=22% | 4.0 Operational Procedures=22%"},
+
+{day:47,topic:"1.1 — Windows Editions: Home, Pro, Pro for Workstations, Enterprise",
+ links:[{label:"Windows 10 Editions – 220-1202",url:"https://www.youtube.com/results?search_query=professor+messer+windows+editions+220-1202"},{label:"Windows 11 Editions – 220-1202",url:"https://www.youtube.com/results?search_query=professor+messer+windows+11+editions+220-1202"}],
+ checklist:["Watch both Professor Messer videos above","Run 'winver' in the run dialog to confirm your Windows edition","Create a comparison matrix for Home/Pro/Pro for Workstations/Enterprise covering: BitLocker, Group Policy (gpedit.msc), Domain Join, RDP Host, Hyper-V, max RAM","Write: only Pro and above can join an Active Directory domain","Write: only Pro and above can HOST Remote Desktop (all editions can be a client)"],
+ note:"Which Windows edition is required to join an Active Directory domain, and which is the minimum required to HOST a Remote Desktop session?",
+ practice:"GPO = Group Policy Object | AD = Active Directory | BitLocker | Hyper-V | Pro max 2TB RAM | Home max 128GB RAM | gpedit.msc = Group Policy Editor"},
+
+{day:48,topic:"1.1 — Windows Installation: Clean, Upgrade, In-Place, Unattended",
+ links:[{label:"Windows Installation – 220-1202",url:"https://www.youtube.com/results?search_query=professor+messer+windows+installation+220-1202"}],
+ checklist:["Watch the Professor Messer video above","Download the Windows 11 Media Creation Tool from microsoft.com (do not run it yet — just review the interface)","Write: clean install = wipes everything; in-place upgrade = preserves apps + data; unattended = automated with answer file","Write: the unattended install answer file is called 'unattend.xml'","Research what Sysprep /generalize does and why it is needed before imaging","Note: WIM = Windows Imaging Format used by deployment tools"],
+ note:"What is the difference between an attended and unattended Windows installation, and what file format stores the answers for an unattended install?",
+ practice:"WIM = Windows Imaging Format | ISO | unattend.xml | Sysprep = System Preparation Tool | OOBE = Out-Of-Box Experience | MDT | WDS = Windows Deployment Services"},
+
+{day:49,topic:"1.2 — File Systems: NTFS vs FAT32 vs exFAT; MBR vs GPT",
+ links:[{label:"File Systems – 220-1202",url:"https://www.youtube.com/results?search_query=professor+messer+file+systems+220-1202"}],
+ checklist:["Watch the Professor Messer video above","Open diskmgmt.msc and identify the partition style of your primary drive (MBR or GPT)","Note the file system of each partition (NTFS, FAT32, exFAT)","Write: FAT32 max file size = 4GB; NTFS max = 256TB; exFAT = designed for flash drives","Write: MBR supports max 4 primary partitions and max 2TB disk; GPT supports 128 partitions","Write: NTFS features FAT32 lacks: permissions, encryption, compression, journaling, large file support"],
+ note:"What is the maximum single file size supported by FAT32, and why does this make it unsuitable for modern video files?",
+ practice:"NTFS = New Technology File System | FAT32 max 4GB file | exFAT | MBR max 2TB/4 primary partitions | GPT max 128 partitions/9.4ZB | EFI System Partition"},
+
+{day:50,topic:"1.2 — Disk Tools: Disk Management, DiskPart, defrag",
+ links:[{label:"Disk Management Tools – 220-1202",url:"https://www.youtube.com/results?search_query=professor+messer+disk+management+220-1202"}],
+ checklist:["Watch the Professor Messer video above","Open diskmgmt.msc and explore the interface","Open elevated cmd and practice DiskPart commands on a USB drive: list disk, select disk 1, list partition","Practice: create partition primary, format fs=ntfs quick, assign letter=Z","Run: defrag C: /U /V — review the output (shows optimization status)","Write the difference between full format (writes zeros, checks bad sectors) vs quick format (rewrites file table only)"],
+ note:"What is the difference between 'format' and 'quick format', and when would you choose a full format?",
+ practice:"DiskPart: list disk | select | clean | create partition | format | assign | active | convert gpt"},
+
+{day:51,topic:"1.3 — Task Manager: All Tabs, Resource Monitor, Performance Monitor",
+ links:[{label:"Windows Tools – 220-1202",url:"https://www.youtube.com/results?search_query=professor+messer+windows+tools+task+manager+220-1202"}],
+ checklist:["Watch the Professor Messer video above","Open Task Manager (Ctrl+Shift+Esc) — navigate ALL 7 tabs and document each tab's purpose","In the Performance tab, click 'Open Resource Monitor'","In Resource Monitor, identify the process using the most network bandwidth","Write: PID = unique number Windows assigns to each running process","Open perfmon.msc and add a counter for CPU usage"],
+ note:"What is the difference between the 'Processes' tab and the 'Details' tab in Task Manager?",
+ practice:"PID = Process Identifier | CPU time vs CPU% | Working set = RAM in use | perfmon.msc = Performance Monitor | resmon.exe = Resource Monitor | Ctrl+Shift+Esc"},
+
+{day:52,topic:"1.3 — Administrative Tools: MMC, Event Viewer, Services",
+ links:[{label:"Administrative Tools – 220-1202",url:"https://www.youtube.com/results?search_query=professor+messer+administrative+tools+mmc+220-1202"}],
+ checklist:["Watch the Professor Messer video above","Open Event Viewer (eventvwr.msc) — navigate to Windows Logs > System","Filter for Error and Critical events from the last 7 days","Document: Event ID 41 = unexpected shutdown (kernel power) | Event ID 1001 = BSOD recorded | 6005 = system started | 6006 = system shutdown","Open services.msc — find Print Spooler service — note its startup type","Open mmc.exe and add three snap-ins: Device Manager, Disk Management, Event Viewer"],
+ note:"What is the Microsoft Management Console (MMC), and how do you add custom snap-ins to manage multiple system components in one window?",
+ practice:"MMC = Microsoft Management Console | eventvwr.msc | services.msc | Event ID 41=unexpected shutdown | 1001=BSOD | 6005=start | 6006=shutdown | secpol.msc"},
+
+{day:53,topic:"1.3 — Registry: HKLM, HKCU, HKCR, HKU, HKCC; regedit; Common Keys",
+ links:[{label:"The Windows Registry – 220-1202",url:"https://www.youtube.com/results?search_query=professor+messer+windows+registry+220-1202"}],
+ checklist:["Watch the Professor Messer video above","Open regedit.exe and navigate to HKLM\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion","Document the ProductName, CurrentBuild, and RegisteredOwner values","Navigate to HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Run — document autostart entries","Write the purpose of each of the 5 root hives in your notes","WARNING: Never delete registry keys unless you know exactly what they do"],
+ note:"What are the 5 root registry hives and what type of data does each store? Which hive stores settings for the currently logged-in user?",
+ practice:"HKLM = HKEY_LOCAL_MACHINE | HKCU = HKEY_CURRENT_USER | HKCR = HKEY_CLASSES_ROOT | HKU = HKEY_USERS | HKCC = HKEY_CURRENT_CONFIG"},
+
+{day:54,topic:"1.4 — Windows Networking: Profiles, File Sharing, Workgroups vs Domains",
+ links:[{label:"Windows Networking – 220-1202",url:"https://www.youtube.com/results?search_query=professor+messer+windows+networking+220-1202"}],
+ checklist:["Watch the Professor Messer video above","Open Network and Sharing Center — switch between Public and Private profiles","Observe how Windows Firewall rules change between Public (locked down) and Private (sharing enabled)","Right-click a folder > Properties > Sharing > Share > add a user with Read permission","Access the share via \\\\localhost\\[sharename] in File Explorer","Write: workgroup = decentralized (each PC manages its own accounts) vs domain = centralized (AD)"],
+ note:"What are the three Windows network location profiles, and which profile automatically allows file sharing and network discovery?",
+ practice:"SMB = Server Message Block | UNC = Universal Naming Convention (\\\\server\\share) | Workgroup | Domain | CIFS = Common Internet File System | Port 445 = SMB"},
+
+{day:55,topic:"1.5 — macOS: Finder, Spotlight, Mission Control, Time Machine, FileVault",
+ links:[{label:"macOS Overview – 220-1202",url:"https://www.youtube.com/results?search_query=professor+messer+macos+overview+220-1202"}],
+ checklist:["Watch the Professor Messer video above","If on a Mac: open Finder, use Spotlight (Cmd+Space), explore Mission Control (F3 or gesture)","Check Time Machine backup status in System Settings > Time Machine","Check FileVault status in System Settings > Privacy & Security > FileVault","If no Mac access: watch a macOS Sonoma walkthrough on YouTube","Write: APFS = Apple File System (replaced HFS+ in macOS High Sierra 2017)"],
+ note:"What is FileVault on macOS, and how does it compare functionally to BitLocker on Windows in terms of encryption and recovery key management?",
+ practice:"HFS+ = Hierarchical File System Plus | APFS = Apple File System | Time Machine | FileVault = AES-XTS encryption | Terminal | Disk Utility | Activity Monitor"},
+
+{day:56,topic:"1.5 — Linux Basics: ls, cd, cp, mv, rm, chmod, chown, grep, sudo, apt",
+ links:[{label:"Linux Commands – 220-1202",url:"https://www.youtube.com/results?search_query=professor+messer+linux+commands+220-1202"}],
+ checklist:["Watch the Professor Messer video above","Open WSL (Windows Subsystem for Linux) or a Linux VM","Run and document each: ls -la, cd /etc, cat /etc/passwd, mkdir ~/testdir, cp /etc/hosts ~/testdir/","Run: chmod 644 ~/testdir/hosts — write what this means in rwx notation","Run: grep 'localhost' ~/testdir/hosts — write what grep does","Write the octal permission chart: 4=read, 2=write, 1=execute; 755=rwxr-xr-x; 644=rw-r--r--"],
+ note:"What does 'chmod 755' mean in octal permission notation, and what permissions does it grant to the owner, group, and others?",
+ practice:"chmod | chown | sudo | apt | yum/dnf | /etc=config | /home=user dirs | /var=variable data | /bin=binaries | /tmp=temp files | 755=rwxr-xr-x | 644=rw-r--r--"},
+
+{day:57,topic:"2.1 — Malware Types: Virus, Worm, Trojan, Ransomware, Rootkit, Keylogger",
+ links:[{label:"Malware – 220-1202",url:"https://www.youtube.com/results?search_query=professor+messer+malware+types+220-1202"}],
+ checklist:["Watch the Professor Messer video above","Create a threat reference table with columns: Type | Spreads How | Does What | Real Example","Fill in: Virus (requires host file) | Worm (self-replicating, no host) | Trojan (disguised as legit) | Ransomware (WannaCry) | Rootkit (hides in kernel) | Keylogger (records keystrokes)","Write the difference between a virus and a worm in ONE clear sentence","Do a 30-question malware quiz on ExamCompass"],
+ note:"What is the functional difference between a virus and a worm in terms of how they propagate, and why does a worm spread faster across a network?",
+ practice:"RAT = Remote Access Trojan | C2 = Command and Control | PUP = Potentially Unwanted Program | Rootkit = kernel-level hiding | Keylogger = records keystrokes | Bootkit = infects MBR"},
+
+{day:58,topic:"2.2 — Social Engineering: Phishing, Spear Phishing, Vishing, Whaling, Tailgating",
+ links:[{label:"Social Engineering – 220-1202",url:"https://www.youtube.com/results?search_query=professor+messer+social+engineering+220-1202"}],
+ checklist:["Watch the Professor Messer video above","Go to phishtank.com and examine 3 real submitted phishing emails","Identify social engineering techniques in each: urgency, authority, familiarity, fear","Write the exact difference between phishing (mass) and spear phishing (targeted with personal details)","Write: whaling = targeting C-suite executives; vishing = voice/phone; smishing = SMS","Research what pretexting is (fabricating a scenario to extract information)"],
+ note:"What distinguishes spear phishing from generic phishing, and what information do attackers gather during reconnaissance to craft convincing spear phishing emails?",
+ practice:"Phishing=mass email | Spear phishing=targeted | Whaling=executives | Vishing=voice | Smishing=SMS | Tailgating=physical bypass | Pretexting | Shoulder surfing"},
+
+{day:59,topic:"2.2 — Password Attacks: Brute Force, Dictionary, Rainbow Table, Credential Stuffing",
+ links:[{label:"Password Attacks – 220-1202",url:"https://www.youtube.com/results?search_query=professor+messer+password+attacks+220-1202"}],
+ checklist:["Watch the Professor Messer video above","Write how a rainbow table attack works vs a dictionary attack (lookup table vs compute-on-the-fly)","Write how password salting defeats rainbow tables: salt makes every hash unique even for same password","Research why bcrypt is preferred over MD5 for password storage (bcrypt is intentionally slow)","Write the difference between credential stuffing (reusing breached passwords) vs brute force","Take the password security quiz on ExamCompass"],
+ note:"Why does adding a cryptographic salt to a password hash defeat a pre-computed rainbow table attack, even if the attacker has the hash?",
+ practice:"Salt = random value added before hashing | MD5 = broken | SHA-256 = current standard | bcrypt = slow/adaptive hash | MFA = Multi-Factor Authentication | Password spraying"},
+
+{day:60,topic:"2.3 — Windows Defender, Malware Removal Steps",
+ links:[{label:"Removing Malware – 220-1202",url:"https://www.youtube.com/results?search_query=professor+messer+removing+malware+220-1202"}],
+ checklist:["Watch the Professor Messer video above","Open Windows Security > Virus & Threat Protection","Run a Quick Scan — document the results","Run a Custom Scan on your Downloads folder","Research and write what Windows Defender Offline Scan does (pre-OS boot scan using WinPE)","Write in order the CompTIA 8-step malware removal process (from the objectives)"],
+ note:"What is the correct sequence for manually removing malware from a Windows machine? List all 8 steps in order.",
+ practice:"Windows Security Center | Defender Offline = pre-OS scan | Quarantine vs Delete | Safe Mode with Networking | msconfig = startup | services.msc | 8-step removal"},
+
+{day:61,topic:"2.4 — Windows Firewall: Inbound/Outbound Rules, Profiles, wf.msc",
+ links:[{label:"Windows Firewall – 220-1202",url:"https://www.youtube.com/results?search_query=professor+messer+windows+firewall+220-1202"}],
+ checklist:["Watch the Professor Messer video above","Open Windows Defender Firewall with Advanced Security (wf.msc)","Create a NEW inbound rule: Rule Type=Port, TCP, Specific Port=23, Block the connection, all profiles, name it 'Block Telnet'","Verify the rule appears in Inbound Rules list","Disable the rule then delete it — document each step","Write the three firewall profiles: Domain (in org network), Private (trusted home), Public (untrusted)"],
+ note:"What is the difference between the Domain, Private, and Public Windows Firewall profiles, and which automatically applies at an unknown coffee shop Wi-Fi?",
+ practice:"wf.msc | Inbound = traffic coming IN | Outbound = traffic going OUT | Stateful firewall | ACL = Access Control List | Public = most restrictive"},
+
+{day:62,topic:"2.5 — Encryption: Symmetric vs Asymmetric, AES, RSA, Certificates, PKI",
+ links:[{label:"Encryption Technologies – 220-1202",url:"https://www.youtube.com/results?search_query=professor+messer+encryption+technologies+220-1202"}],
+ checklist:["Watch the Professor Messer video above","Write: symmetric = same key to encrypt and decrypt (AES); asymmetric = public/private key pair (RSA)","Write in plain language how TLS 1.3 handshake works: server sends cert → client verifies with CA → key exchange → symmetric session begins","Write: AES-128 vs AES-256 — 256-bit is stronger; 128-bit is faster","Research what a Certificate Authority (CA) is and why browsers trust them","Do the encryption quiz on ExamCompass"],
+ note:"Why does HTTPS use both asymmetric and symmetric encryption? Which handles the key exchange and which handles bulk data transfer?",
+ practice:"AES = Advanced Encryption Standard | RSA = Rivest–Shamir–Adleman | PKI = Public Key Infrastructure | CA = Certificate Authority | TLS | SSL = deprecated | Cipher suite | HTTPS=443"},
+
+{day:63,topic:"2.5 — BitLocker, EFS, TPM, Secure Boot",
+ links:[{label:"Data Encryption – 220-1202",url:"https://www.youtube.com/results?search_query=professor+messer+data+encryption+bitlocker+220-1202"}],
+ checklist:["Watch the Professor Messer video above","Open BitLocker Drive Encryption in Control Panel — check status on each drive","Run tpm.msc — verify TPM version and status","Write: BitLocker = full disk encryption (FDE); EFS = per-file encryption on NTFS only","Write: BitLocker without TPM requires either USB startup key or PIN","Research what a SED (Self-Encrypting Drive) is and how it differs from BitLocker"],
+ note:"What role does the TPM play in BitLocker encryption, and what are the two authentication methods BitLocker can use without a TPM chip present?",
+ practice:"BitLocker = Windows FDE | EFS = Encrypting File System (file-level) | TPM = hardware key storage | Recovery key = 48-digit | SED = Self-Encrypting Drive | AES-128/256"},
+
+{day:64,topic:"2.6 — UAC, Least Privilege, Standard vs Admin Accounts",
+ links:[{label:"User Account Control – 220-1202",url:"https://www.youtube.com/results?search_query=professor+messer+user+account+control+uac+220-1202"}],
+ checklist:["Watch the Professor Messer video above","Open lusrmgr.msc — explore local users and groups","Create a new standard user account named 'TestUser'","Log in as TestUser and attempt to run an installer — observe the UAC credential prompt","Log back in as admin — observe that UAC only shows a consent prompt (not credential prompt)","Write: principle of least privilege = users get minimum access required for their job"],
+ note:"What is the principle of least privilege, and how does Windows UAC enforce it even for users who are members of the local Administrators group?",
+ practice:"UAC = User Account Control | SID = Security Identifier | ACL = Access Control List | DACL = Discretionary ACL | SACL = System ACL | lusrmgr.msc | Elevation"},
+
+{day:65,topic:"2.6 — NTFS Permissions: Full Control, Modify, Read/Execute, Read, Write; Inheritance",
+ links:[{label:"NTFS Permissions – 220-1202",url:"https://www.youtube.com/results?search_query=professor+messer+ntfs+permissions+220-1202"}],
+ checklist:["Watch the Professor Messer video above","Create a folder C:\\PermTest — open Properties > Security","Add TestUser with Read permission only","Log in as TestUser and try to create a file in C:\\PermTest — document the result","Back as admin: add TestUser with an explicit DENY on Write","Verify Deny overrides the Allow — document this critical rule","Write: permissions are inherited from parent folder unless you break inheritance"],
+ note:"What is the order of permission precedence in NTFS when a user has both an explicit Allow and an explicit Deny permission on the same object?",
+ practice:"NTFS: Full Control > Modify > Read+Execute > Read > Write | Deny overrides Allow | Inherited vs Explicit | Effective permissions = combined | Propagation"},
+
+{day:66,topic:"2.7 — Active Directory: Users, Groups, OUs, GPOs, Domain Join",
+ links:[{label:"Active Directory – 220-1202",url:"https://www.youtube.com/results?search_query=professor+messer+active+directory+220-1202"}],
+ checklist:["Watch the Professor Messer video above","Write the steps to join a Windows PC to a domain (System > Advanced > Computer Name > Change)","Write what an Organizational Unit (OU) is used for (organize AD objects, apply GPOs)","Write how a GPO (Group Policy Object) is linked to an OU and enforced","Write: security group = used to assign permissions; distribution group = used for email lists","Research what LDAP and Kerberos are and which ports they use (LDAP=389, Kerberos=88)"],
+ note:"What is the difference between a local account, a domain account, and a Microsoft account in Windows, and what are the admin advantages of domain accounts?",
+ practice:"AD = Active Directory | OU = Organizational Unit | GPO = Group Policy Object | DC = Domain Controller | LDAP=389 | Kerberos=88 | SAM = Security Accounts Manager"},
+
+{day:67,topic:"2.8 — VPN Types: Site-to-Site, Remote Access, SSL VPN, IPsec, Split Tunneling",
+ links:[{label:"VPNs and Tunneling – 220-1202",url:"https://www.youtube.com/results?search_query=professor+messer+vpn+tunneling+220-1202"}],
+ checklist:["Watch the Professor Messer video above","Write the difference between site-to-site VPN (network-to-network) and remote access VPN (user-to-network)","Write: SSL VPN (port 443 TCP/UDP) vs IPsec VPN (port 500/4500 UDP)","Write: full tunnel = all traffic through VPN; split tunnel = only corporate traffic through VPN","Write: IPsec has two modes — Transport (encrypts payload only) and Tunnel (encrypts entire packet)","Research what IKE (Internet Key Exchange) does in an IPsec connection"],
+ note:"What is split tunneling in a VPN context, and why might a corporate IT policy prohibit it even though it reduces bandwidth usage?",
+ practice:"VPN | IPsec | IKE = Internet Key Exchange | AH = Authentication Header | ESP = Encapsulating Security Payload | Port 1194=OpenVPN | Port 500/4500=IPsec | Port 443=SSL VPN"},
+
+{day:68,topic:"2.9 — Wireless Hardening: SSID, MAC Filtering, WPS, Rogue APs, Evil Twin",
+ links:[{label:"Wireless Hardening – 220-1202",url:"https://www.youtube.com/results?search_query=professor+messer+wireless+hardening+220-1202"}],
+ checklist:["Watch the Professor Messer video above","Log into your home router admin panel","Disable WPS (it is vulnerable to brute-force PIN attacks)","Research evil twin attack: attacker creates a fake AP with the same SSID","Write why hiding the SSID is security theater (still discoverable via probe requests)","Write why MAC filtering is ineffective (MAC spoofing defeats it within seconds)","Research WIDS (Wireless Intrusion Detection System) and how it detects rogue APs"],
+ note:"Why is MAC address filtering considered an ineffective security control for wireless networks, and what attack technique defeats it in seconds?",
+ practice:"WPS = Wi-Fi Protected Setup (disable!) | Evil twin | WIDS = Wireless IDS | MAC spoofing | Deauth attack | 802.1X = enterprise auth | RADIUS server"},
+
+{day:69,topic:"2.10 — Data Destruction: Overwriting, Degaussing, Shredding, Certificate of Destruction",
+ links:[{label:"Data Destruction – 220-1202",url:"https://www.youtube.com/results?search_query=professor+messer+data+destruction+220-1202"}],
+ checklist:["Watch the Professor Messer video above","Google 'NIST SP 800-88 Guidelines for Media Sanitization' — read the summary section","Create a destruction method table: HDD, SSD, optical media, USB flash — recommended method for each","Write: overwriting is ineffective on SSDs due to wear leveling","Write: crypto-erase (encrypt then destroy key) is NIST-recommended for SSDs","Write: degaussing works on HDDs and tapes but does NOT work on SSDs or optical media"],
+ note:"Why is the DoD 5220.22-M 7-pass overwrite standard ineffective for SSDs, and what does NIST SP 800-88 recommend instead?",
+ practice:"Overwrite = ineffective on SSD | Degaussing = magnetic erasure (HDD only) | Crypto-erase = SSD best practice | Physical shredding = ultimate | CoD = Certificate of Destruction"},
+
+{day:70,topic:"3.1 — OS Troubleshooting: Startup Repair, System Restore, WinRE, Boot Errors",
+ links:[{label:"Troubleshooting Boot Issues – 220-1202",url:"https://www.youtube.com/results?search_query=professor+messer+troubleshooting+windows+startup+boot+220-1202"}],
+ checklist:["Watch the Professor Messer video above","Boot into WinRE: hold Shift while clicking Restart > Troubleshoot > Advanced Options","WITHOUT executing anything, document all 5 recovery tools visible: Startup Repair, System Restore, System Image Recovery, Command Prompt, UEFI Firmware Settings","Write the bootrec commands: /fixmbr, /fixboot, /scanos, /rebuildbcd","Write when you would use each recovery tool — create a decision chart","Write: bcdedit = Boot Configuration Data Editor (modifies boot entries)"],
+ note:"What is the Windows Recovery Environment (WinRE) and what 5 recovery tools does it provide? Which one fixes a corrupted boot manager?",
+ practice:"WinRE | bootrec /fixmbr | bootrec /fixboot | bootrec /scanos | bootrec /rebuildbcd | bcdedit | Startup Repair | System Restore | PE = Pre-installation Environment"},
+
+{day:71,topic:"3.1 — Windows CLI Tools: sfc, DISM, gpupdate, gpresult, net user, net use",
+ links:[{label:"Windows Command Line Tools – 220-1202",url:"https://www.youtube.com/results?search_query=professor+messer+windows+command+line+tools+220-1202"}],
+ checklist:["Watch the Professor Messer video above","Open elevated cmd — run: sfc /scannow — document the output message","Run: DISM /Online /Cleanup-Image /CheckHealth — document result","Run: DISM /Online /Cleanup-Image /ScanHealth — note any detected corruption","Run: gpresult /r — review applied group policies","Run: net user — list all local accounts","Write the order: run DISM /RestoreHealth FIRST (repairs the repair tool), then run sfc /scannow"],
+ note:"What is the difference between sfc /scannow and DISM /RestoreHealth, and in what order should you run them when repairing a corrupt Windows install?",
+ practice:"SFC = System File Checker | DISM = Deployment Image Servicing and Management | gpupdate /force | gpresult /r | net user | net use | net localgroup | tasklist | taskkill"},
+
+{day:72,topic:"3.2 — Application Troubleshooting: Crashes, DLL Errors, Compatibility, WOW64",
+ links:[{label:"Troubleshooting Applications – 220-1202",url:"https://www.youtube.com/results?search_query=professor+messer+troubleshooting+applications+220-1202"}],
+ checklist:["Watch the Professor Messer video above","Right-click an older .exe > Properties > Compatibility tab — review all compatibility options","Research what a DLL (Dynamic Link Library) is and why 'missing .dll' errors occur","Write: WOW64 = Windows-on-Windows 64-bit — allows 32-bit apps to run on 64-bit OS","Write: 32-bit apps install to C:\\Program Files (x86); 64-bit apps install to C:\\Program Files","Open Task Manager > Details tab — note which processes are 32-bit (shows *32 after name)"],
+ note:"What is WOW64 and how does Windows enable 32-bit applications to run on a 64-bit operating system? Where are 32-bit program files stored vs 64-bit?",
+ practice:"DLL = Dynamic Link Library | WOW64 = Windows-on-Windows 64 | Program Files (x86) = 32-bit | Program Files = 64-bit | Compatibility mode | Dependency Walker"},
+
+{day:73,topic:"3.3 — Mobile OS Troubleshooting: App Crashes, Battery Drain, Resets",
+ links:[{label:"Mobile OS Troubleshooting – 220-1202",url:"https://www.youtube.com/results?search_query=professor+messer+mobile+os+troubleshooting+220-1202"}],
+ checklist:["Watch the Professor Messer video above","Navigate to Settings > Battery > Battery Usage on your phone — identify top 3 draining apps","Write the 3 reset types for Android: Soft reset (power off/on) | Hard reset (force restart) | Factory reset (wipes all user data)","Write the 3 reset types for iOS: Soft reset (Slide to Power Off) | Force restart (button combo) | Factory reset (Erase All Content)","Write: factory reset does NOT always remove corporate data if MDM profile is installed","Research what FRP (Factory Reset Protection) is and why it is important for device recovery"],
+ note:"What data is preserved in an Android factory reset vs an iOS factory reset, and when does a factory reset NOT fully remove corporate data?",
+ practice:"Soft reset=reboot | Hard reset=force restart | Factory reset=wipes user data | MDM remote wipe | FRP = Factory Reset Protection | ADB = Android Debug Bridge"},
+
+{day:74,topic:"3.4 — Security Troubleshooting: Malware Removal 8-Step Process",
+ links:[{label:"Malware Removal – 220-1202",url:"https://www.youtube.com/results?search_query=professor+messer+malware+removal+steps+220-1202"}],
+ checklist:["Watch the Professor Messer video above","Memorize and write the CompTIA 8-step malware removal process from the objectives","Note: Step 1 = Identify and research malware symptoms","Note: Step 2 = Quarantine infected systems (disconnect from network)","Note: Step 3 = Disable System Restore (prevents reinfection from restore points)","Note: Step 8 = Educate end user on avoiding reinfection","Research IOC indicators: unknown startup entries in msconfig, suspicious netstat connections, high CPU usage by unknown process"],
+ note:"What is the CompTIA-defined 8-step malware removal process? At which step do you disconnect the machine from the network, and why?",
+ practice:"IOC = Indicator of Compromise | C2 = Command and Control | 8 steps: Identify > Quarantine > Disable Restore > Remediate > Schedule Scan > Re-enable > Document > Educate"},
+
+{day:75,topic:"4.1 — Documentation: Incident Tickets, Asset Management, CMDB",
+ links:[{label:"Documentation – 220-1202",url:"https://www.youtube.com/results?search_query=professor+messer+documentation+ticketing+220-1202"}],
+ checklist:["Watch the Professor Messer video above","Create a mock IT incident ticket with all fields: Ticket #, Date/Time, User name, Department, Problem description, Steps taken, Resolution, Follow-up actions","Research what a CMDB (Configuration Management Database) is and what it tracks","Write: asset management = tracking hardware/software lifecycle from procurement to disposal","Write what an acceptable use policy (AUP) is and why organizations require employees to sign it","Research the difference between ITIL and a simple IT ticketing system"],
+ note:"What is a CMDB and how does it differ from a basic IT asset inventory spreadsheet?",
+ practice:"CMDB = Configuration Management Database | ITIL = IT Infrastructure Library | SLA = Service Level Agreement | KPI = Key Performance Indicator | ITSM = IT Service Management | AUP"},
+
+{day:76,topic:"4.2 — Change Management: CAB, Rollback Plan, Change Windows, RFC",
+ links:[{label:"Change Management – 220-1202",url:"https://www.youtube.com/results?search_query=professor+messer+change+management+220-1202"}],
+ checklist:["Watch the Professor Messer video above","Write what a CAB (Change Advisory Board) does and who is typically on it","Write what a RFC (Request for Change) document must contain: description, risk, rollback plan, testing, approval","Create a mock RFC for deploying a Windows feature update to 50 workstations","Include in your mock RFC: a rollback plan (restore from checkpoint/snapshot)","Research what a 'change window' is and why changes are done at 2am on Saturdays"],
+ note:"What is the purpose of a rollback plan in change management, and who typically approves an emergency change that bypasses the standard CAB process?",
+ practice:"CAB = Change Advisory Board | RFC = Request for Change | Change window = approved maintenance time | Emergency change = expedited process | Rollback = restore prior state"},
+
+{day:77,topic:"4.3 — Disaster Recovery: Backup Types, RTO, RPO, RAID Levels",
+ links:[{label:"Backup and Recovery – 220-1202",url:"https://www.youtube.com/results?search_query=professor+messer+backup+recovery+220-1202"}],
+ checklist:["Watch the Professor Messer video above","Create a RAID comparison table: RAID 0/1/5/6/10 — min drives, drives that can fail, performance, storage efficiency","Write: full backup = all data; incremental = changes since last backup; differential = changes since last full","Write: RTO = how long you can be down; RPO = how much data you can lose","Research the 3-2-1 backup rule: 3 copies, 2 media types, 1 offsite","Write: RAID is NOT a backup — it protects against hardware failure only"],
+ note:"What is the difference between RTO (Recovery Time Objective) and RPO (Recovery Point Objective), and which represents the maximum acceptable data loss?",
+ practice:"RTO = Recovery Time Objective (downtime) | RPO = Recovery Point Objective (data loss) | RAID 0=striping | RAID 1=mirror | RAID 5=1-disk parity | RAID 6=2-disk parity | RAID 10=stripe+mirror"},
+
+{day:78,topic:"4.4 — Environmental Controls: HVAC, Hot/Cold Aisle, Fire Suppression, UPS",
+ links:[{label:"Environmental Controls – 220-1202",url:"https://www.youtube.com/results?search_query=professor+messer+environmental+controls+220-1202"}],
+ checklist:["Watch the Professor Messer video above","Draw a top-down data center diagram showing hot aisle / cold aisle layout","Label: cold aisle = server intake faces; hot aisle = server exhaust faces","Write: FM-200 replaced halon (ozone-depleting) as clean agent fire suppression — safe for electronics","Write UPS types: Standby (switches on failure) | Line-interactive (voltage regulation) | Double-conversion (always on UPS power)","Research what a PDU (Power Distribution Unit) does in a rack"],
+ note:"What is the purpose of hot/cold aisle containment in a data center, and which direction do server intake and exhaust fans face in each aisle?",
+ practice:"HVAC = Heating Ventilation and Air Conditioning | UPS = Uninterruptible Power Supply | PDU = Power Distribution Unit | FM-200 | Hot aisle=exhaust | Cold aisle=intake | Halon=banned"},
+
+{day:79,topic:"4.5 — Regulatory Compliance: GDPR, HIPAA, PCI-DSS, SOX; Data Classification",
+ links:[{label:"Regulatory Compliance – 220-1202",url:"https://www.youtube.com/results?search_query=professor+messer+regulatory+compliance+220-1202"}],
+ checklist:["Watch the Professor Messer video above","Create a compliance reference card for GDPR, HIPAA, PCI-DSS, SOX: what region, what data, one key IT requirement","Write: HIPAA protects PHI (Protected Health Information) — requires access controls and audit logs","Write: PCI-DSS protects cardholder data — requires encryption and segmentation","Write: GDPR (EU) = right to erasure, data breach notification within 72 hours","Write the 4 common data classification labels: Public, Internal, Confidential, Restricted"],
+ note:"What type of data does HIPAA protect, and what does the HIPAA Security Rule require from IT systems handling that data?",
+ practice:"GDPR = General Data Protection Regulation (EU) | HIPAA = Health Insurance Portability and Accountability Act | PHI = Protected Health Information | PCI-DSS | SOX = Sarbanes-Oxley"},
+
+{day:80,topic:"4.6 — Professionalism: Communication, Privacy, Licensing (EULA, GPL, MIT)",
+ links:[{label:"Professionalism – 220-1202",url:"https://www.youtube.com/results?search_query=professor+messer+professionalism+communication+220-1202"}],
+ checklist:["Watch the Professor Messer video above","Write the difference between GPL (copyleft — share-alike required) and MIT (permissive — use for anything)","Write what an EULA (End User License Agreement) restricts (no reverse engineering, no redistribution)","Write 5 professional behaviors for remote IT support: clear documentation, prompt communication, escalation protocol, confidentiality, follow-through","Research what an NDA (Non-Disclosure Agreement) covers and when IT staff sign them","Write: PII = Personally Identifiable Information — never store, display, or transmit unnecessarily"],
+ note:"What is the difference between a GPL license and an MIT license in terms of what restrictions are placed on redistribution of modified code?",
+ practice:"EULA = End User License Agreement | GPL = GNU General Public License (copyleft) | MIT = permissive open-source | FOSS | NDA = Non-Disclosure Agreement | PII = Personally Identifiable Information"},
+
+// CORE 2 REVIEW
+{day:81,topic:"Core 2 Review — Domain 1 (OS) Full Practice Drill",
+ links:[{label:"Crucial Exams Core 2 Practice",url:"https://crucialexams.com/exams/comptia/a-plus/"},{label:"ExamCompass Core 2 Practice",url:"https://www.examcompass.com/comptia/a-plus-certification/free-a-plus-practice-tests"}],
+ checklist:["Take a 90-question Core 2 OS-focused practice exam on Crucial Exams — 90 min timer","After exam, open cmd and from memory run: sfc, DISM, gpresult, net user, ipconfig, netstat, tasklist","Write the result of each command without looking at prior notes","List your 3 weakest OS sub-objectives by objective number","Re-watch the Professor Messer video for your lowest-scoring topic today"],
+ note:"Which 3 OS sub-objectives had the lowest accuracy on today&#39;s practice exam? What is the specific knowledge gap for each?",
+ practice:"Windows editions | File systems | Registry hives | Boot process | WinRE tools | Disk Management | DiskPart commands"},
+
+{day:82,topic:"Core 2 Review — Domain 2 (Security) Full Practice Drill",
+ links:[{label:"ExamCompass Security Practice",url:"https://www.examcompass.com/comptia/a-plus-certification/free-a-plus-practice-tests"},{label:"Crucial Exams Core 2 Practice",url:"https://crucialexams.com/exams/comptia/a-plus/"}],
+ checklist:["Take a 90-question ExamCompass security-focused quiz","For every wrong answer, map it to a specific Professor Messer video","Re-watch the two lowest-scoring topic videos today","From memory, write all malware types and all social engineering attack types","From memory, write all NTFS permission levels and 3 Windows Firewall profiles"],
+ note:"Without notes: list all malware types, all social engineering types, NTFS permission levels, and the 3 Windows Firewall profiles.",
+ practice:"Malware types | Social engineering | Encryption standards | BitLocker/EFS | UAC | NTFS permissions | VPN types | Data destruction methods"},
+
+{day:83,topic:"Core 2 Review — Domains 3 & 4 (Troubleshooting + Operational Procedures)",
+ links:[{label:"Crucial Exams Core 2 Practice",url:"https://crucialexams.com/exams/comptia/a-plus/"},{label:"Professor Messer Core 2 Playlist",url:"https://www.youtube.com/results?search_query=professor+messer+220-1202+core+2+full+course+playlist"}],
+ checklist:["Take a 50-question quiz on Software Troubleshooting on Crucial Exams","Take a 50-question quiz on Operational Procedures on Crucial Exams","Calculate your percentage per domain — target 80%+","Re-watch any Professor Messer module where you scored below 80%","Write the 8-step malware removal process from memory","Write the 5 RAID levels and their fault tolerance from memory"],
+ note:"Describe the 8-step malware removal process, the RFC change process, and all 5 RAID levels with fault tolerance — from memory.",
+ practice:"8-step malware removal | CAB/RFC | RAID 0/1/5/6/10 | RTO vs RPO | Data classification | GDPR/HIPAA/PCI-DSS"},
+
+{day:84,topic:"Core 2 Full Simulation Exam #2",
+ links:[{label:"Crucial Exams Full Core 2 Simulation",url:"https://crucialexams.com/exams/comptia/a-plus/"},{label:"ExamCompass Full Core 2 Practice",url:"https://www.examcompass.com/comptia/a-plus-certification/free-a-plus-practice-tests"}],
+ checklist:["Set a strict 90-minute timer — no notes, no phone","Take the full 90-question Core 2 simulation — treat it as the real exam","Target score: 85%+","After grading: write the correct reasoning for every wrong answer before sleeping","Compare your score to Day 81 — note improvements and remaining weak areas"],
+ note:"Compare your Day 81 and Day 84 scores. What is the single biggest improvement and the single biggest remaining weakness?",
+ practice:"Comprehensive Core 2 acronyms and port numbers — write them all from memory"},
+
+{day:85,topic:"Core 2 Weakness Audit — Final Pre-Sprint Review",
+ links:[{label:"CompTIA 220-1202 Exam Objectives",url:"https://www.comptia.org/certifications/a"}],
+ checklist:["Retrieve your Core 1 Cheat Sheet from Day 45","Create a matching Core 2 Cheat Sheet for your personal weak spots","Combine both sheets into one master Weakness Reference Card","Review every item on the card until each can be answered from memory","Set a 15-minute timer and write all port numbers, OSI layers, RAID levels, malware types, WinRE tools from memory","Verify your answers and correct any mistakes — this card is your exam-eve reference"],
+ note:"Without looking: write all port numbers, all OSI layers, all RAID levels, all malware types, all Windows recovery tools, and the 7-step troubleshooting process.",
+ practice:"FINAL SPEED TEST: all 14 ports | 7 OSI layers | 5 RAID levels | 8 malware types | 7 troubleshooting steps | 5 cloud characteristics | 802.11 standards"},
+
+// PBQ SPRINT
+{day:86,topic:"PBQ Simulation #1 — Network Topology and Cable Installation",
+ links:[{label:"Professor Messer PBQ Simulations",url:"https://www.youtube.com/results?search_query=professor+messer+a+plus+performance+based+questions+simulation"},{label:"ExamCompass PBQ Practice",url:"https://www.examcompass.com/comptia/a-plus-certification/free-a-plus-practice-tests"}],
+ checklist:["Complete a network diagram drag-and-drop PBQ simulation on Professor Messer or ExamCompass","Practice placing: modem, router, switch, WAP, firewall in the correct order","Label IP addressing scheme and subnet for a simulated small office","Identify the correct cable type for each connection (Cat6a for new installs, fiber for long runs)","Write the 3 most common PBQ scenario types you expect on Core 1"],
+ note:"What types of PBQs appear in the A+ exam, and what are the 3 most common PBQ scenarios tested in Core 1?",
+ practice:"PBQ = Performance-Based Question | Review: OSI layers | Cable types | Network devices | IP addressing | T568A/B pinout"},
+
+{day:87,topic:"PBQ Simulation #2 — Security Configuration and Permissions",
+ links:[{label:"Professor Messer PBQ Practice",url:"https://www.youtube.com/results?search_query=professor+messer+220-1202+pbq+practice+simulation"},{label:"ExamCompass Core 2 Practice",url:"https://www.examcompass.com/comptia/a-plus-certification/free-a-plus-practice-tests"}],
+ checklist:["Complete security PBQs: configure a Windows Firewall rule for a given scenario","Complete a PBQ requiring NTFS permission setup for multiple users with different access levels","In an infected-system simulation, identify the malware indicators and select the correct removal steps","Select the correct encryption method for each scenario: FDE (BitLocker), file-level (EFS), transport (TLS)","Write your step-by-step process for configuring least-privilege NTFS permissions for 3 user roles"],
+ note:"In a PBQ requiring NTFS permission configuration for 3 users with different access levels, what is your exact process to enforce least privilege?",
+ practice:"NTFS permissions | Windows Firewall rules | UAC levels | BitLocker vs EFS | Malware removal sequence | Encryption methods"},
+
+{day:88,topic:"PBQ Simulation #3 — OS Installation and Disk Configuration",
+ links:[{label:"Professor Messer PBQ Practice",url:"https://www.youtube.com/results?search_query=professor+messer+220-1202+pbq+practice+simulation"}],
+ checklist:["Complete PBQs requiring Windows installation decision-making (clean vs upgrade vs in-place)","Practice DiskPart commands from memory in sequence: list disk, select, clean, create partition, format, assign","Simulate UEFI boot order configuration for a given install scenario","Answer: Windows 11 requires GPT partition style (not MBR)","Write the 4 partitions Windows 11 creates on a GPT drive: EFI (100MB), MSR (16MB), Primary NTFS, Recovery"],
+ note:"In a PBQ preparing a new drive for Windows 11, what partition type must you select, what file system, and how many partitions does Windows create automatically?",
+ practice:"GPT required for Windows 11 | EFI partition=100MB | MSR=16MB | Primary NTFS | Recovery partition | DiskPart | UEFI | Secure Boot"},
+
+{day:89,topic:"PBQ Simulation #4 — Combined Troubleshooting Scenarios",
+ links:[{label:"Professor Messer Core 1 PBQ Practice",url:"https://www.youtube.com/results?search_query=professor+messer+220-1201+performance+based+questions+PBQ"},{label:"Professor Messer Core 2 PBQ Practice",url:"https://www.youtube.com/results?search_query=professor+messer+220-1202+performance+based+questions+PBQ"}],
+ checklist:["Take combined troubleshooting PBQ simulations from both Core 1 and Core 2","For EVERY PBQ scenario, write out all 7 troubleshooting steps before selecting your answer","Practice hardware scenarios: no POST, system overheating, BSOD during RAM test","Practice software scenarios: malware-infected PC, slow boot, application crash with missing DLL","For each scenario, write the decision tree: symptom → likely cause → test → fix","Do a final timed drill: 10 PBQ scenarios in 30 minutes"],
+ note:"Walk through: 'A Windows PC spontaneously reboots every 20–30 minutes under load.' Apply all 7 CompTIA troubleshooting steps explicitly.",
+ practice:"7-step methodology | BSOD stop codes | SMART failure | Malware IOCs | Boot failure sequence | APIPA | DLL errors"},
+
+// FINAL AUDIT
+{day:90,topic:"Day 90 — Final Weakness Audit + Exam Readiness Check",
+ links:[{label:"Crucial Exams Full Core 1 Final",url:"https://crucialexams.com/exams/comptia/a-plus/"},{label:"Crucial Exams Full Core 2 Final",url:"https://crucialexams.com/exams/comptia/a-plus/"},{label:"CompTIA Exam Registration",url:"https://home.pearsonvue.com/comptia"}],
+ checklist:["Take a full 90-question Core 1 simulation — strict exam conditions, 90 min","Take a full 90-question Core 2 simulation — strict exam conditions, 90 min","Grade both exams — target 80%+ on each","Review your master Weakness Reference Card from Day 85","Score below 80% on any domain? Spend 2–3 more days on those topics before booking","Score 80%+ on both? Go to Pearson VUE (link above) and book your exam NOW","Congratulations — 90 days of preparation complete."],
+ note:"What is your final score on each domain? List every objective where you scored below 75% — these are your last study targets before test day.",
+ practice:"FINAL: all ports | all OSI layers | all RAID levels | all malware types | all Windows commands | all wireless standards | all cloud models | all 7 troubleshooting steps — write them ALL without looking"}
+];
+// Real Professor Messer YouTube video IDs (verified from youtube.com search results)
+// Format: {id: "YOUTUBE_VIDEO_ID", title: "Video Title"}
+
+const VIDEO_SEARCHES={
+"1":[{"id":"T8UQp6lD9eo","title":"How to Pass 220-1101 & 220-1102"}],
+"2":[{"id":"BpKw2u_aDzo","title":"Motherboard Form Factors"},{"id":"ehcAgqcdIPA","title":"Motherboard Compatibility"}],
+"3":[{"id":"jPvv-wZXpgo","title":"CPU Features"},{"id":"xXTadDEf1F0","title":"Cooling"}],
+"4":[{"id":"DjSC2J7hvH4","title":"Overview of Memory"},{"id":"W7sIU8UoTpA","title":"Memory Technologies"}],
+"5":[{"id":"I0cJLL3I_-k","title":"Storage Devices"}],
+"6":[{"id":"LrWO7dfvEoY","title":"Computer Power (PSU)"}],
+"7":[{"id":"I3lYMLvD_fI","title":"Motherboard Expansion Slots"},{"id":"1cS5JPULDdY","title":"Network Devices (PCIe ref)"}],
+"8":[{"id":"LrWO7dfvEoY","title":"Computer Power & Connectors"}],
+"9":[{"id":"6iymm-Cb-wY","title":"Wireless/Network Technologies (USB ref)"}],
+"10":[{"id":"jSAJQiTOIPk","title":"The BIOS"},{"id":"-tJPH2im4fI","title":"BIOS Settings"}],
+"11":[{"id":"sn4B3zANQug","title":"Laptop Displays"}],
+"12":[{"id":"y7oHZ1mi7e4","title":"Laptop Hardware"}],
+"13":[{"id":"7730jdd9eVU","title":"Mobile Device Accessories (Laptop Power ref)"}],
+"14":[{"id":"PoWQFd8GKtc","title":"Laser Printers"},{"id":"lbRnoUzGxNA","title":"Inkjet Printers"},{"id":"FXHAjbjWm0s","title":"Thermal Printers"}],
+"15":[{"id":"DLeKJN6dhPI","title":"Multifunction Devices"},{"id":"OQmVLHgp56o","title":"Troubleshooting Printers"}],
+"16":[{"id":"YIaF4cJRB4g","title":"Introduction to IP / OSI Model"}],
+"17":[{"id":"dh8h-4u7Wak","title":"Common Network Ports"}],
+"18":[{"id":"dYjbr0YA8MU","title":"IPv4 Addressing & Subnetting"}],
+"19":[{"id":"lcQ1K0bY8Xc","title":"IPv6 Addressing"}],
+"20":[{"id":"1cS5JPULDdY","title":"Network Devices (Hub/Switch/Router)"}],
+"21":[{"id":"-8S9ocPswCE","title":"Wireless Network Standards (802.11)"},{"id":"6iymm-Cb-wY","title":"Wireless Network Technologies"}],
+"22":[{"id":"TVyiJlq1uY8","title":"Wireless Encryption (WPA/WPA2/WPA3)"}],
+"23":[{"id":"nuJamkM4RsM","title":"Network Services (DHCP/DNS)"}],
+"24":[{"id":"KXHoBiZUqwo","title":"Network Tools (ping/tracert/ipconfig)"}],
+"25":[{"id":"KXHoBiZUqwo","title":"Network Cables & Tools"}],
+"26":[{"id":"KXHoBiZUqwo","title":"Network Tools (Fiber/Connectors)"}],
+"27":[{"id":"nuJamkM4RsM","title":"Troubleshooting Methodology"}],
+"28":[{"id":"1cS5JPULDdY","title":"Network Troubleshooting Tools"}],
+"29":[{"id":"TVyiJlq1uY8","title":"Cloud Computing (IaaS/PaaS/SaaS)"}],
+"30":[{"id":"bOpMpBj1ipA","title":"Cloud VDI, SAN & NAS"}],
+"31":[{"id":"1cS5JPULDdY","title":"Virtualization & Hypervisors"}],
+"32":[{"id":"7730jdd9eVU","title":"Mobile Devices (Android/iOS)"}],
+"33":[{"id":"7730jdd9eVU","title":"MDM & Mobile Management"}],
+"34":[{"id":"3MHDU4kFChU","title":"An Overview of Windows"},{"id":"bnEKY6UJfKc","title":"Windows Features & Editions"}],
+"35":[{"id":"bnEKY6UJfKc","title":"Windows File Systems & Disk Mgmt"}],
+"36":[{"id":"bnEKY6UJfKc","title":"Windows Registry & Boot Process"}],
+"37":[{"id":"bnEKY6UJfKc","title":"Windows Command-Line Tools"}],
+"38":[{"id":"zLqF5zR2tQ4","title":"Windows Control Panel & Admin Tools"}],
+"39":[{"id":"VGB0u-TnO6g","title":"Logical Security & NTFS Permissions"}],
+"40":[{"id":"VGB0u-TnO6g","title":"UAC & User Accounts"}],
+"41":[{"id":"Ycmmzyvor-c","title":"Windows Network Technologies"}],
+"42":[{"id":"Ycmmzyvor-c","title":"Windows Remote Desktop & Management"}],
+"43":[{"id":"bnEKY6UJfKc","title":"macOS & Linux Overview"}],
+"44":[{"id":"VGB0u-TnO6g","title":"Linux File Permissions & chmod"}],
+"45":[{"id":"bnEKY6UJfKc","title":"Core 1 Final Review"}],
+"46":[{"id":"dYjbr0YA8MU","title":"Malware Types (Virus/Worm/Ransomware)"}],
+"47":[{"id":"dYjbr0YA8MU","title":"Social Engineering Attacks"}],
+"48":[{"id":"UeWL115wc9g","title":"Removing Malware — 8 Steps"}],
+"49":[{"id":"VGB0u-TnO6g","title":"Encryption (AES/RSA/TLS/PKI)"}],
+"50":[{"id":"VGB0u-TnO6g","title":"BitLocker, EFS & Windows Defender"}],
+"51":[{"id":"VGB0u-TnO6g","title":"Windows Firewall & Network Security"}],
+"52":[{"id":"Ycmmzyvor-c","title":"VPN & Remote Access (IPsec)"}],
+"53":[{"id":"VGB0u-TnO6g","title":"Authentication & MFA"}],
+"54":[{"id":"VLWt0-8BOV4","title":"Active Directory & GPO"}],
+"55":[{"id":"VGB0u-TnO6g","title":"Data Destruction & Privacy"}],
+"56":[{"id":"TVyiJlq1uY8","title":"Wireless Security Threats (WPS/Evil Twin)"}],
+"57":[{"id":"VGB0u-TnO6g","title":"Physical Security Controls"}],
+"58":[{"id":"WJOV5QjCiUU","title":"Troubleshooting Windows (BSOD/Crashes)"}],
+"59":[{"id":"bOpMpBj1ipA","title":"Mobile Device Security & Troubleshooting"}],
+"60":[{"id":"bnEKY6UJfKc","title":"Documentation & Change Management"}],
+"61":[{"id":"bnEKY6UJfKc","title":"Backup Types & Disaster Recovery"}],
+"62":[{"id":"I0cJLL3I_-k","title":"RAID Levels & Storage Redundancy"}],
+"63":[{"id":"bnEKY6UJfKc","title":"Environmental Controls & Data Center"}],
+"64":[{"id":"VGB0u-TnO6g","title":"Regulatory Compliance (HIPAA/GDPR/PCI)"}],
+"65":[{"id":"WJOV5QjCiUU","title":"Windows Recovery Tools (WinRE/Safe Mode)"}],
+"66":[{"id":"1cS5JPULDdY","title":"Virtualization Security & Cloud"}],
+"67":[{"id":"bnEKY6UJfKc","title":"Scripting & PowerShell Automation"}],
+"68":[{"id":"bnEKY6UJfKc","title":"Professionalism & Communication"}],
+"69":[{"id":"VGB0u-TnO6g","title":"Safety, ESD & Hazmat Procedures"}],
+"70":[{"id":"VGB0u-TnO6g","title":"Windows Security Hardening & Policies"}],
+"71":[{"id":"VGB0u-TnO6g","title":"Incident Response & Digital Forensics"}],
+"72":[{"id":"1cS5JPULDdY","title":"Network Hardware: Switches & VLANs"}],
+"73":[{"id":"KXHoBiZUqwo","title":"Network Connectivity Troubleshooting"}],
+"74":[{"id":"OQmVLHgp56o","title":"Network Printers & MFP Configuration"}],
+"75":[{"id":"VGB0u-TnO6g","title":"Access Control & Physical Security"}],
+"76":[{"id":"bnEKY6UJfKc","title":"Change Management & ITIL"}],
+"77":[{"id":"bnEKY6UJfKc","title":"Disaster Recovery Planning"}],
+"78":[{"id":"KXHoBiZUqwo","title":"Advanced Network Troubleshooting"}],
+"79":[{"id":"WJOV5QjCiUU","title":"Hardware Troubleshooting (RAM/Storage/PSU)"}],
+"80":[{"id":"bnEKY6UJfKc","title":"Professionalism, Ethics & Licensing"}],
+"81":[{"id":"3MHDU4kFChU","title":"Core 2 OS Review — Windows Tools"}],
+"82":[{"id":"VGB0u-TnO6g","title":"Core 2 Security Review"}],
+"83":[{"id":"WJOV5QjCiUU","title":"Core 2 Troubleshooting Review"}],
+"84":[{"id":"bnEKY6UJfKc","title":"Exam Strategy & PBQ Tips"}],
+"85":[{"id":"bnEKY6UJfKc","title":"PBQ Sprint Practice"}],
+"86":[{"id":"3MHDU4kFChU","title":"Core 1 Final Audit"}],
+"87":[{"id":"VGB0u-TnO6g","title":"Core 2 Final Audit"}],
+"88":[{"id":"bnEKY6UJfKc","title":"Full Practice Exam Day"}],
+"89":[{"id":"bnEKY6UJfKc","title":"IT Career Path After A+"}],
+"90":[{"id":"bnEKY6UJfKc","title":"Exam Day — You Got This!"}]
+};
+const TESTS={"core1":[{"title":"Core 1 — Set 1: Hardware & Components","questions":[{"q":"Which motherboard form factor is largest and most commonly used in desktop PCs?","opts":["Mini-ITX","Micro-ATX","ATX","E-ATX"],"ans":2,"exp":"Standard ATX (305×244mm) is the most common desktop form factor, with the most expansion slots and space."},{"q":"What is the maximum data transfer rate of NVMe SSD compared to SATA SSD?","opts":["Same speed","NVMe is 2× faster","NVMe is ~6× faster","NVMe is slower"],"ans":2,"exp":"NVMe SSDs reach ~3500 MB/s (PCIe 3.0) vs SATA SSDs at ~550 MB/s — approximately 6× faster."},{"q":"A user installs a second RAM stick. What must be true to enable dual-channel mode?","opts":["Both sticks must be the same brand","Both sticks must be installed in matching color slots","Both sticks must be DDR5","RAM must be ECC"],"ans":1,"exp":"Dual-channel requires installing matching sticks in the paired slots (typically A2 and B2, or color-coded slots)."},{"q":"Which connector provides 12V and 5V power rails and was used for legacy drives?","opts":["SATA power","PCIe 8-pin","Molex 4-pin","Berg connector"],"ans":2,"exp":"Molex (4-pin Peripheral) connector provides +12V and +5V and was used for older HDDs and optical drives."},{"q":"What does the 80 PLUS Gold rating mean for a power supply?","opts":["87% efficient at 50% load","100% efficient","It uses gold capacitors","80W minimum output"],"ans":0,"exp":"80 PLUS Gold requires 87% efficiency at 50% load, 87% at 20% load, and 87% at 100% load."},{"q":"Which PCIe slot type is used for dedicated graphics cards?","opts":["PCIe x1","PCIe x4","PCIe x8","PCIe x16"],"ans":3,"exp":"Dedicated GPUs use PCIe x16, which provides 16 lanes of bandwidth — approximately 16 GB/s on PCIe 3.0."},{"q":"A technician needs to replace a CPU. The socket has pins on the motherboard, not the CPU. Which CPU vendor uses this design?","opts":["AMD (PGA)","Intel (LGA)","Both AMD and Intel","Neither"],"ans":1,"exp":"Intel uses LGA (Land Grid Array) — pins on the motherboard socket. AMD historically used PGA (pins on CPU)."},{"q":"What does POST stand for and when does it run?","opts":["Peripheral Output System Test — after OS boot","Power-On Self-Test — before OS boot","Program Operational System Test — during login","Power Output Stability Test — continuously"],"ans":1,"exp":"POST (Power-On Self-Test) is run by the BIOS/UEFI immediately when the computer is powered on, before the OS loads."},{"q":"Which M.2 key type supports NVMe protocol only?","opts":["B key","M key","B+M key","A key"],"ans":1,"exp":"M-key M.2 slots support NVMe (PCIe) protocol. B+M key supports both SATA and NVMe. B-key supports SATA only."},{"q":"What is the purpose of Secure Boot in UEFI?","opts":["Prevents BIOS password bypass","Ensures only digitally signed bootloaders load","Encrypts the hard drive","Speeds up POST"],"ans":1,"exp":"Secure Boot verifies that bootloaders and OS kernels have valid digital signatures, preventing rootkits and bootkits."},{"q":"A laptop display shows correct images but no backlight. Which component most likely failed?","opts":["LCD panel","Digitizer","Inverter or LED driver","GPU"],"ans":2,"exp":"No backlight with correct image = inverter failure (CCFL backlights) or LED driver failure. The LCD panel itself is working."},{"q":"What connector type powers a laptop's internal storage in a small form factor?","opts":["2.5-inch SATA","M.2 2280","3.5-inch SATA","mSATA"],"ans":1,"exp":"Most modern laptops use M.2 2280 (80mm length) NVMe drives connected via the M.2 slot on the motherboard."},{"q":"Which type of RAM is used in laptops due to its smaller physical size?","opts":["DIMM","SO-DIMM","RDIMM","LRDIMM"],"ans":1,"exp":"SO-DIMM (Small Outline DIMM) is the laptop version of RAM — shorter at 67.6mm vs 133mm for desktop DIMM."},{"q":"A 7-step laser print process step where toner is permanently bonded to paper using heat and pressure is called:","opts":["Transferring","Exposing","Fusing","Developing"],"ans":2,"exp":"Fusing is step 6. The fuser assembly uses heat (~200°C) and pressure rollers to permanently bond toner to paper."},{"q":"What is the maximum single file size supported by FAT32?","opts":["2 GB","4 GB","8 GB","Unlimited"],"ans":1,"exp":"FAT32 supports a maximum single file size of 4 GB minus 1 byte — making it unsuitable for large video files."},{"q":"Which bus standard replaced PCI and became the dominant expansion slot in modern PCs?","opts":["AGP","PCIe","AMR","ISA"],"ans":1,"exp":"PCIe (PCI Express) replaced PCI and AGP as the universal expansion standard. It uses serial point-to-point lanes."},{"q":"A technician sees a 169.254.x.x IP address on a client machine. What does this indicate?","opts":["VPN is active","Static IP is configured","DHCP server was unreachable — APIPA address assigned","The machine is on IPv6"],"ans":2,"exp":"169.254.0.0/16 is the APIPA range. Windows assigns an APIPA address when DHCP fails, allowing local-only communication."},{"q":"What cabling standard is most commonly used for terminating Ethernet patch cables in North American commercial installations?","opts":["T568A","T568B","Cat6a","EIA-232"],"ans":1,"exp":"T568B is the dominant standard in North American commercial wiring. T568A is used in residential and government applications."},{"q":"Which cable type supports 10 Gbps at up to 100 meters?","opts":["Cat5e","Cat6","Cat6a","Cat8"],"ans":2,"exp":"Cat6a supports 10 Gbps at 100 meters. Cat6 only supports 10 Gbps at 55 meters (not full 100m runs)."},{"q":"What does TPM stand for and what is its primary function in a PC?","opts":["Trusted Platform Module — stores encryption keys in hardware","Terminal Processing Module — manages CPU thermal output","Transfer Protocol Manager — handles network authentication","Timed Power Management — controls sleep states"],"ans":0,"exp":"TPM (Trusted Platform Module) is a hardware chip that securely stores encryption keys, used by BitLocker and Secure Boot."}]},{"title":"Core 1 — Set 2: Networking","questions":[{"q":"At which OSI layer does a switch operate, and what address does it use for forwarding decisions?","opts":["Layer 1 — IP address","Layer 2 — MAC address","Layer 3 — IP address","Layer 4 — Port number"],"ans":1,"exp":"Switches operate at Layer 2 (Data Link) and use MAC addresses to build forwarding tables and send frames to specific ports."},{"q":"Which port does HTTPS use?","opts":["80","443","8080","8443"],"ans":1,"exp":"HTTPS (HTTP Secure) uses port 443. HTTP uses port 80. These are among the most critical ports to memorize for the exam."},{"q":"What is the correct DHCP process acronym and order?","opts":["DORA — Discover, Offer, Request, Acknowledge","DARO — Discover, Acknowledge, Request, Offer","DOAS — Discover, Offer, Acknowledge, Set","DORS — Discover, Offer, Renew, Set"],"ans":0,"exp":"DORA: Discover (broadcast from client) → Offer (broadcast from server) → Request (broadcast from client) → Acknowledge (unicast from server)."},{"q":"Which wireless standard introduced OFDMA and MU-MIMO improvements and operates on 2.4, 5, and 6 GHz?","opts":["802.11ac (Wi-Fi 5)","802.11n (Wi-Fi 4)","802.11ax (Wi-Fi 6)","802.11g"],"ans":2,"exp":"802.11ax (Wi-Fi 6) introduced OFDMA for multi-user efficiency and operates on 2.4 GHz, 5 GHz, and optionally 6 GHz bands."},{"q":"What is the maximum distance for a Cat6a cable running 10 Gbps?","opts":["55 meters","100 meters","150 meters","30 meters"],"ans":1,"exp":"Cat6a supports 10 Gbps at the full 100-meter Ethernet run distance. Cat6 only achieves 10 Gbps up to 55 meters."},{"q":"A DNS A record maps:","opts":["Domain name to IPv6 address","Domain name to IPv4 address","Mail server to domain","Domain alias to another domain"],"ans":1,"exp":"A records (Address records) map a hostname to an IPv4 address. AAAA records map to IPv6. MX = mail, CNAME = alias."},{"q":"Which command would you use to view the MAC-to-IP address mapping table on a Windows machine?","opts":["ipconfig /all","arp -a","netstat -an","tracert"],"ans":1,"exp":"'arp -a' displays the ARP cache — the table of IP-to-MAC address mappings the local machine has learned."},{"q":"What does the 'tracert' command do on Windows?","opts":["Traces DNS lookups","Shows all open TCP connections","Displays each router hop between source and destination","Tests wireless signal strength"],"ans":2,"exp":"tracert (traceroute) sends ICMP probes with incrementing TTL values to map each hop between the source and destination."},{"q":"Which encryption protocol is considered broken and should never be used for Wi-Fi security?","opts":["WPA2","WPA3","WEP","802.1X"],"ans":2,"exp":"WEP (Wired Equivalent Privacy) uses RC4 with weak IVs that allow an attacker to crack the key in minutes by capturing packets."},{"q":"What does SAE stand for in WPA3 and what attack does it prevent?","opts":["Secure Access Engine — brute force","Simultaneous Authentication of Equals — offline dictionary attack","Symmetric Auth Encryption — replay attacks","Single Access Endpoint — deauth attacks"],"ans":1,"exp":"SAE (Simultaneous Authentication of Equals) in WPA3 uses a Dragonfly handshake that prevents offline password cracking attacks."},{"q":"What is the subnet mask for a /26 CIDR block?","opts":["255.255.255.0","255.255.255.128","255.255.255.192","255.255.255.224"],"ans":2,"exp":"/26 = 255.255.255.192. The last octet has 6 bits masked (11000000 = 192), leaving 6 host bits = 64 addresses, 62 usable."},{"q":"Which fiber connector uses a push-pull locking mechanism and is commonly used in data center patch panels?","opts":["ST","SC","LC","FC"],"ans":2,"exp":"LC (Lucent Connector) uses a small push-pull latch and is the most common fiber connector in modern data center environments."},{"q":"What port does SSH use?","opts":["21","22","23","25"],"ans":1,"exp":"SSH (Secure Shell) uses port 22. Telnet uses 23 but is unencrypted. SSH replaced Telnet as the secure remote terminal protocol."},{"q":"Which cloud model gives the customer least management responsibility?","opts":["IaaS","PaaS","SaaS","Hybrid"],"ans":2,"exp":"SaaS (Software as a Service) — the vendor manages everything including the application. The customer only manages data and users."},{"q":"An OTDR is used to:","opts":["Measure Wi-Fi signal strength","Trace cable runs through walls","Locate breaks and measure length in fiber optic cables","Test Ethernet cable continuity"],"ans":2,"exp":"OTDR (Optical Time Domain Reflectometer) sends a light pulse down fiber and measures reflections to locate faults and measure cable length."},{"q":"Which IPv6 address prefix is used for link-local addresses?","opts":["::1/128","2000::/3","fc00::/7","fe80::/10"],"ans":3,"exp":"fe80::/10 is the link-local prefix. Link-local addresses are auto-configured and only valid on the local network segment — not routable."},{"q":"What port does RDP (Remote Desktop Protocol) use?","opts":["22","3389","5900","443"],"ans":1,"exp":"RDP uses TCP port 3389. It is used for remote desktop connections to Windows systems. VNC uses 5900, SSH uses 22."},{"q":"What is the difference between single-mode and multimode fiber?","opts":["SMF uses LED, MMF uses laser","SMF has smaller core (~9µm) for longer distance, MMF has larger core (~50µm) for shorter distance","SMF is for copper, MMF is for glass","SMF supports 10Gbps, MMF does not"],"ans":1,"exp":"SMF (8-10µm) uses a laser and supports distances of up to 40+ km. MMF (50-62.5µm) uses LEDs and is limited to ~300m at 10Gbps."},{"q":"Which DHCP message is sent as a broadcast by the client to accept a server's offer?","opts":["Discover","Offer","Request","Acknowledge"],"ans":2,"exp":"The DHCP Request is broadcast (not unicast) even after receiving an Offer — this notifies all DHCP servers which offer was accepted."},{"q":"A technician needs to test if a specific port is open on a remote server. Which tool is most appropriate?","opts":["ping","tracert","nslookup","telnet or netcat"],"ans":3,"exp":"'telnet [host] [port]' or 'nc -zv [host] [port]' tests if a specific TCP port is open. ping only tests ICMP reachability."}]},{"title":"Core 1 — Set 3: Cloud, Virtualization & Mobile","questions":[{"q":"A company wants to deploy virtual servers without managing underlying hardware. Which cloud model is correct?","opts":["SaaS","PaaS","IaaS","DaaS"],"ans":2,"exp":"IaaS (Infrastructure as a Service) — e.g., AWS EC2 — provides virtualized compute, storage, and networking. Customer manages OS and apps."},{"q":"What is the key difference between a Type 1 and Type 2 hypervisor?","opts":["Type 1 runs inside an OS; Type 2 runs on bare metal","Type 1 runs on bare metal; Type 2 runs inside a host OS","Type 1 supports more VMs","Type 2 is used in enterprise data centers"],"ans":1,"exp":"Type 1 (bare-metal): VMware ESXi, Hyper-V, KVM — installs directly on hardware. Type 2 (hosted): VirtualBox, Workstation — runs inside Windows/Linux."},{"q":"Which of the 5 NIST cloud characteristics describes the ability to scale resources up or down automatically?","opts":["On-demand self-service","Broad network access","Rapid elasticity","Resource pooling"],"ans":2,"exp":"Rapid elasticity allows resources to be provisioned and released quickly, automatically scaling to meet demand."},{"q":"What is an SoC (System on Chip) and why is it used in mobile devices?","opts":["A type of RAM","CPU, GPU, modem, and memory controller integrated on one chip — saves space and power","An external GPU","A type of SSD for phones"],"ans":1,"exp":"SoC integrates CPU, GPU, modem, NPU, and memory controller on one die — drastically reducing size, power draw, and latency for mobile use."},{"q":"Which wireless technology is used for contactless payments and operates at 13.56 MHz with a range of ~20cm?","opts":["Bluetooth","Wi-Fi Direct","NFC","RFID 900MHz"],"ans":2,"exp":"NFC (Near Field Communication) operates at 13.56 MHz with a ~20cm range. Used for Apple Pay, Google Pay, and access cards."},{"q":"What does MDM allow an IT administrator to do on employee mobile devices?","opts":["Only view browser history","Enforce PINs, encrypt storage, and remotely wipe devices","Only push app updates","Only track GPS location"],"ans":1,"exp":"MDM (Mobile Device Management) allows admins to enforce security policies, push configurations, manage apps, and remotely wipe devices."},{"q":"A company pays monthly for Office 365 instead of buying perpetual licenses. This is an example of:","opts":["CapEx model","IaaS","OpEx/SaaS model","PaaS"],"ans":2,"exp":"Switching from perpetual software licenses (CapEx) to monthly subscriptions (OpEx/SaaS) is a common cloud consumption model."},{"q":"Which 5G frequency range provides much higher speeds but significantly shorter range and poor building penetration?","opts":["Sub-6GHz (FR1)","mmWave (FR2)","700 MHz LTE","C-Band"],"ans":1,"exp":"mmWave (FR2, >24GHz) offers 10 Gbps+ speeds but has very short range (~100m) and cannot penetrate walls or windows."},{"q":"What is the maximum Bluetooth range for Class 2 devices (most consumer devices)?","opts":["1 meter","10 meters","100 meters","300 meters"],"ans":1,"exp":"Bluetooth Class 2 = 10 meters range. Class 1 = 100 meters. Class 3 = 1 meter. Most phones and earbuds are Class 2."},{"q":"Exchange ActiveSync (EAS) is primarily used to:","opts":["Sync files to Google Drive","Push corporate email, contacts, and calendar to mobile devices and enforce security policies","Provide VPN access","Configure Wi-Fi on mobile devices"],"ans":1,"exp":"EAS syncs email, contacts, calendar, and tasks from Exchange/M365 to mobile devices and enforces MDM-style security policies."},{"q":"What is a container (e.g., Docker) and how does it differ from a full VM?","opts":["A container includes a full OS kernel; VMs do not","A container shares the host OS kernel; VMs have their own isolated OS","Containers are slower than VMs","Containers require a Type 1 hypervisor"],"ans":1,"exp":"Containers share the host kernel and are isolated at the process level — much lighter than VMs which each run a full OS."},{"q":"Which cloud deployment model is owned and operated exclusively by a single organization?","opts":["Public cloud","Hybrid cloud","Community cloud","Private cloud"],"ans":3,"exp":"Private cloud is deployed on-premises or in a dedicated hosted environment for one organization — not shared with others."},{"q":"A virtual machine snapshot is used to:","opts":["Back up the host hypervisor","Capture the VM state at a point in time for rollback","Increase VM RAM","Clone VMs to new hardware"],"ans":1,"exp":"A VM snapshot captures the disk state, RAM state, and VM settings at a point in time — enabling rollback if a change breaks things."},{"q":"What does BYOD stand for, and what security risk does it introduce?","opts":["Build Your Own Device — hardware fragmentation","Bring Your Own Device — unmanaged personal devices may carry malware or lack encryption","Buy Your Own Device — increased cost","Backup Your Own Data — data loss risk"],"ans":1,"exp":"BYOD (Bring Your Own Device) allows personal devices on corporate networks — the risk is unmanaged endpoints that may lack MDM controls."},{"q":"Which cloud characteristic describes the metering of resource usage for billing purposes?","opts":["Rapid elasticity","Resource pooling","Measured service","On-demand self-service"],"ans":2,"exp":"Measured service = usage is monitored, controlled, and reported — customers are billed only for what they consume (pay-per-use)."},{"q":"What type of hypervisor is VMware ESXi?","opts":["Type 2 — runs inside Windows","Type 1 — runs directly on hardware","Type 3 — cloud-based","Type 1.5 — hybrid"],"ans":1,"exp":"VMware ESXi is a Type 1 (bare-metal) hypervisor — it installs directly on server hardware with no host OS underneath."},{"q":"A user's phone shows 'Limited connectivity' on Wi-Fi. Which step should a technician try first?","opts":["Factory reset the phone","Forget and reconnect to the Wi-Fi network","Replace the Wi-Fi card","Update the OS"],"ans":1,"exp":"Forgetting and reconnecting forces a fresh DHCP lease and re-authentication. This resolves most transient connectivity issues quickly."},{"q":"What is the purpose of the IMEI number on a mobile device?","opts":["It identifies the SIM card","It is the device's unique hardware identifier used by carriers to block stolen phones","It stores Wi-Fi credentials","It is the device's IP address on LTE"],"ans":1,"exp":"IMEI (International Mobile Equipment Identity) uniquely identifies the mobile device hardware — carriers can blacklist stolen phones by IMEI."},{"q":"Which mobile OS is open-source and allows sideloading apps outside the official store?","opts":["iOS — Apple controls sideloading","Android — allows APK sideloading","Windows Phone — requires Store","Tizen — no sideloading"],"ans":1,"exp":"Android allows sideloading APKs with 'Unknown sources' enabled. iOS requires Apple Developer enrollment for sideloading (outside official App Store)."},{"q":"A technician needs to test hardware without installing a full OS. Which virtualization feature is most useful?","opts":["VM snapshot","Live migration","VM template","Sandbox/isolated VM"],"ans":3,"exp":"Running a sandboxed VM allows testing untrusted software or hardware-level diagnostics without affecting the host or production systems."}]},{"title":"Core 1 — Set 4: Hardware & Network Troubleshooting","questions":[{"q":"A computer powers on but emits 3 long beeps with no display. According to AMI BIOS beep codes, what most likely failed?","opts":["CPU failure","RAM failure","GPU/Video failure","Storage failure"],"ans":2,"exp":"AMI BIOS 3 long beeps = Video/GPU failure. 1 short beep = POST passed OK. Continuous beeping = RAM or CPU. Always verify with your specific BIOS vendor."},{"q":"A technician runs MemTest86 and it shows errors after Pass 1. What should be done?","opts":["Replace the motherboard","Run chkdsk","Test each RAM module individually to isolate the faulty stick","Update BIOS"],"ans":2,"exp":"Remove all but one RAM stick and retest. If errors persist, swap sticks until the faulty module is identified. Always test each stick individually."},{"q":"A hard drive makes a clicking noise on startup. What is the IMMEDIATE correct action?","opts":["Run chkdsk /f /r","Run a defragment","Stop using the drive and back up data immediately","Update the drive firmware"],"ans":2,"exp":"Clicking = failed read/write heads (mechanical failure). The drive is in imminent failure — stop writes immediately and recover data before it dies."},{"q":"A PC spontaneously reboots under heavy CPU load. CPU temperature reads 95°C at load. What is the most likely cause?","opts":["RAM failure","Faulty power supply","CPU thermal throttling/overheating — dried thermal paste or failed fan","GPU driver crash"],"ans":2,"exp":"95°C at load with random reboots = CPU thermal protection triggering emergency shutdown. Reapply thermal paste and verify fan/heatsink seating."},{"q":"Which S.M.A.R.T. attribute most reliably indicates a hard drive is approaching failure?","opts":["Power On Hours","Reallocated Sector Count increasing","Drive temperature","Read Error Rate"],"ans":1,"exp":"Increasing Reallocated Sector Count means the drive is remapping bad sectors to spare areas. A rising count = imminent failure. Back up immediately."},{"q":"A user cannot access the internet but can ping 192.168.1.1 (the default gateway). What is ruled out?","opts":["DNS server issue","Physical layer problem and local routing","Both A and B","Neither — all layers must be retested"],"ans":1,"exp":"If you can ping the gateway, the physical connection (Layer 1), NIC (Layer 2), and local routing (Layer 3) are all working. The problem is beyond the gateway — likely DNS or ISP."},{"q":"A laser printer produces pages with a repeated ghost image offset by about 1 inch. What component needs replacement?","opts":["Fuser assembly","Transfer roller","OPC drum","Corona wire"],"ans":2,"exp":"Ghost images repeating at fixed intervals = worn OPC drum. The drum is not cleaning completely between rotations, leaving residual toner impressions."},{"q":"A technician runs 'ipconfig /all' and sees the IP address 169.254.12.45. What does this mean?","opts":["The machine is using a static IP","The DHCP server assigned this IP","DHCP failed — the OS assigned an APIPA address","The machine is on IPv6"],"ans":2,"exp":"169.254.x.x is the APIPA (Automatic Private IP Addressing) range — Windows assigns this when DHCP fails. Check cable, switch, and DHCP server."},{"q":"Which command releases and then renews a DHCP lease on Windows?","opts":["ipconfig /renew only","ipconfig /flushdns","ipconfig /release then ipconfig /renew","netsh int ip reset"],"ans":2,"exp":"ipconfig /release drops the current lease. ipconfig /renew sends a new DHCP Discover to get a fresh lease. Always release first."},{"q":"A printer produces pages with toner that smears when touched. Which component is failing?","opts":["Corona wire","OPC drum","Fuser assembly","Transfer belt"],"ans":2,"exp":"Toner smearing = fuser failure. The fuser (heat + pressure rollers) did not bond toner to the paper. Unfused toner wipes off easily."},{"q":"What does the 'netstat -an' command display?","opts":["DNS server addresses","ARP table","All active TCP/UDP connections with port numbers and IP addresses","Wi-Fi signal strength"],"ans":2,"exp":"'netstat -an' shows all active connections (-a) in numerical format (-n — no hostname resolution). Useful for spotting suspicious outbound connections."},{"q":"A technician notices a workstation has very slow performance. Task Manager shows CPU at 100% but no user applications are open. What should be suspected?","opts":["Insufficient RAM","Disk fragmentation","Malware or a runaway process","Display driver issue"],"ans":2,"exp":"100% CPU with no user apps = likely malware C2 activity or a runaway system process. Check Task Manager Details tab for the specific PID."},{"q":"A Windows PC shows a BSOD with stop code 0x0000001A. What does this indicate?","opts":["Hard drive failure","Driver conflict","Memory management error — likely RAM","GPU overheating"],"ans":2,"exp":"0x0000001A = MEMORY_MANAGEMENT. This is one of the most common RAM-related BSODs. Run MemTest86 to confirm faulty module."},{"q":"After upgrading RAM, a PC will not POST and the keyboard light flashes. What should be checked first?","opts":["Re-seat the RAM in the correct slots","Replace the CPU","Flash the BIOS","Replace the power supply"],"ans":0,"exp":"RAM not seated fully is the #1 cause of no-POST after a RAM upgrade. Re-seat firmly in the correct slots (check manual for single/dual-channel slots)."},{"q":"Which tool generates a tone that can be traced through walls to identify a specific cable run?","opts":["OTDR","Cable tester","Toner probe (Fox and Hound)","Loopback adapter"],"ans":2,"exp":"Toner probe (also called Fox and Hound) — the toner injects an audio signal, and the probe wand detects it through walls to trace the cable."},{"q":"A technician suspects a physical layer (Layer 1) network problem. Which tool should be used first?","opts":["Packet sniffer","Cable tester","Wi-Fi analyzer","OTDR"],"ans":1,"exp":"A cable tester checks for opens, shorts, crosses, and split pairs in copper Ethernet cables — the most common Layer 1 failure points."},{"q":"A user says their inkjet printer is printing horizontal bands with missing colors. What is most likely?","opts":["Wrong paper type","Clogged or depleted print head/ink nozzle","Wrong ICC color profile","Damaged fuser"],"ans":1,"exp":"Horizontal banding in inkjet printing = clogged nozzles or depleted ink cartridge. Run the printer's built-in head cleaning cycle first."},{"q":"What does the '–f' flag do in 'chkdsk C: /f'?","opts":["Finds and deletes duplicate files","Fixes file system errors","Formats the drive","Finds bad sectors"],"ans":1,"exp":"chkdsk /f fixes file system errors (cross-linked files, bad FAT/MFT entries). It requires a reboot if run on the system drive. /r additionally finds bad sectors."},{"q":"A user complains their laptop fan runs constantly at full speed even when idle. After checking for malware, what is the next most likely cause?","opts":["Faulty keyboard","Failed fan controller or blocked vents with dust","Incorrect screen resolution","BIOS setting for performance mode"],"ans":1,"exp":"Constant full-speed fan at idle (after ruling out malware) = blocked vents trapping heat, or a failed thermal sensor giving bad temp readings to the fan controller."},{"q":"A single workstation cannot reach any website but can ping the default gateway. Which step should be done next?","opts":["Replace the NIC","Run: ipconfig /flushdns then nslookup google.com to test DNS","Reinstall Windows","Replace the cable"],"ans":1,"exp":"Can ping gateway = L1/L2/L3 working. Internet failure with good gateway = DNS or ISP issue. Test DNS with nslookup to isolate the problem layer."}]},{"title":"Core 1 — Set 5: Mixed Objectives","questions":[{"q":"What is the purpose of a loopback adapter in network troubleshooting?","opts":["Tests DNS resolution","Tests a NIC by sending and receiving data on the same port","Traces cable runs","Measures fiber signal loss"],"ans":1,"exp":"A loopback adapter (RJ-45 loopback plug) connects TX to RX pins, allowing the NIC to send and receive its own data — testing the NIC's transmit/receive hardware."},{"q":"Which connector is used on the end of a fiber patch cable commonly found in small form factor switches?","opts":["SC","ST","LC","FC"],"ans":2,"exp":"LC (Lucent Connector) is the dominant fiber connector in modern equipment due to its small size (half the footprint of SC). Most SFP modules use LC."},{"q":"What is the correct order of laser printing steps 4–6?","opts":["Developing, Transferring, Fusing","Exposing, Developing, Transferring","Charging, Exposing, Developing","Fusing, Cleaning, Processing"],"ans":0,"exp":"The full sequence: Processing → Charging → Exposing → Developing → Transferring → Fusing → Cleaning. Steps 4–6 = Developing, Transferring, Fusing."},{"q":"A technician needs to verify whether a DHCP server is responding on the network. Which command shows the DHCP server IP assigned to a Windows PC?","opts":["ping 255.255.255.255","ipconfig /all — shows 'DHCP Server' field","netstat -an","arp -a"],"ans":1,"exp":"'ipconfig /all' shows the DHCP Server field displaying which IP assigned the lease. This confirms the DHCP server is reachable."},{"q":"A network diagram shows devices connected to a central hub. All devices experience slow speeds when multiple users transfer data simultaneously. What is the architectural problem?","opts":["Insufficient RAM in the hub","Hub shares bandwidth — all ports in one collision domain","Wrong cable category","DNS resolution is slow"],"ans":1,"exp":"Hubs repeat all traffic to all ports — creating one large collision domain. Every device competes for bandwidth. Solution: replace with a switch."},{"q":"What type of cloud storage would allow multiple competing companies to share the same cloud infrastructure while maintaining data isolation?","opts":["Public cloud","Private cloud","Hybrid cloud","Community cloud"],"ans":3,"exp":"Community cloud is shared by organizations with common interests (e.g., healthcare providers sharing HIPAA-compliant infrastructure) with shared costs."},{"q":"A technician is installing a new PCIe NIC in a server. The only available slot is PCIe x4, but the card is designed for PCIe x8. Will it work?","opts":["No — PCIe slots are not backward compatible","Yes — PCIe is electrically backward compatible; x4 slot will run the x8 card at x4 speeds","Only if the card has a notch","Only with an adapter"],"ans":1,"exp":"PCIe is electrically backward compatible. A PCIe x8 card in an x4 slot will function at x4 bandwidth (half speed). The card physically fits in larger slots too."},{"q":"Which port does SNMP use for polling agents?","opts":["53","161","162","514"],"ans":1,"exp":"SNMP uses UDP port 161 for polling (manager queries agents) and UDP port 162 for traps (agents send unsolicited alerts to manager)."},{"q":"A Cat5e cable fails beyond 100 meters. What is the recommended solution that maintains 1 Gbps performance?","opts":["Use Cat8 cable","Use a repeater or switch to regenerate the signal at the 100m mark","Use fiber optic cable only","Reduce to 100 Mbps mode"],"ans":1,"exp":"Ethernet has a 100-meter segment limit due to signal attenuation. A switch or repeater regenerates the signal, allowing another 100-meter segment."},{"q":"A user calls saying their phone shows 'No Service' after traveling internationally. What should be checked first?","opts":["Battery level","Whether the phone supports the carrier's international LTE bands","Wi-Fi settings","Bluetooth status"],"ans":1,"exp":"Different countries use different LTE frequency bands. A phone that only supports domestic bands will not work internationally. Check if the phone supports the local bands."},{"q":"A technician is asked to dispose of a government workstation's SSD. Which method meets NIST SP 800-88 guidelines?","opts":["7-pass overwrite","Degaussing","Cryptographic erase or physical destruction","Quick format and reuse"],"ans":2,"exp":"NIST SP 800-88 recommends cryptographic erase (ATA Secure Erase or encryption key destruction) for SSDs. Overwriting is ineffective due to wear leveling."},{"q":"What is the purpose of the 'ipconfig /flushdns' command?","opts":["Renews the DHCP lease","Clears the local DNS resolver cache — forces fresh DNS lookups","Resets TCP/IP stack","Releases the IP address"],"ans":1,"exp":"'/flushdns' clears the local DNS cache. Useful when a website's IP has changed but the old IP is cached, causing connection failures."},{"q":"Which IEEE standard defines Power over Ethernet delivering up to 30W?","opts":["802.3af","802.3at","802.3bt","802.11ac"],"ans":1,"exp":"802.3at (PoE+) supports up to 30W. 802.3af (original PoE) = 15.4W. 802.3bt (PoE++) = up to 90W. Used for IP cameras, VoIP phones, WAPs."},{"q":"A user's laptop has 8 GB of RAM but only 4 GB shows as available in Windows. What is the most likely cause?","opts":["Windows 10 Home RAM limit","One stick is faulty or not seated","32-bit OS installed","Integrated GPU is using the RAM"],"ans":1,"exp":"If only half the RAM shows, the most common cause is one stick not fully seated or failed. Check Task Manager > Performance > Memory for 'Slots used'."},{"q":"What is the function of the CMOS battery on a motherboard?","opts":["Provides power during POST","Powers the real-time clock and retains BIOS settings when AC power is off","Charges the laptop battery","Provides backup power to RAM"],"ans":1,"exp":"The CMOS CR2032 battery maintains the real-time clock (RTC) and BIOS settings (date, time, boot order) when the system is unplugged."},{"q":"A thermal printer is printing blank pages. What is the most likely cause?","opts":["No toner cartridge","Paper loaded backward — thermal coating faces away from print head","Fuser failure","Corona wire broken"],"ans":1,"exp":"Thermal printers use heat-sensitive paper with a coating on one side. If loaded backward, the plain side faces the print head — resulting in blank output."},{"q":"Which virtualization technology allows multiple VMs to share the same underlying physical hardware resources?","opts":["Partitioning","Resource pooling / hypervisor resource allocation","RAID","NAS"],"ans":1,"exp":"Hypervisors use resource pooling to allocate vCPU, vRAM, and vStorage from the physical host's resources across multiple VMs simultaneously."},{"q":"A wireless client can connect to an AP but cannot reach the internet. Other clients on the same AP work fine. What should be checked on the client?","opts":["Replace the wireless card","Check the client's IP config — likely APIPA or wrong gateway","Reboot the AP","Check the ISP connection"],"ans":1,"exp":"If only one client fails while others work, the issue is client-specific. Check: ipconfig /all for APIPA (169.254.x.x), wrong gateway, or wrong subnet mask."},{"q":"What is the purpose of a VDI (Virtual Desktop Infrastructure) solution?","opts":["Backs up physical desktops","Hosts desktop environments on a server, delivering them to thin clients over the network","Provides dedicated GPU resources per user","Creates containers for web apps"],"ans":1,"exp":"VDI runs full desktop OS instances on central servers. Users connect via thin clients. IT manages one central image instead of hundreds of physical desktops."},{"q":"A user reports their PC screen is black but they can hear Windows startup sounds. What should be checked first?","opts":["RAM","GPU driver","Monitor power cable, input source, and brightness — then GPU","Reinstall Windows"],"ans":2,"exp":"Black screen with audio = display/output issue, not a boot failure. Check: monitor is on, correct input selected, brightness up, cable seated, then try another cable/port."}]}],"core2":[{"title":"Core 2 — Set 1: Operating Systems","questions":[{"q":"Which Windows edition is the minimum required to HOST a Remote Desktop session (not just connect to one)?","opts":["Windows 10/11 Home","Windows 10/11 Pro","Windows 10/11 Enterprise only","Any edition with RDP enabled"],"ans":1,"exp":"Home edition can only be an RDP client (connecting to other machines). Pro and above can be RDP hosts. This is a frequently tested distinction."},{"q":"What command repairs the Windows Boot Configuration Data (BCD)?","opts":["sfc /scannow","DISM /RestoreHealth","bootrec /rebuildbcd","bcdedit /fix"],"ans":2,"exp":"'bootrec /rebuildbcd' scans for Windows installations and rebuilds the BCD store. Use this when Windows fails to boot with 'BOOTMGR is missing' or similar errors."},{"q":"Which registry hive stores settings specific to the currently logged-in user?","opts":["HKLM","HKCU","HKCR","HKU"],"ans":1,"exp":"HKCU (HKEY_CURRENT_USER) stores settings for the active user profile. HKLM stores system-wide settings. HKU stores all user profiles."},{"q":"What is the difference between a clean install and an in-place upgrade of Windows?","opts":["Clean install preserves apps; in-place upgrade does not","In-place upgrade preserves apps, settings, and data; clean install wipes everything","Both preserve user data","In-place upgrade requires a DVD"],"ans":1,"exp":"In-place upgrade preserves applications, settings, and user data. Clean install wipes the drive. For migration to new hardware, clean install is preferred."},{"q":"A technician runs 'sfc /scannow' and it reports corrupted files that could not be fixed. What should be done next?","opts":["Reinstall Windows immediately","Run DISM /Online /Cleanup-Image /RestoreHealth first, then re-run sfc /scannow","Run chkdsk","Delete the corrupted files manually"],"ans":1,"exp":"DISM /RestoreHealth repairs the Windows component store (WinSxS) using Windows Update. Once fixed, sfc can then repair system files using the corrected source."},{"q":"What does 'gpupdate /force' do?","opts":["Updates GPU drivers","Forces immediate reapplication of all Group Policy Objects without waiting for the standard refresh interval","Updates Windows Store apps","Resets local security policy"],"ans":1,"exp":"'gpupdate /force' immediately reapplies all GPOs from Active Directory domain controllers, overriding the standard 90-minute refresh interval."},{"q":"A Windows partition is formatted as FAT32. A user tries to copy a 5 GB video file and receives an error. What is the cause?","opts":["The partition is full","FAT32 has a 4 GB maximum single file size limit","Windows cannot copy to FAT32","The file is corrupted"],"ans":1,"exp":"FAT32 has a hard limit of 4 GB minus 1 byte per file. The video exceeds this. Solution: format as exFAT or NTFS, which support files over 4 GB."},{"q":"Which Windows tool allows an administrator to see which Group Policy Objects are applied to a specific computer or user?","opts":["gpedit.msc","gpresult /r","msconfig","regedit"],"ans":1,"exp":"'gpresult /r' shows the Resultant Set of Policy — which GPOs applied, which were filtered, and the source domain controller. 'gpresult /h report.html' creates an HTML report."},{"q":"What is the purpose of Sysprep /generalize before imaging a Windows system?","opts":["Encrypts the disk before cloning","Removes hardware-specific information (SIDs, device drivers) so the image can be deployed to different hardware","Backs up the user profile","Enables WDS deployment"],"ans":1,"exp":"Sysprep /generalize removes the unique SID, hardware-specific drivers, and machine-specific settings — making the image deployable on any compatible hardware."},{"q":"In Windows Task Manager, what does the 'Details' tab show that the 'Processes' tab does not?","opts":["Memory usage","The specific Process ID (PID), CPU time, and the user account running each executable","GPU usage","Network connections"],"ans":1,"exp":"Details tab shows PID (Process ID), CPU time (total, not %), image path, and the specific user account. Essential for identifying exact process causing issues."},{"q":"What file system does macOS use for modern SSDs and HDDs?","opts":["HFS+","NTFS","APFS","ext4"],"ans":2,"exp":"APFS (Apple File System) was introduced in macOS High Sierra (2017) and is the default for SSDs. HFS+ is the legacy file system for older drives."},{"q":"Which Linux directory contains configuration files for the system and applications?","opts":["/home","/etc","/var","/bin"],"ans":1,"exp":"/etc contains system-wide configuration files (network config, user accounts, service settings). /home = user directories, /var = logs/variable data."},{"q":"A Windows PC's boot process reaches the BIOS but shows 'Operating System Not Found.' What is the most likely cause?","opts":["RAM failure","BIOS password set","Boot order is incorrect or the bootloader is corrupt","GPU failure"],"ans":2,"exp":"Boot order not set to the correct drive OR the MBR/BCD is corrupted. Check boot order first. If correct, use 'bootrec /fixmbr' and 'bootrec /rebuildbcd' from WinRE."},{"q":"What does 'chmod 644' mean for a Linux file?","opts":["Owner can read/write/execute; group and others can read","Owner can read/write; group can read; others can read","Owner can read only; group can write; others can execute","Full permissions for everyone"],"ans":1,"exp":"Octal 644: Owner=6(rw-), Group=4(r--), Others=4(r--). The file owner can read and write; everyone else can only read. Standard for config files."},{"q":"A user cannot log in after a domain controller went offline. Their workstation shows 'The domain controller could not be contacted.' What allows them to log in locally?","opts":["VPN connection required","Cached credentials — Windows caches the last N successful domain logins","Calling IT to reset password","Reinstalling Windows"],"ans":1,"exp":"Windows caches domain credentials locally (default: last 10 logins). If the DC is unreachable, Windows authenticates against the cached credentials hash."},{"q":"What partition style is required for Windows 11 installation?","opts":["MBR","GPT","Either MBR or GPT","Dynamic disk"],"ans":1,"exp":"Windows 11 requires GPT (GUID Partition Table) on the boot drive. MBR is the legacy partition style limited to 2TB disks and 4 primary partitions."},{"q":"Which Windows Recovery Environment (WinRE) tool should be used when the Windows installation files are corrupted?","opts":["System Restore","Startup Repair","System Image Recovery","Command Prompt"],"ans":2,"exp":"System Image Recovery restores from a previously created full system image backup. Use when OS files are too corrupt for in-place repair."},{"q":"What is the 'DiskPart' command to mark a partition as the active boot partition?","opts":["DiskPart format active","In DiskPart: select partition N → active","DiskPart /bootpartition","bcdedit /active"],"ans":1,"exp":"In DiskPart: 'select disk 0' → 'select partition 1' → 'active'. This marks the partition as bootable (sets the boot flag in the MBR)."},{"q":"A technician needs to see all local user accounts on a Windows machine via command line. Which command is correct?","opts":["tasklist","net user","lusrmgr.msc","whoami /all"],"ans":1,"exp":"'net user' (run as administrator) lists all local user accounts. 'net user [username]' shows detailed info about a specific account."},{"q":"What does 'exFAT' file system provide that FAT32 does not?","opts":["File permissions","NTFS compression","Support for files larger than 4 GB without the overhead of NTFS","Journaling"],"ans":2,"exp":"exFAT removes FAT32's 4 GB file size limit while remaining lightweight (no journaling or permissions like NTFS). Ideal for large flash drives and memory cards."}]},{"title":"Core 2 — Set 2: Security","questions":[{"q":"What is the key functional difference between a virus and a worm?","opts":["Worms encrypt files; viruses do not","Viruses attach to host files and require user action to spread; worms self-replicate across networks without a host file","Viruses only affect Windows; worms affect all OS","Worms are always ransomware"],"ans":1,"exp":"Virus: requires a host file and user action to execute. Worm: self-replicates independently across networks by exploiting vulnerabilities (e.g., WannaCry)."},{"q":"What does UAC (User Account Control) do when a standard user tries to run a program that requires elevation?","opts":["Silently denies access","Prompts for an administrator username and password","Auto-approves the request","Logs the user out"],"ans":1,"exp":"Standard users get a credential prompt (must enter admin credentials). Admin users get a consent prompt (click Yes/No). This enforces least privilege."},{"q":"A company employee receives an email appearing to be from their CEO requesting urgent wire transfer details. This is an example of:","opts":["Phishing","Whaling","Smishing","Vishing"],"ans":1,"exp":"Whaling targets high-value individuals (C-suite executives) with highly targeted spear phishing. BEC (Business Email Compromise) attacks are a subset of whaling."},{"q":"What is the correct NTFS permission precedence rule?","opts":["Most permissive wins","Inherited permissions override explicit permissions","Explicit Deny always overrides Allow","Allow always overrides Deny"],"ans":2,"exp":"Explicit Deny overrides Allow — even if a user has Allow through group membership, an explicit Deny wins. Exception: owner/SYSTEM can override in some cases."},{"q":"Which Windows Firewall profile automatically applies when a laptop connects to a previously unknown network?","opts":["Domain","Private","Public","Custom"],"ans":2,"exp":"Public profile is the most restrictive — applied to new/unknown networks (like hotel Wi-Fi). It blocks file sharing and network discovery by default."},{"q":"What is the purpose of salting a password before hashing?","opts":["Makes the hash shorter","Adds a random unique value before hashing — ensures identical passwords produce different hashes, defeating rainbow tables","Encrypts the hash","Speeds up authentication"],"ans":1,"exp":"A salt is a random value appended to the password before hashing. Since every salt is unique, pre-computed rainbow tables become useless."},{"q":"BitLocker requires this hardware component to store encryption keys securely without requiring a USB key or PIN:","opts":["UEFI","Secure Boot","TPM (Trusted Platform Module)","EFS"],"ans":2,"exp":"TPM stores the BitLocker encryption key. At boot, BitLocker measures the system state; if it matches the stored PCR values, TPM releases the key automatically."},{"q":"A technician discovers a rootkit on a server. What makes rootkits particularly dangerous?","opts":["They spread via email","They operate at the kernel level, hiding their presence from the OS and security tools","They encrypt files for ransom","They only affect browsers"],"ans":1,"exp":"Rootkits hook into the OS kernel to hide files, processes, and network connections — making them invisible to standard AV scans running on the same OS."},{"q":"Which encryption standard is recommended for WPA2 wireless networks and replaces the deprecated TKIP?","opts":["AES-CCMP","RC4-TKIP","DES","3DES"],"ans":0,"exp":"AES-CCMP (Counter Mode CBC-MAC Protocol) is required by WPA2 certification. TKIP was the WPA (v1) algorithm — it is deprecated and insecure."},{"q":"What is credential stuffing?","opts":["Brute-forcing all possible passwords","Using username/password pairs stolen from one breach to try logging into other services","Installing a keylogger","Cracking password hashes offline"],"ans":1,"exp":"Credential stuffing exploits password reuse. Stolen breach databases (username+password lists) are automated against other services (banking, email, etc.)."},{"q":"A technician needs to permanently destroy data on a government SSD. Which method is NIST SP 800-88 compliant?","opts":["7-pass DoD overwrite","Degaussing","ATA Secure Erase (crypto-erase) or physical destruction","Quick format"],"ans":2,"exp":"NIST SP 800-88 recommends Cryptographic Erase (overwriting with random data at firmware level) or physical destruction for SSDs. Standard overwriting is ineffective on SSDs."},{"q":"EFS (Encrypting File System) differs from BitLocker in that:","opts":["EFS encrypts entire disks; BitLocker encrypts files","EFS encrypts individual files and folders using the user's credentials; BitLocker encrypts the entire volume","EFS requires TPM; BitLocker does not","EFS only works on NTFS; BitLocker works on any file system"],"ans":1,"exp":"EFS = per-file NTFS encryption tied to user certificates. BitLocker = full volume/disk encryption. EFS files are not accessible if user profile is deleted."},{"q":"What should a technician do FIRST when discovering malware on a workstation according to CompTIA's 8-step process?","opts":["Run antivirus immediately","Disconnect the machine from the network (quarantine)","Reboot into Safe Mode","Delete suspicious files manually"],"ans":1,"exp":"Step 2 in CompTIA's malware process: Quarantine the infected system by disconnecting from the network to prevent spread to other systems."},{"q":"A phishing email targets a specific executive using their name, title, and recent company activity. This is specifically called:","opts":["Phishing","Spear phishing","Whaling","Vishing"],"ans":1,"exp":"Spear phishing is personalized targeting using specific details about the victim. Whaling is spear phishing specifically targeting executives."},{"q":"Which VPN protocol uses port 443 (HTTPS), making it difficult for firewalls to block?","opts":["IPsec","OpenVPN on UDP 1194","SSL/TLS VPN","L2TP/IPsec"],"ans":2,"exp":"SSL/TLS VPN (e.g., Cisco AnyConnect, GlobalProtect) tunnels over TCP/UDP 443 — the same port as HTTPS, so it typically passes through firewalls unrestricted."},{"q":"What is the principle of least privilege?","opts":["All users get admin rights for convenience","Users are given only the minimum permissions required to perform their job function","Administrators can access all resources","Guest accounts have no restrictions"],"ans":1,"exp":"Least privilege limits the blast radius of a compromise. If an account is hijacked, the attacker only has the permissions that account held."},{"q":"A user reports receiving SMS messages asking them to click a link to verify their bank account. This attack is called:","opts":["Phishing","Vishing","Smishing","Pharming"],"ans":2,"exp":"Smishing = SMS + phishing. Text messages are sent with malicious links or requests for credentials. Vishing = voice/phone calls. Phishing = email."},{"q":"What is the difference between IDS and IPS in network security?","opts":["IDS blocks threats; IPS only alerts","IDS monitors and alerts on threats; IPS actively blocks/prevents them in real-time","Both do the same thing","IPS is for wireless; IDS is for wired"],"ans":1,"exp":"IDS (Intrusion Detection System) = passive — logs and alerts. IPS (Intrusion Prevention System) = active — sits inline and blocks malicious traffic in real-time."},{"q":"Which Windows feature allows a standard user process to run with elevated privileges without a full Admin token?","opts":["EFS","UAC virtualization","Run as Administrator (launches elevated process)","AppLocker"],"ans":2,"exp":"'Run as Administrator' launches a new elevated process using an admin token (either the user's split token or credentials of a different admin account via UAC prompt)."},{"q":"A firewall administrator needs to allow HTTPS traffic inbound to a web server. Which rule should be created?","opts":["Allow inbound TCP port 80","Allow inbound TCP port 443","Allow outbound TCP port 443","Allow inbound UDP port 53"],"ans":1,"exp":"HTTPS = TCP port 443. Inbound means traffic coming FROM the internet TO the server. Port 80 = HTTP (unencrypted). Port 53 = DNS."}]},{"title":"Core 2 — Set 3: Software Troubleshooting","questions":[{"q":"A Windows PC fails to boot and shows 'BOOTMGR is missing.' Which WinRE command should be run first?","opts":["sfc /scannow","bootrec /fixmbr","bootrec /fixboot then bootrec /rebuildbcd","chkdsk /f /r"],"ans":2,"exp":"'bootrec /fixboot' rewrites the boot sector. 'bootrec /rebuildbcd' scans for Windows installs and rebuilds the boot menu. Run both when BOOTMGR is missing."},{"q":"A user reports that an application crashes with 'Missing DLL: vcruntime140.dll.' What is the correct fix?","opts":["Reinstall Windows","Install the correct Visual C++ Redistributable package","Run sfc /scannow","Increase virtual memory"],"ans":1,"exp":"DLL errors usually mean a required runtime library is missing. 'vcruntime140.dll' = Visual C++ 2015-2019 redistributable. Download from Microsoft and install."},{"q":"After a Windows update, a user's USB mouse stops working. Which tool should be used to roll back the driver?","opts":["sfc /scannow","DISM","Device Manager > Driver > Roll Back Driver","System Restore"],"ans":2,"exp":"Device Manager > right-click device > Properties > Driver tab > Roll Back Driver. This restores the previous driver version. Works if 'Roll Back' is not greyed out."},{"q":"A Windows PC is infected with malware that persists after antivirus removal. What does 'Disable System Restore' do in the malware removal process?","opts":["Removes the virus from the registry","Prevents the virus from being restored from a previous restore point","Runs a full offline scan","Removes startup entries"],"ans":1,"exp":"Malware sometimes hides copies in System Restore snapshots. Disabling System Restore (temporarily) removes those snapshots so the virus cannot restore itself."},{"q":"What is WOW64 and what does it do?","opts":["A Windows firewall feature","A 32-bit compatibility layer that allows 32-bit applications to run on 64-bit Windows","A BIOS emulation layer","A virtual memory management tool"],"ans":1,"exp":"WOW64 (Windows-on-Windows 64-bit) is a subsystem that translates 32-bit API calls to 64-bit. It's why 32-bit apps install to C:\\Program Files (x86)."},{"q":"A user says their browser is redirecting all searches to a different search engine. They have unwanted toolbars. What is this most likely?","opts":["DNS poisoning attack","Browser hijacker malware — a type of PUP","Incorrect browser default settings only","Proxy server misconfiguration"],"ans":1,"exp":"Browser hijacking (often a PUP — Potentially Unwanted Program) modifies browser settings, default search engine, and installs toolbars without clear consent."},{"q":"Which BSOD stop code is associated with a driver attempting to access an invalid memory address?","opts":["0x0000001A — MEMORY_MANAGEMENT","0x0000000A — IRQL_NOT_LESS_OR_EQUAL","0x00000050 — PAGE_FAULT_IN_NONPAGED_AREA","0xC000021A — STATUS_SYSTEM_PROCESS_TERMINATED"],"ans":1,"exp":"0x0000000A = IRQL_NOT_LESS_OR_EQUAL. A driver tried to access memory at a higher IRQL than allowed — most commonly caused by a faulty or incompatible driver."},{"q":"A technician runs DISM /Online /Cleanup-Image /CheckHealth and it reports component store corruption. What is the next step?","opts":["Reinstall Windows immediately","Run DISM /Online /Cleanup-Image /RestoreHealth to repair the component store","Run sfc /scannow","Run chkdsk"],"ans":1,"exp":"After CheckHealth shows corruption, run DISM /RestoreHealth — it downloads and replaces corrupted Windows component store files from Windows Update."},{"q":"After a factory reset on an Android phone, the user is asked for the Google account that was previously signed in. This security feature is called:","opts":["Knox","MDM lock","FRP — Factory Reset Protection","Screen lock bypass"],"ans":2,"exp":"FRP (Factory Reset Protection) requires the original Google account credentials after a factory reset — preventing unauthorized reuse of stolen/lost devices."},{"q":"A user's application runs fine when they right-click and 'Run as Administrator' but fails normally. What is the most likely cause?","opts":["The app is infected with malware","The app requires elevation/admin rights to function but is not configured as Always Run as Admin","The app is incompatible with the OS version","The user's profile is corrupted"],"ans":1,"exp":"The app requires admin rights (writes to protected registry keys or Program Files). Fix: right-click shortcut > Properties > Compatibility > 'Run as administrator'."},{"q":"Which Event Viewer Event ID indicates an unexpected system shutdown (e.g., power failure, forced power off)?","opts":["Event ID 6005","Event ID 6006","Event ID 41","Event ID 1001"],"ans":2,"exp":"Event ID 41 (Kernel-Power) = unexpected shutdown/restart without proper OS shutdown sequence. ID 6005 = boot, 6006 = normal shutdown, 1001 = crash dump."},{"q":"A mobile device's app crashes every time it opens. Which step should be tried BEFORE a factory reset?","opts":["Replace the device","Clear the app's cache and data, then reinstall the app","Install a third-party antivirus","Disable Wi-Fi"],"ans":1,"exp":"Clearing app cache/data removes corrupted files. Reinstalling gets a fresh version. Factory reset is a last resort — it destroys all user data."},{"q":"A Windows user complains that the desktop icons are all wrong sizes and windows are misaligned after a remote session. What likely caused this?","opts":["RAM failure","Remote Desktop changed the display resolution and it was not restored","GPU overheating","Corrupted desktop.ini"],"ans":1,"exp":"Remote Desktop defaults to the connecting client's resolution. When disconnecting, Windows may not restore the original resolution — manually adjust in Display Settings."},{"q":"What does the Windows 'Compatibility Mode' option do in application properties?","opts":["Runs the app at higher performance","Runs the app as if it is on an older Windows version, enabling legacy API support","Forces 32-bit mode","Disables app updates"],"ans":1,"exp":"Compatibility Mode instructs Windows to use older API behaviors (e.g., 'Windows 8' or 'Windows XP SP3') to allow apps that worked on older OS versions to function."},{"q":"A user reports that their PC is running slowly, with high disk usage. Task Manager shows 'System and Compressed Memory' at 100% disk. What is likely happening?","opts":["Hard drive failure imminent","Windows is using the page file (virtual memory) excessively due to insufficient RAM","Antivirus scan is running","Windows Update is installing"],"ans":1,"exp":"High disk usage from 'System' + page file activity = not enough RAM. Windows is swapping memory to/from the page file on disk, causing massive slowdown."},{"q":"A company's policy requires all USB storage to be disabled. Which Windows tool enforces this?","opts":["Device Manager — disable USB controllers","Group Policy: Computer Config > Administrative Templates > System > Removable Storage","BitLocker","Windows Firewall"],"ans":1,"exp":"Group Policy 'Removable Storage' settings allow admins to deny read/write access to USB storage devices across all domain-joined machines."},{"q":"A technician is asked to verify whether a suspected Trojan is communicating with an external server. Which command shows active outbound connections?","opts":["ipconfig /all","arp -a","netstat -an | find 'ESTABLISHED'","tracert malware-server.com"],"ans":2,"exp":"'netstat -an' shows all connections. Piping to 'find ESTABLISHED' shows active sessions. Look for unexpected IPs on non-standard ports — sign of C2 activity."},{"q":"A computer is running slowly and the user reports frequent pop-ups. After malware removal, what is step 7 in CompTIA's 8-step process?","opts":["Disable System Restore","Schedule antivirus scans","Document findings, actions taken, and outcomes","Educate the end user"],"ans":2,"exp":"CompTIA 8-step: 7 = Document findings and actions. 8 = Educate end user. Documentation creates an audit trail and informs future prevention."},{"q":"Which tool would you use to check if a specific Windows service is set to start automatically and is currently running?","opts":["Task Manager > Processes","services.msc","msconfig > Startup","Event Viewer"],"ans":1,"exp":"services.msc (Services Management Console) shows all services, their startup type (Automatic/Manual/Disabled), and current status (Running/Stopped)."},{"q":"A user factory-resets their corporate COPE Android device. After reset, they notice corporate apps and email are gone but personal photos were wiped too. Why?","opts":["MDM performed a selective wipe","Factory reset wiped all data as expected — COPE devices are not selective","The MDM profile was removed","Google backup was disabled"],"ans":1,"exp":"Factory reset wipes ALL user data on the device regardless of COPE. An MDM remote wipe can often be selective (corporate data only) — but a manual factory reset is not."}]},{"title":"Core 2 — Set 4: Operational Procedures","questions":[{"q":"A company is planning to deploy a new firewall update across 50 branch offices. According to change management best practices, what document must be created first?","opts":["Incident report","RFC (Request for Change)","CMDB entry","SLA"],"ans":1,"exp":"An RFC (Request for Change) documents the change description, scope, risk assessment, rollback plan, testing results, and requires CAB approval before deployment."},{"q":"What is the difference between RTO and RPO in disaster recovery planning?","opts":["RTO = data loss tolerance; RPO = downtime tolerance","RTO = how long systems can be down; RPO = how much data can be lost","Both measure the same thing","RTO is for hardware; RPO is for software"],"ans":1,"exp":"RTO (Recovery Time Objective) = maximum acceptable downtime. RPO (Recovery Point Objective) = maximum acceptable data loss (how old the backup can be)."},{"q":"A RAID 5 array has 4 drives. One drive fails. What happens?","opts":["All data is lost","The array degrades but continues to function; data can be recovered when a replacement drive is added","The array automatically rebuilds on remaining drives without replacement","The server shuts down automatically"],"ans":1,"exp":"RAID 5 tolerates one drive failure using distributed parity. The array runs in degraded mode. Rebuild begins when a hot spare or replacement drive is added."},{"q":"What is a rollback plan in change management?","opts":["A plan to escalate the change to senior management","A documented procedure to revert to the previous working state if the change fails","A backup of the change approval form","A plan to migrate to new hardware"],"ans":1,"exp":"A rollback plan is mandatory in any RFC — it documents exact steps to restore the previous configuration if the change causes unexpected issues."},{"q":"Hot aisle/cold aisle containment in a data center works by:","opts":["Using hot air to power servers more efficiently","Alternating server rack orientation so intake faces face cold air, and exhaust faces hot air — preventing hot air recirculation","Placing cooling units inside server racks","Using liquid cooling only"],"ans":1,"exp":"Cold aisle = server intake sides face cold air supply. Hot aisle = exhaust sides face hot air return to AC units. This prevents hot/cold air mixing and improves cooling efficiency."},{"q":"What regulation applies to organizations handling EU citizens' personal data, requiring breach notification within 72 hours?","opts":["HIPAA","PCI-DSS","SOX","GDPR"],"ans":3,"exp":"GDPR (General Data Protection Regulation) — EU law requiring 72-hour breach notification to supervisory authorities and specifying rights like right to erasure."},{"q":"A technician is disposing of a hard drive from a medical clinic. What is required under HIPAA?","opts":["Degauss and reuse","Quick format and donate","Physical destruction or certified data sanitization with a Certificate of Destruction","Simple deletion of files"],"ans":2,"exp":"HIPAA requires that PHI (Protected Health Information) on storage media be properly sanitized. Physical destruction or NIST-compliant sanitization with a CoD is required."},{"q":"A differential backup is run Monday through Friday. A failure occurs on Friday. How many backup sets are needed to restore?","opts":["5 (one per day)","2 (Sunday full + Friday differential)","1 (Friday differential only)","6 (full + all 5 differentials)"],"ans":1,"exp":"Differential always backs up changes since the last FULL backup. To restore: you only need the last full (Sunday) + the most recent differential (Friday) = 2 sets."},{"q":"What does a UPS (Uninterruptible Power Supply) provide?","opts":["Surge protection only","Battery backup allowing clean system shutdown during power failures","Backup internet connection","Remote access to servers"],"ans":1,"exp":"UPS provides battery backup power for a defined period (minutes to hours) allowing orderly shutdown or brief continuation during power failures. Double-conversion UPS always runs on battery."},{"q":"Which RAID level requires a minimum of 4 drives and combines striping and mirroring for both performance and redundancy?","opts":["RAID 0","RAID 1","RAID 5","RAID 10"],"ans":3,"exp":"RAID 10 (1+0) mirrors drives first, then stripes across mirror pairs. Requires 4 minimum. Can survive multiple simultaneous failures as long as no mirror pair loses both drives."},{"q":"An IT technician is creating a ticket for a user issue. What is the MOST important information to include?","opts":["The technician's name only","Ticket number, date/time, user info, symptoms, steps taken, resolution, and follow-up actions","Only the solution implemented","The user's password for verification"],"ans":1,"exp":"A complete ticket includes: ticket ID, timestamp, user/asset info, problem description, troubleshooting steps taken (even failed ones), resolution, and follow-up."},{"q":"What is the purpose of the 3-2-1 backup rule?","opts":["3 full backups, 2 incrementals, 1 differential","3 copies of data, on 2 different media types, with 1 copy stored offsite","3 daily backups, 2 weekly, 1 monthly","3 RAID arrays, 2 data centers, 1 cloud backup"],"ans":1,"exp":"3-2-1: 3 total copies, 2 different storage media (e.g., local NAS + tape), 1 offsite (cloud or off-site vault). Protects against hardware failure AND site disaster."},{"q":"Which environmental suppression system replaced halon and is safe for both humans and electronic equipment?","opts":["CO2","Water sprinkler","FM-200","Dry chemical"],"ans":2,"exp":"FM-200 (HFC-227ea) is a clean agent suppression system — it does not leave residue, is safe for electronics, and is safe for occupied spaces. Halon was banned by the Montreal Protocol."},{"q":"A change advisory board (CAB) emergency exception is used when:","opts":["The change is too expensive for normal approval","An urgent change is needed immediately (e.g., critical security patch) and cannot wait for the standard CAB meeting cycle","The CAB is on vacation","The IT director approves all changes personally"],"ans":1,"exp":"Emergency changes follow an expedited approval process — typically requires approval from a designated change authority (CTO/CISO) and must be documented retroactively."},{"q":"What does the term 'change window' refer to in IT operations?","opts":["The browser window showing change requests","An approved time period (usually off-hours) when changes are allowed to be deployed to minimize user impact","The number of changes allowed per sprint","A GUI for managing change requests"],"ans":1,"exp":"Change windows are scheduled maintenance periods (e.g., Saturday 2am–6am) when production changes are allowed. Changes outside the window require emergency approval."},{"q":"An employee is leaving the company. Which account management action should be taken IMMEDIATELY on their last day?","opts":["Archive all their emails first","Disable the account immediately; do not delete it yet","Change their password to something complex","Transfer their files first, then delete the account"],"ans":1,"exp":"Disable (not delete) the account immediately to prevent unauthorized access. Account data and email should be preserved for a defined period per policy before deletion."},{"q":"What is the difference between full and incremental backups?","opts":["Full backs up all data; incremental backs up data changed since the last incremental only","Full is faster; incremental is more complete","Full is for servers; incremental is for workstations","They are the same"],"ans":0,"exp":"Full = all data every time. Incremental = only data changed since the last backup of any type. Incremental is faster but requires all previous incrementals to restore."},{"q":"An organization must retain financial records for 7 years per SOX. This is an example of:","opts":["SLA requirement","Data retention policy","Change management policy","AUP (Acceptable Use Policy)"],"ans":1,"exp":"Data retention policies define how long specific data types must be kept and how they must be disposed of. SOX requires 7-year financial document retention."},{"q":"Which type of documentation describes the expected uptime and support response times between a vendor and customer?","opts":["AUP","NDA","SLA","RFC"],"ans":2,"exp":"SLA (Service Level Agreement) defines measurable service commitments: uptime percentage (e.g., 99.9%), response time, resolution time, and penalties for non-compliance."},{"q":"A company wants to ensure that no single IT employee can approve AND implement a critical system change without oversight. This principle is called:","opts":["Least privilege","Mandatory Access Control","Separation of duties","Need to know"],"ans":2,"exp":"Separation of duties ensures no single person controls an entire critical process end-to-end — reduces insider threat and error. In change management: one person approves, a different person implements."}]},{"title":"Core 2 — Set 5: Mixed Objectives","questions":[{"q":"A technician configures BitLocker on a laptop without a TPM. Which authentication options are available?","opts":["None — TPM is required","USB startup key or PIN/password","Facial recognition only","Smart card only"],"ans":1,"exp":"Without TPM: BitLocker can use a USB startup key (plugged in at boot) or a pre-boot PIN/password. The TPM normally stores the encryption key automatically."},{"q":"Which Windows command adds a new local user account named 'jsmith' with password 'Pass123!'?","opts":["user add jsmith Pass123!","net user jsmith Pass123! /add","lusrmgr /new jsmith","adduser jsmith Pass123!"],"ans":1,"exp":"'net user [username] [password] /add' creates a new local user account. Use '/active:yes' to ensure it is enabled. Works in cmd and PowerShell."},{"q":"A user receives a call from 'Microsoft Support' claiming their PC has a virus and asking for remote access. This is:","opts":["A legitimate Microsoft service call","Vishing — voice phishing / tech support scam","Whaling","Tailgating"],"ans":1,"exp":"Microsoft never calls users unsolicited. This is a vishing (voice phishing) tech support scam — the goal is to get remote access or payment for fake 'repair' services."},{"q":"Which malware type encrypts files and demands payment for the decryption key?","opts":["Spyware","Adware","Ransomware","Rootkit"],"ans":2,"exp":"Ransomware (e.g., WannaCry, Ryuk) encrypts victim files and demands cryptocurrency payment for the decryption key. Backups are the best defense."},{"q":"A Windows laptop joined to a domain is taken home. The user cannot access domain resources. What allows them to work with locally cached files?","opts":["VPN is automatically connected","Offline Files (Client-Side Caching) — syncs specified network files locally","BitLocker provides access","APIPA provides domain access"],"ans":1,"exp":"Windows Offline Files (CSC — Client-Side Caching) syncs specified network shares to local storage so users can access files when disconnected from the domain."},{"q":"What is the difference between HIPAA and PCI-DSS?","opts":["HIPAA is for financial data; PCI-DSS is for health data","HIPAA protects medical/health information in the US; PCI-DSS protects payment card data globally","Both cover the same data types","HIPAA is voluntary; PCI-DSS is mandatory"],"ans":1,"exp":"HIPAA = US healthcare law protecting PHI (medical records, insurance data). PCI-DSS = Payment Card Industry standard protecting cardholder data (card numbers, CVV)."},{"q":"After a hard drive replacement, a technician needs to install Windows on the new drive. The PC uses UEFI. What partition style must be used?","opts":["MBR","GPT","Dynamic","Extended"],"ans":1,"exp":"UEFI-based systems require GPT for the boot drive. UEFI can only boot from GPT disks (unless CSM/Legacy mode is enabled). Windows 11 strictly requires UEFI + GPT."},{"q":"A laptop running Windows 11 Pro shows 'Your organization's IT administrator has limited access.' This means:","opts":["The laptop has malware","The device is enrolled in MDM (Intune/JAMF) and managed by a corporate policy","BitLocker is active","A third-party VPN is blocking access"],"ans":1,"exp":"This message appears on MDM-enrolled devices. Microsoft Intune or another MDM solution has applied compliance policies restricting settings on the device."},{"q":"What is a CMDB (Configuration Management Database)?","opts":["A backup of the Windows registry","A database that tracks all IT assets, their configurations, relationships, and change history","A collection of Group Policy Objects","A network monitoring tool"],"ans":1,"exp":"CMDB stores configuration items (CIs) — hardware, software, network devices — and their relationships. Used in ITIL-based IT service management for change impact analysis."},{"q":"Which Linux command changes the owner of a file to 'admin'?","opts":["chmod admin filename","chown admin filename","setowner admin filename","usermod admin filename"],"ans":1,"exp":"'chown admin filename' changes the file owner to 'admin'. 'chown admin:staff filename' changes both owner and group. chmod changes permissions, not ownership."},{"q":"A user reports that their VPN connects but they can only access internal resources — normal internet traffic goes through VPN too, making it slow. What VPN setting is this?","opts":["Split tunneling disabled (full tunnel)","NAT overload","DNS leaking","Proxy configured"],"ans":0,"exp":"Full tunnel VPN routes ALL traffic through the corporate VPN. Split tunneling sends only corporate-bound traffic through VPN, allowing normal internet traffic to go direct."},{"q":"A technician is writing documentation for an IT process. What is an AUP?","opts":["A BIOS update procedure","Acceptable Use Policy — defines what is and is not allowed on company IT resources","An automatic update policy for Windows","Access User Permissions document"],"ans":1,"exp":"AUP (Acceptable Use Policy) is signed by employees and defines permitted use of company IT resources, consequences for violations, and monitoring practices."},{"q":"What does RAID 0 provide, and what is its critical weakness?","opts":["Fault tolerance only — slow performance","Improved read/write performance via striping — but zero redundancy (one disk failure = total data loss)","Both performance and redundancy","Only used for backups"],"ans":1,"exp":"RAID 0 stripes data across drives for maximum performance. There is NO fault tolerance — if one drive fails, ALL data in the array is lost."},{"q":"An attacker physically follows an authorized employee through a secured door without badging in. This is called:","opts":["Shoulder surfing","Piggybacking/Tailgating","Man-in-the-middle","Social engineering via email"],"ans":1,"exp":"Tailgating (piggybacking) = physically following someone through a secured door without using your own credentials. Counter-measure: security vestibules/mantrap, security awareness training."},{"q":"A company switches from buying physical servers (CapEx) to renting cloud VMs monthly (OpEx). What is the primary financial benefit?","opts":["Higher total cost over time","Predictable monthly costs with no large upfront capital investment","Free hardware upgrades","Reduced IT staffing needs"],"ans":1,"exp":"Cloud/OpEx model converts large upfront capital (CapEx) purchases to predictable operating expenses (OpEx). No depreciation, easier budget planning, scale as needed."},{"q":"What is the purpose of running 'gpresult /r' on a domain workstation?","opts":["Resets all Group Policies","Shows which GPOs are applied to the computer and current user","Updates Group Policy immediately","Generates a security report"],"ans":1,"exp":"'gpresult /r' shows the Resultant Set of Policy — which GPOs applied (and which were filtered/blocked), the source OU, and the domain controller used for auth."},{"q":"A system image backup differs from a file backup in that:","opts":["A system image only backs up the OS; file backup includes user data","A system image is an exact bit-for-bit copy of the entire volume including OS, settings, and data — enables bare-metal restore","File backups are slower","System images are smaller"],"ans":1,"exp":"A system image backup captures the complete disk state. A bare-metal restore rewrites the entire image to new hardware — no reinstall needed. File backups are selective."},{"q":"Which Windows feature allows older (incompatible) 32-bit programs to run on 64-bit Windows?","opts":["Hyper-V","WOW64 (Windows-on-Windows 64-bit subsystem)","Compatibility Mode alone","Boot Camp"],"ans":1,"exp":"WOW64 translates 32-bit Windows API calls to 64-bit equivalents, allowing 32-bit applications to run on 64-bit Windows without modification. Most 32-bit apps work seamlessly."},{"q":"A user asks why their newly encrypted EFS folder cannot be opened by a colleague on the same workstation. What is the reason?","opts":["EFS only works on the C: drive","EFS encrypts using the user's specific certificate — other users cannot access the encrypted files even on the same machine","EFS requires BitLocker to be active","The file permissions need to be set to Allow"],"ans":1,"exp":"EFS is tied to the encrypting user's personal certificate/private key. Even an admin cannot open EFS-encrypted files without the correct certificate, unless the EFS Recovery Agent is configured."},{"q":"A technician needs to remotely access a Windows Server to manage it securely. Which protocol should be used?","opts":["Telnet on port 23","FTP on port 21","RDP on port 3389 with NLA enabled","VNC on port 5900 unencrypted"],"ans":2,"exp":"RDP with NLA (Network Level Authentication) on port 3389 provides encrypted remote desktop access. Telnet and unencrypted VNC transmit data in plaintext — never use for production servers."}]}]};
+
+const TESTS={"core1":[{"title":"Core 1 (220-1201) — Set 1: Hardware & Components","questions":[{"q":"Which motherboard form factor is largest and most commonly used in desktop PCs?","opts":["Mini-ITX","Micro-ATX","ATX","E-ATX"],"ans":2,"exp":"Standard ATX (305×244mm) is the most common desktop form factor, with the most expansion slots and space."},{"q":"What is the maximum data transfer rate of NVMe SSD compared to SATA SSD?","opts":["Same speed","NVMe is 2× faster","NVMe is ~6× faster","NVMe is slower"],"ans":2,"exp":"NVMe SSDs reach ~3500 MB/s (PCIe 3.0) vs SATA SSDs at ~550 MB/s — approximately 6× faster."},{"q":"A user installs a second RAM stick. What must be true to enable dual-channel mode?","opts":["Both sticks must be the same brand","Both sticks must be installed in matching color slots","Both sticks must be DDR5","RAM must be ECC"],"ans":1,"exp":"Dual-channel requires installing matching sticks in the paired slots (typically A2 and B2, or color-coded slots)."},{"q":"Which connector provides 12V and 5V power rails and was used for legacy drives?","opts":["SATA power","PCIe 8-pin","Molex 4-pin","Berg connector"],"ans":2,"exp":"Molex (4-pin Peripheral) connector provides +12V and +5V and was used for older HDDs and optical drives."},{"q":"What does the 80 PLUS Gold rating mean for a power supply?","opts":["87% efficient at 50% load","100% efficient","It uses gold capacitors","80W minimum output"],"ans":0,"exp":"80 PLUS Gold requires 87% efficiency at 50% load, 87% at 20% load, and 87% at 100% load."},{"q":"Which PCIe slot type is used for dedicated graphics cards?","opts":["PCIe x1","PCIe x4","PCIe x8","PCIe x16"],"ans":3,"exp":"Dedicated GPUs use PCIe x16, which provides 16 lanes of bandwidth — approximately 16 GB/s on PCIe 3.0."},{"q":"A technician needs to replace a CPU. The socket has pins on the motherboard, not the CPU. Which CPU vendor uses this design?","opts":["AMD (PGA)","Intel (LGA)","Both AMD and Intel","Neither"],"ans":1,"exp":"Intel uses LGA (Land Grid Array) — pins on the motherboard socket. AMD historically used PGA (pins on CPU)."},{"q":"What does POST stand for and when does it run?","opts":["Peripheral Output System Test — after OS boot","Power-On Self-Test — before OS boot","Program Operational System Test — during login","Power Output Stability Test — continuously"],"ans":1,"exp":"POST (Power-On Self-Test) is run by the BIOS/UEFI immediately when the computer is powered on, before the OS loads."},{"q":"Which M.2 key type supports NVMe protocol only?","opts":["B key","M key","B+M key","A key"],"ans":1,"exp":"M-key M.2 slots support NVMe (PCIe) protocol. B+M key supports both SATA and NVMe. B-key supports SATA only."},{"q":"What is the purpose of Secure Boot in UEFI?","opts":["Prevents BIOS password bypass","Ensures only digitally signed bootloaders load","Encrypts the hard drive","Speeds up POST"],"ans":1,"exp":"Secure Boot verifies that bootloaders and OS kernels have valid digital signatures, preventing rootkits and bootkits."},{"q":"A laptop display shows correct images but no backlight. Which component most likely failed?","opts":["LCD panel","Digitizer","Inverter or LED driver","GPU"],"ans":2,"exp":"No backlight with correct image = inverter failure (CCFL backlights) or LED driver failure. The LCD panel itself is working."},{"q":"What connector type powers a laptop's internal storage in a small form factor?","opts":["2.5-inch SATA","M.2 2280","3.5-inch SATA","mSATA"],"ans":1,"exp":"Most modern laptops use M.2 2280 (80mm length) NVMe drives connected via the M.2 slot on the motherboard."},{"q":"Which type of RAM is used in laptops due to its smaller physical size?","opts":["DIMM","SO-DIMM","RDIMM","LRDIMM"],"ans":1,"exp":"SO-DIMM (Small Outline DIMM) is the laptop version of RAM — shorter at 67.6mm vs 133mm for desktop DIMM."},{"q":"A 7-step laser print process step where toner is permanently bonded to paper using heat and pressure is called:","opts":["Transferring","Exposing","Fusing","Developing"],"ans":2,"exp":"Fusing is step 6. The fuser assembly uses heat (~200°C) and pressure rollers to permanently bond toner to paper."},{"q":"What is the maximum single file size supported by FAT32?","opts":["2 GB","4 GB","8 GB","Unlimited"],"ans":1,"exp":"FAT32 supports a maximum single file size of 4 GB minus 1 byte — making it unsuitable for large video files."},{"q":"Which bus standard replaced PCI and became the dominant expansion slot in modern PCs?","opts":["AGP","PCIe","AMR","ISA"],"ans":1,"exp":"PCIe (PCI Express) replaced PCI and AGP as the universal expansion standard. It uses serial point-to-point lanes."},{"q":"A technician sees a 169.254.x.x IP address on a client machine. What does this indicate?","opts":["VPN is active","Static IP is configured","DHCP server was unreachable — APIPA address assigned","The machine is on IPv6"],"ans":2,"exp":"169.254.0.0/16 is the APIPA range. Windows assigns an APIPA address when DHCP fails, allowing local-only communication."},{"q":"What cabling standard is most commonly used for terminating Ethernet patch cables in North American commercial installations?","opts":["T568A","T568B","Cat6a","EIA-232"],"ans":1,"exp":"T568B is the dominant standard in North American commercial wiring. T568A is used in residential and government applications."},{"q":"Which cable type supports 10 Gbps at up to 100 meters?","opts":["Cat5e","Cat6","Cat6a","Cat8"],"ans":2,"exp":"Cat6a supports 10 Gbps at 100 meters. Cat6 only supports 10 Gbps at 55 meters (not full 100m runs)."},{"q":"What does TPM stand for and what is its primary function in a PC?","opts":["Trusted Platform Module — stores encryption keys in hardware","Terminal Processing Module — manages CPU thermal output","Transfer Protocol Manager — handles network authentication","Timed Power Management — controls sleep states"],"ans":0,"exp":"TPM (Trusted Platform Module) is a hardware chip that securely stores encryption keys, used by BitLocker and Secure Boot."}]},{"title":"Core 1 — Set 2: Networking","questions":[{"q":"At which OSI layer does a switch operate, and what address does it use for forwarding decisions?","opts":["Layer 1 — IP address","Layer 2 — MAC address","Layer 3 — IP address","Layer 4 — Port number"],"ans":1,"exp":"Switches operate at Layer 2 (Data Link) and use MAC addresses to build forwarding tables and send frames to specific ports."},{"q":"Which port does HTTPS use?","opts":["80","443","8080","8443"],"ans":1,"exp":"HTTPS (HTTP Secure) uses port 443. HTTP uses port 80. These are among the most critical ports to memorize for the exam."},{"q":"What is the correct DHCP process acronym and order?","opts":["DORA — Discover, Offer, Request, Acknowledge","DARO — Discover, Acknowledge, Request, Offer","DOAS — Discover, Offer, Acknowledge, Set","DORS — Discover, Offer, Renew, Set"],"ans":0,"exp":"DORA: Discover (broadcast from client) → Offer (broadcast from server) → Request (broadcast from client) → Acknowledge (unicast from server)."},{"q":"Which wireless standard introduced OFDMA and MU-MIMO improvements and operates on 2.4, 5, and 6 GHz?","opts":["802.11ac (Wi-Fi 5)","802.11n (Wi-Fi 4)","802.11ax (Wi-Fi 6)","802.11g"],"ans":2,"exp":"802.11ax (Wi-Fi 6) introduced OFDMA for multi-user efficiency and operates on 2.4 GHz, 5 GHz, and optionally 6 GHz bands."},{"q":"What is the maximum distance for a Cat6a cable running 10 Gbps?","opts":["55 meters","100 meters","150 meters","30 meters"],"ans":1,"exp":"Cat6a supports 10 Gbps at the full 100-meter Ethernet run distance. Cat6 only achieves 10 Gbps up to 55 meters."},{"q":"A DNS A record maps:","opts":["Domain name to IPv6 address","Domain name to IPv4 address","Mail server to domain","Domain alias to another domain"],"ans":1,"exp":"A records (Address records) map a hostname to an IPv4 address. AAAA records map to IPv6. MX = mail, CNAME = alias."},{"q":"Which command would you use to view the MAC-to-IP address mapping table on a Windows machine?","opts":["ipconfig /all","arp -a","netstat -an","tracert"],"ans":1,"exp":"'arp -a' displays the ARP cache — the table of IP-to-MAC address mappings the local machine has learned."},{"q":"What does the 'tracert' command do on Windows?","opts":["Traces DNS lookups","Shows all open TCP connections","Displays each router hop between source and destination","Tests wireless signal strength"],"ans":2,"exp":"tracert (traceroute) sends ICMP probes with incrementing TTL values to map each hop between the source and destination."},{"q":"Which encryption protocol is considered broken and should never be used for Wi-Fi security?","opts":["WPA2","WPA3","WEP","802.1X"],"ans":2,"exp":"WEP (Wired Equivalent Privacy) uses RC4 with weak IVs that allow an attacker to crack the key in minutes by capturing packets."},{"q":"What does SAE stand for in WPA3 and what attack does it prevent?","opts":["Secure Access Engine — brute force","Simultaneous Authentication of Equals — offline dictionary attack","Symmetric Auth Encryption — replay attacks","Single Access Endpoint — deauth attacks"],"ans":1,"exp":"SAE (Simultaneous Authentication of Equals) in WPA3 uses a Dragonfly handshake that prevents offline password cracking attacks."},{"q":"What is the subnet mask for a /26 CIDR block?","opts":["255.255.255.0","255.255.255.128","255.255.255.192","255.255.255.224"],"ans":2,"exp":"/26 = 255.255.255.192. The last octet has 6 bits masked (11000000 = 192), leaving 6 host bits = 64 addresses, 62 usable."},{"q":"Which fiber connector uses a push-pull locking mechanism and is commonly used in data center patch panels?","opts":["ST","SC","LC","FC"],"ans":2,"exp":"LC (Lucent Connector) uses a small push-pull latch and is the most common fiber connector in modern data center environments."},{"q":"What port does SSH use?","opts":["21","22","23","25"],"ans":1,"exp":"SSH (Secure Shell) uses port 22. Telnet uses 23 but is unencrypted. SSH replaced Telnet as the secure remote terminal protocol."},{"q":"Which cloud model gives the customer least management responsibility?","opts":["IaaS","PaaS","SaaS","Hybrid"],"ans":2,"exp":"SaaS (Software as a Service) — the vendor manages everything including the application. The customer only manages data and users."},{"q":"An OTDR is used to:","opts":["Measure Wi-Fi signal strength","Trace cable runs through walls","Locate breaks and measure length in fiber optic cables","Test Ethernet cable continuity"],"ans":2,"exp":"OTDR (Optical Time Domain Reflectometer) sends a light pulse down fiber and measures reflections to locate faults and measure cable length."},{"q":"Which IPv6 address prefix is used for link-local addresses?","opts":["::1/128","2000::/3","fc00::/7","fe80::/10"],"ans":3,"exp":"fe80::/10 is the link-local prefix. Link-local addresses are auto-configured and only valid on the local network segment — not routable."},{"q":"What port does RDP (Remote Desktop Protocol) use?","opts":["22","3389","5900","443"],"ans":1,"exp":"RDP uses TCP port 3389. It is used for remote desktop connections to Windows systems. VNC uses 5900, SSH uses 22."},{"q":"What is the difference between single-mode and multimode fiber?","opts":["SMF uses LED, MMF uses laser","SMF has smaller core (~9µm) for longer distance, MMF has larger core (~50µm) for shorter distance","SMF is for copper, MMF is for glass","SMF supports 10Gbps, MMF does not"],"ans":1,"exp":"SMF (8-10µm) uses a laser and supports distances of up to 40+ km. MMF (50-62.5µm) uses LEDs and is limited to ~300m at 10Gbps."},{"q":"Which DHCP message is sent as a broadcast by the client to accept a server's offer?","opts":["Discover","Offer","Request","Acknowledge"],"ans":2,"exp":"The DHCP Request is broadcast (not unicast) even after receiving an Offer — this notifies all DHCP servers which offer was accepted."},{"q":"A technician needs to test if a specific port is open on a remote server. Which tool is most appropriate?","opts":["ping","tracert","nslookup","telnet or netcat"],"ans":3,"exp":"'telnet [host] [port]' or 'nc -zv [host] [port]' tests if a specific TCP port is open. ping only tests ICMP reachability."}]},{"title":"Core 1 — Set 3: Cloud, Virtualization & Mobile","questions":[{"q":"A company wants to deploy virtual servers without managing underlying hardware. Which cloud model is correct?","opts":["SaaS","PaaS","IaaS","DaaS"],"ans":2,"exp":"IaaS (Infrastructure as a Service) — e.g., AWS EC2 — provides virtualized compute, storage, and networking. Customer manages OS and apps."},{"q":"What is the key difference between a Type 1 and Type 2 hypervisor?","opts":["Type 1 runs inside an OS; Type 2 runs on bare metal","Type 1 runs on bare metal; Type 2 runs inside a host OS","Type 1 supports more VMs","Type 2 is used in enterprise data centers"],"ans":1,"exp":"Type 1 (bare-metal): VMware ESXi, Hyper-V, KVM — installs directly on hardware. Type 2 (hosted): VirtualBox, Workstation — runs inside Windows/Linux."},{"q":"Which of the 5 NIST cloud characteristics describes the ability to scale resources up or down automatically?","opts":["On-demand self-service","Broad network access","Rapid elasticity","Resource pooling"],"ans":2,"exp":"Rapid elasticity allows resources to be provisioned and released quickly, automatically scaling to meet demand."},{"q":"What is an SoC (System on Chip) and why is it used in mobile devices?","opts":["A type of RAM","CPU, GPU, modem, and memory controller integrated on one chip — saves space and power","An external GPU","A type of SSD for phones"],"ans":1,"exp":"SoC integrates CPU, GPU, modem, NPU, and memory controller on one die — drastically reducing size, power draw, and latency for mobile use."},{"q":"Which wireless technology is used for contactless payments and operates at 13.56 MHz with a range of ~20cm?","opts":["Bluetooth","Wi-Fi Direct","NFC","RFID 900MHz"],"ans":2,"exp":"NFC (Near Field Communication) operates at 13.56 MHz with a ~20cm range. Used for Apple Pay, Google Pay, and access cards."},{"q":"What does MDM allow an IT administrator to do on employee mobile devices?","opts":["Only view browser history","Enforce PINs, encrypt storage, and remotely wipe devices","Only push app updates","Only track GPS location"],"ans":1,"exp":"MDM (Mobile Device Management) allows admins to enforce security policies, push configurations, manage apps, and remotely wipe devices."},{"q":"A company pays monthly for Office 365 instead of buying perpetual licenses. This is an example of:","opts":["CapEx model","IaaS","OpEx/SaaS model","PaaS"],"ans":2,"exp":"Switching from perpetual software licenses (CapEx) to monthly subscriptions (OpEx/SaaS) is a common cloud consumption model."},{"q":"Which 5G frequency range provides much higher speeds but significantly shorter range and poor building penetration?","opts":["Sub-6GHz (FR1)","mmWave (FR2)","700 MHz LTE","C-Band"],"ans":1,"exp":"mmWave (FR2, >24GHz) offers 10 Gbps+ speeds but has very short range (~100m) and cannot penetrate walls or windows."},{"q":"What is the maximum Bluetooth range for Class 2 devices (most consumer devices)?","opts":["1 meter","10 meters","100 meters","300 meters"],"ans":1,"exp":"Bluetooth Class 2 = 10 meters range. Class 1 = 100 meters. Class 3 = 1 meter. Most phones and earbuds are Class 2."},{"q":"Exchange ActiveSync (EAS) is primarily used to:","opts":["Sync files to Google Drive","Push corporate email, contacts, and calendar to mobile devices and enforce security policies","Provide VPN access","Configure Wi-Fi on mobile devices"],"ans":1,"exp":"EAS syncs email, contacts, calendar, and tasks from Exchange/M365 to mobile devices and enforces MDM-style security policies."},{"q":"What is a container (e.g., Docker) and how does it differ from a full VM?","opts":["A container includes a full OS kernel; VMs do not","A container shares the host OS kernel; VMs have their own isolated OS","Containers are slower than VMs","Containers require a Type 1 hypervisor"],"ans":1,"exp":"Containers share the host kernel and are isolated at the process level — much lighter than VMs which each run a full OS."},{"q":"Which cloud deployment model is owned and operated exclusively by a single organization?","opts":["Public cloud","Hybrid cloud","Community cloud","Private cloud"],"ans":3,"exp":"Private cloud is deployed on-premises or in a dedicated hosted environment for one organization — not shared with others."},{"q":"A virtual machine snapshot is used to:","opts":["Back up the host hypervisor","Capture the VM state at a point in time for rollback","Increase VM RAM","Clone VMs to new hardware"],"ans":1,"exp":"A VM snapshot captures the disk state, RAM state, and VM settings at a point in time — enabling rollback if a change breaks things."},{"q":"What does BYOD stand for, and what security risk does it introduce?","opts":["Build Your Own Device — hardware fragmentation","Bring Your Own Device — unmanaged personal devices may carry malware or lack encryption","Buy Your Own Device — increased cost","Backup Your Own Data — data loss risk"],"ans":1,"exp":"BYOD (Bring Your Own Device) allows personal devices on corporate networks — the risk is unmanaged endpoints that may lack MDM controls."},{"q":"Which cloud characteristic describes the metering of resource usage for billing purposes?","opts":["Rapid elasticity","Resource pooling","Measured service","On-demand self-service"],"ans":2,"exp":"Measured service = usage is monitored, controlled, and reported — customers are billed only for what they consume (pay-per-use)."},{"q":"What type of hypervisor is VMware ESXi?","opts":["Type 2 — runs inside Windows","Type 1 — runs directly on hardware","Type 3 — cloud-based","Type 1.5 — hybrid"],"ans":1,"exp":"VMware ESXi is a Type 1 (bare-metal) hypervisor — it installs directly on server hardware with no host OS underneath."},{"q":"A user's phone shows 'Limited connectivity' on Wi-Fi. Which step should a technician try first?","opts":["Factory reset the phone","Forget and reconnect to the Wi-Fi network","Replace the Wi-Fi card","Update the OS"],"ans":1,"exp":"Forgetting and reconnecting forces a fresh DHCP lease and re-authentication. This resolves most transient connectivity issues quickly."},{"q":"What is the purpose of the IMEI number on a mobile device?","opts":["It identifies the SIM card","It is the device's unique hardware identifier used by carriers to block stolen phones","It stores Wi-Fi credentials","It is the device's IP address on LTE"],"ans":1,"exp":"IMEI (International Mobile Equipment Identity) uniquely identifies the mobile device hardware — carriers can blacklist stolen phones by IMEI."},{"q":"Which mobile OS is open-source and allows sideloading apps outside the official store?","opts":["iOS — Apple controls sideloading","Android — allows APK sideloading","Windows Phone — requires Store","Tizen — no sideloading"],"ans":1,"exp":"Android allows sideloading APKs with 'Unknown sources' enabled. iOS requires Apple Developer enrollment for sideloading (outside official App Store)."},{"q":"A technician needs to test hardware without installing a full OS. Which virtualization feature is most useful?","opts":["VM snapshot","Live migration","VM template","Sandbox/isolated VM"],"ans":3,"exp":"Running a sandboxed VM allows testing untrusted software or hardware-level diagnostics without affecting the host or production systems."}]},{"title":"Core 1 — Set 4: Hardware & Network Troubleshooting","questions":[{"q":"A computer powers on but emits 3 long beeps with no display. According to AMI BIOS beep codes, what most likely failed?","opts":["CPU failure","RAM failure","GPU/Video failure","Storage failure"],"ans":2,"exp":"AMI BIOS 3 long beeps = Video/GPU failure. 1 short beep = POST passed OK. Continuous beeping = RAM or CPU. Always verify with your specific BIOS vendor."},{"q":"A technician runs MemTest86 and it shows errors after Pass 1. What should be done?","opts":["Replace the motherboard","Run chkdsk","Test each RAM module individually to isolate the faulty stick","Update BIOS"],"ans":2,"exp":"Remove all but one RAM stick and retest. If errors persist, swap sticks until the faulty module is identified. Always test each stick individually."},{"q":"A hard drive makes a clicking noise on startup. What is the IMMEDIATE correct action?","opts":["Run chkdsk /f /r","Run a defragment","Stop using the drive and back up data immediately","Update the drive firmware"],"ans":2,"exp":"Clicking = failed read/write heads (mechanical failure). The drive is in imminent failure — stop writes immediately and recover data before it dies."},{"q":"A PC spontaneously reboots under heavy CPU load. CPU temperature reads 95°C at load. What is the most likely cause?","opts":["RAM failure","Faulty power supply","CPU thermal throttling/overheating — dried thermal paste or failed fan","GPU driver crash"],"ans":2,"exp":"95°C at load with random reboots = CPU thermal protection triggering emergency shutdown. Reapply thermal paste and verify fan/heatsink seating."},{"q":"Which S.M.A.R.T. attribute most reliably indicates a hard drive is approaching failure?","opts":["Power On Hours","Reallocated Sector Count increasing","Drive temperature","Read Error Rate"],"ans":1,"exp":"Increasing Reallocated Sector Count means the drive is remapping bad sectors to spare areas. A rising count = imminent failure. Back up immediately."},{"q":"A user cannot access the internet but can ping 192.168.1.1 (the default gateway). What is ruled out?","opts":["DNS server issue","Physical layer problem and local routing","Both A and B","Neither — all layers must be retested"],"ans":1,"exp":"If you can ping the gateway, the physical connection (Layer 1), NIC (Layer 2), and local routing (Layer 3) are all working. The problem is beyond the gateway — likely DNS or ISP."},{"q":"A laser printer produces pages with a repeated ghost image offset by about 1 inch. What component needs replacement?","opts":["Fuser assembly","Transfer roller","OPC drum","Corona wire"],"ans":2,"exp":"Ghost images repeating at fixed intervals = worn OPC drum. The drum is not cleaning completely between rotations, leaving residual toner impressions."},{"q":"A technician runs 'ipconfig /all' and sees the IP address 169.254.12.45. What does this mean?","opts":["The machine is using a static IP","The DHCP server assigned this IP","DHCP failed — the OS assigned an APIPA address","The machine is on IPv6"],"ans":2,"exp":"169.254.x.x is the APIPA (Automatic Private IP Addressing) range — Windows assigns this when DHCP fails. Check cable, switch, and DHCP server."},{"q":"Which command releases and then renews a DHCP lease on Windows?","opts":["ipconfig /renew only","ipconfig /flushdns","ipconfig /release then ipconfig /renew","netsh int ip reset"],"ans":2,"exp":"ipconfig /release drops the current lease. ipconfig /renew sends a new DHCP Discover to get a fresh lease. Always release first."},{"q":"A printer produces pages with toner that smears when touched. Which component is failing?","opts":["Corona wire","OPC drum","Fuser assembly","Transfer belt"],"ans":2,"exp":"Toner smearing = fuser failure. The fuser (heat + pressure rollers) did not bond toner to the paper. Unfused toner wipes off easily."},{"q":"What does the 'netstat -an' command display?","opts":["DNS server addresses","ARP table","All active TCP/UDP connections with port numbers and IP addresses","Wi-Fi signal strength"],"ans":2,"exp":"'netstat -an' shows all active connections (-a) in numerical format (-n — no hostname resolution). Useful for spotting suspicious outbound connections."},{"q":"A technician notices a workstation has very slow performance. Task Manager shows CPU at 100% but no user applications are open. What should be suspected?","opts":["Insufficient RAM","Disk fragmentation","Malware or a runaway process","Display driver issue"],"ans":2,"exp":"100% CPU with no user apps = likely malware C2 activity or a runaway system process. Check Task Manager Details tab for the specific PID."},{"q":"A Windows PC shows a BSOD with stop code 0x0000001A. What does this indicate?","opts":["Hard drive failure","Driver conflict","Memory management error — likely RAM","GPU overheating"],"ans":2,"exp":"0x0000001A = MEMORY_MANAGEMENT. This is one of the most common RAM-related BSODs. Run MemTest86 to confirm faulty module."},{"q":"After upgrading RAM, a PC will not POST and the keyboard light flashes. What should be checked first?","opts":["Re-seat the RAM in the correct slots","Replace the CPU","Flash the BIOS","Replace the power supply"],"ans":0,"exp":"RAM not seated fully is the #1 cause of no-POST after a RAM upgrade. Re-seat firmly in the correct slots (check manual for single/dual-channel slots)."},{"q":"Which tool generates a tone that can be traced through walls to identify a specific cable run?","opts":["OTDR","Cable tester","Toner probe (Fox and Hound)","Loopback adapter"],"ans":2,"exp":"Toner probe (also called Fox and Hound) — the toner injects an audio signal, and the probe wand detects it through walls to trace the cable."},{"q":"A technician suspects a physical layer (Layer 1) network problem. Which tool should be used first?","opts":["Packet sniffer","Cable tester","Wi-Fi analyzer","OTDR"],"ans":1,"exp":"A cable tester checks for opens, shorts, crosses, and split pairs in copper Ethernet cables — the most common Layer 1 failure points."},{"q":"A user says their inkjet printer is printing horizontal bands with missing colors. What is most likely?","opts":["Wrong paper type","Clogged or depleted print head/ink nozzle","Wrong ICC color profile","Damaged fuser"],"ans":1,"exp":"Horizontal banding in inkjet printing = clogged nozzles or depleted ink cartridge. Run the printer's built-in head cleaning cycle first."},{"q":"What does the '–f' flag do in 'chkdsk C: /f'?","opts":["Finds and deletes duplicate files","Fixes file system errors","Formats the drive","Finds bad sectors"],"ans":1,"exp":"chkdsk /f fixes file system errors (cross-linked files, bad FAT/MFT entries). It requires a reboot if run on the system drive. /r additionally finds bad sectors."},{"q":"A user complains their laptop fan runs constantly at full speed even when idle. After checking for malware, what is the next most likely cause?","opts":["Faulty keyboard","Failed fan controller or blocked vents with dust","Incorrect screen resolution","BIOS setting for performance mode"],"ans":1,"exp":"Constant full-speed fan at idle (after ruling out malware) = blocked vents trapping heat, or a failed thermal sensor giving bad temp readings to the fan controller."},{"q":"A single workstation cannot reach any website but can ping the default gateway. Which step should be done next?","opts":["Replace the NIC","Run: ipconfig /flushdns then nslookup google.com to test DNS","Reinstall Windows","Replace the cable"],"ans":1,"exp":"Can ping gateway = L1/L2/L3 working. Internet failure with good gateway = DNS or ISP issue. Test DNS with nslookup to isolate the problem layer."}]},{"title":"Core 1 — Set 5: Mixed Objectives","questions":[{"q":"What is the purpose of a loopback adapter in network troubleshooting?","opts":["Tests DNS resolution","Tests a NIC by sending and receiving data on the same port","Traces cable runs","Measures fiber signal loss"],"ans":1,"exp":"A loopback adapter (RJ-45 loopback plug) connects TX to RX pins, allowing the NIC to send and receive its own data — testing the NIC's transmit/receive hardware."},{"q":"Which connector is used on the end of a fiber patch cable commonly found in small form factor switches?","opts":["SC","ST","LC","FC"],"ans":2,"exp":"LC (Lucent Connector) is the dominant fiber connector in modern equipment due to its small size (half the footprint of SC). Most SFP modules use LC."},{"q":"What is the correct order of laser printing steps 4–6?","opts":["Developing, Transferring, Fusing","Exposing, Developing, Transferring","Charging, Exposing, Developing","Fusing, Cleaning, Processing"],"ans":0,"exp":"The full sequence: Processing → Charging → Exposing → Developing → Transferring → Fusing → Cleaning. Steps 4–6 = Developing, Transferring, Fusing."},{"q":"A technician needs to verify whether a DHCP server is responding on the network. Which command shows the DHCP server IP assigned to a Windows PC?","opts":["ping 255.255.255.255","ipconfig /all — shows 'DHCP Server' field","netstat -an","arp -a"],"ans":1,"exp":"'ipconfig /all' shows the DHCP Server field displaying which IP assigned the lease. This confirms the DHCP server is reachable."},{"q":"A network diagram shows devices connected to a central hub. All devices experience slow speeds when multiple users transfer data simultaneously. What is the architectural problem?","opts":["Insufficient RAM in the hub","Hub shares bandwidth — all ports in one collision domain","Wrong cable category","DNS resolution is slow"],"ans":1,"exp":"Hubs repeat all traffic to all ports — creating one large collision domain. Every device competes for bandwidth. Solution: replace with a switch."},{"q":"What type of cloud storage would allow multiple competing companies to share the same cloud infrastructure while maintaining data isolation?","opts":["Public cloud","Private cloud","Hybrid cloud","Community cloud"],"ans":3,"exp":"Community cloud is shared by organizations with common interests (e.g., healthcare providers sharing HIPAA-compliant infrastructure) with shared costs."},{"q":"A technician is installing a new PCIe NIC in a server. The only available slot is PCIe x4, but the card is designed for PCIe x8. Will it work?","opts":["No — PCIe slots are not backward compatible","Yes — PCIe is electrically backward compatible; x4 slot will run the x8 card at x4 speeds","Only if the card has a notch","Only with an adapter"],"ans":1,"exp":"PCIe is electrically backward compatible. A PCIe x8 card in an x4 slot will function at x4 bandwidth (half speed). The card physically fits in larger slots too."},{"q":"Which port does SNMP use for polling agents?","opts":["53","161","162","514"],"ans":1,"exp":"SNMP uses UDP port 161 for polling (manager queries agents) and UDP port 162 for traps (agents send unsolicited alerts to manager)."},{"q":"A Cat5e cable fails beyond 100 meters. What is the recommended solution that maintains 1 Gbps performance?","opts":["Use Cat8 cable","Use a repeater or switch to regenerate the signal at the 100m mark","Use fiber optic cable only","Reduce to 100 Mbps mode"],"ans":1,"exp":"Ethernet has a 100-meter segment limit due to signal attenuation. A switch or repeater regenerates the signal, allowing another 100-meter segment."},{"q":"A user calls saying their phone shows 'No Service' after traveling internationally. What should be checked first?","opts":["Battery level","Whether the phone supports the carrier's international LTE bands","Wi-Fi settings","Bluetooth status"],"ans":1,"exp":"Different countries use different LTE frequency bands. A phone that only supports domestic bands will not work internationally. Check if the phone supports the local bands."},{"q":"A technician is asked to dispose of a government workstation's SSD. Which method meets NIST SP 800-88 guidelines?","opts":["7-pass overwrite","Degaussing","Cryptographic erase or physical destruction","Quick format and reuse"],"ans":2,"exp":"NIST SP 800-88 recommends cryptographic erase (ATA Secure Erase or encryption key destruction) for SSDs. Overwriting is ineffective due to wear leveling."},{"q":"What is the purpose of the 'ipconfig /flushdns' command?","opts":["Renews the DHCP lease","Clears the local DNS resolver cache — forces fresh DNS lookups","Resets TCP/IP stack","Releases the IP address"],"ans":1,"exp":"'/flushdns' clears the local DNS cache. Useful when a website's IP has changed but the old IP is cached, causing connection failures."},{"q":"Which IEEE standard defines Power over Ethernet delivering up to 30W?","opts":["802.3af","802.3at","802.3bt","802.11ac"],"ans":1,"exp":"802.3at (PoE+) supports up to 30W. 802.3af (original PoE) = 15.4W. 802.3bt (PoE++) = up to 90W. Used for IP cameras, VoIP phones, WAPs."},{"q":"A user's laptop has 8 GB of RAM but only 4 GB shows as available in Windows. What is the most likely cause?","opts":["Windows 10 Home RAM limit","One stick is faulty or not seated","32-bit OS installed","Integrated GPU is using the RAM"],"ans":1,"exp":"If only half the RAM shows, the most common cause is one stick not fully seated or failed. Check Task Manager > Performance > Memory for 'Slots used'."},{"q":"What is the function of the CMOS battery on a motherboard?","opts":["Provides power during POST","Powers the real-time clock and retains BIOS settings when AC power is off","Charges the laptop battery","Provides backup power to RAM"],"ans":1,"exp":"The CMOS CR2032 battery maintains the real-time clock (RTC) and BIOS settings (date, time, boot order) when the system is unplugged."},{"q":"A thermal printer is printing blank pages. What is the most likely cause?","opts":["No toner cartridge","Paper loaded backward — thermal coating faces away from print head","Fuser failure","Corona wire broken"],"ans":1,"exp":"Thermal printers use heat-sensitive paper with a coating on one side. If loaded backward, the plain side faces the print head — resulting in blank output."},{"q":"Which virtualization technology allows multiple VMs to share the same underlying physical hardware resources?","opts":["Partitioning","Resource pooling / hypervisor resource allocation","RAID","NAS"],"ans":1,"exp":"Hypervisors use resource pooling to allocate vCPU, vRAM, and vStorage from the physical host's resources across multiple VMs simultaneously."},{"q":"A wireless client can connect to an AP but cannot reach the internet. Other clients on the same AP work fine. What should be checked on the client?","opts":["Replace the wireless card","Check the client's IP config — likely APIPA or wrong gateway","Reboot the AP","Check the ISP connection"],"ans":1,"exp":"If only one client fails while others work, the issue is client-specific. Check: ipconfig /all for APIPA (169.254.x.x), wrong gateway, or wrong subnet mask."},{"q":"What is the purpose of a VDI (Virtual Desktop Infrastructure) solution?","opts":["Backs up physical desktops","Hosts desktop environments on a server, delivering them to thin clients over the network","Provides dedicated GPU resources per user","Creates containers for web apps"],"ans":1,"exp":"VDI runs full desktop OS instances on central servers. Users connect via thin clients. IT manages one central image instead of hundreds of physical desktops."},{"q":"A user reports their PC screen is black but they can hear Windows startup sounds. What should be checked first?","opts":["RAM","GPU driver","Monitor power cable, input source, and brightness — then GPU","Reinstall Windows"],"ans":2,"exp":"Black screen with audio = display/output issue, not a boot failure. Check: monitor is on, correct input selected, brightness up, cable seated, then try another cable/port."}]}],"core2":[{"title":"Core 2 — Set 1: Operating Systems","questions":[{"q":"Which Windows edition is the minimum required to HOST a Remote Desktop session (not just connect to one)?","opts":["Windows 10/11 Home","Windows 10/11 Pro","Windows 10/11 Enterprise only","Any edition with RDP enabled"],"ans":1,"exp":"Home edition can only be an RDP client (connecting to other machines). Pro and above can be RDP hosts. This is a frequently tested distinction."},{"q":"What command repairs the Windows Boot Configuration Data (BCD)?","opts":["sfc /scannow","DISM /RestoreHealth","bootrec /rebuildbcd","bcdedit /fix"],"ans":2,"exp":"'bootrec /rebuildbcd' scans for Windows installations and rebuilds the BCD store. Use this when Windows fails to boot with 'BOOTMGR is missing' or similar errors."},{"q":"Which registry hive stores settings specific to the currently logged-in user?","opts":["HKLM","HKCU","HKCR","HKU"],"ans":1,"exp":"HKCU (HKEY_CURRENT_USER) stores settings for the active user profile. HKLM stores system-wide settings. HKU stores all user profiles."},{"q":"What is the difference between a clean install and an in-place upgrade of Windows?","opts":["Clean install preserves apps; in-place upgrade does not","In-place upgrade preserves apps, settings, and data; clean install wipes everything","Both preserve user data","In-place upgrade requires a DVD"],"ans":1,"exp":"In-place upgrade preserves applications, settings, and user data. Clean install wipes the drive. For migration to new hardware, clean install is preferred."},{"q":"A technician runs 'sfc /scannow' and it reports corrupted files that could not be fixed. What should be done next?","opts":["Reinstall Windows immediately","Run DISM /Online /Cleanup-Image /RestoreHealth first, then re-run sfc /scannow","Run chkdsk","Delete the corrupted files manually"],"ans":1,"exp":"DISM /RestoreHealth repairs the Windows component store (WinSxS) using Windows Update. Once fixed, sfc can then repair system files using the corrected source."},{"q":"What does 'gpupdate /force' do?","opts":["Updates GPU drivers","Forces immediate reapplication of all Group Policy Objects without waiting for the standard refresh interval","Updates Windows Store apps","Resets local security policy"],"ans":1,"exp":"'gpupdate /force' immediately reapplies all GPOs from Active Directory domain controllers, overriding the standard 90-minute refresh interval."},{"q":"A Windows partition is formatted as FAT32. A user tries to copy a 5 GB video file and receives an error. What is the cause?","opts":["The partition is full","FAT32 has a 4 GB maximum single file size limit","Windows cannot copy to FAT32","The file is corrupted"],"ans":1,"exp":"FAT32 has a hard limit of 4 GB minus 1 byte per file. The video exceeds this. Solution: format as exFAT or NTFS, which support files over 4 GB."},{"q":"Which Windows tool allows an administrator to see which Group Policy Objects are applied to a specific computer or user?","opts":["gpedit.msc","gpresult /r","msconfig","regedit"],"ans":1,"exp":"'gpresult /r' shows the Resultant Set of Policy — which GPOs applied, which were filtered, and the source domain controller. 'gpresult /h report.html' creates an HTML report."},{"q":"What is the purpose of Sysprep /generalize before imaging a Windows system?","opts":["Encrypts the disk before cloning","Removes hardware-specific information (SIDs, device drivers) so the image can be deployed to different hardware","Backs up the user profile","Enables WDS deployment"],"ans":1,"exp":"Sysprep /generalize removes the unique SID, hardware-specific drivers, and machine-specific settings — making the image deployable on any compatible hardware."},{"q":"In Windows Task Manager, what does the 'Details' tab show that the 'Processes' tab does not?","opts":["Memory usage","The specific Process ID (PID), CPU time, and the user account running each executable","GPU usage","Network connections"],"ans":1,"exp":"Details tab shows PID (Process ID), CPU time (total, not %), image path, and the specific user account. Essential for identifying exact process causing issues."},{"q":"What file system does macOS use for modern SSDs and HDDs?","opts":["HFS+","NTFS","APFS","ext4"],"ans":2,"exp":"APFS (Apple File System) was introduced in macOS High Sierra (2017) and is the default for SSDs. HFS+ is the legacy file system for older drives."},{"q":"Which Linux directory contains configuration files for the system and applications?","opts":["/home","/etc","/var","/bin"],"ans":1,"exp":"/etc contains system-wide configuration files (network config, user accounts, service settings). /home = user directories, /var = logs/variable data."},{"q":"A Windows PC's boot process reaches the BIOS but shows 'Operating System Not Found.' What is the most likely cause?","opts":["RAM failure","BIOS password set","Boot order is incorrect or the bootloader is corrupt","GPU failure"],"ans":2,"exp":"Boot order not set to the correct drive OR the MBR/BCD is corrupted. Check boot order first. If correct, use 'bootrec /fixmbr' and 'bootrec /rebuildbcd' from WinRE."},{"q":"What does 'chmod 644' mean for a Linux file?","opts":["Owner can read/write/execute; group and others can read","Owner can read/write; group can read; others can read","Owner can read only; group can write; others can execute","Full permissions for everyone"],"ans":1,"exp":"Octal 644: Owner=6(rw-), Group=4(r--), Others=4(r--). The file owner can read and write; everyone else can only read. Standard for config files."},{"q":"A user cannot log in after a domain controller went offline. Their workstation shows 'The domain controller could not be contacted.' What allows them to log in locally?","opts":["VPN connection required","Cached credentials — Windows caches the last N successful domain logins","Calling IT to reset password","Reinstalling Windows"],"ans":1,"exp":"Windows caches domain credentials locally (default: last 10 logins). If the DC is unreachable, Windows authenticates against the cached credentials hash."},{"q":"What partition style is required for Windows 11 installation?","opts":["MBR","GPT","Either MBR or GPT","Dynamic disk"],"ans":1,"exp":"Windows 11 requires GPT (GUID Partition Table) on the boot drive. MBR is the legacy partition style limited to 2TB disks and 4 primary partitions."},{"q":"Which Windows Recovery Environment (WinRE) tool should be used when the Windows installation files are corrupted?","opts":["System Restore","Startup Repair","System Image Recovery","Command Prompt"],"ans":2,"exp":"System Image Recovery restores from a previously created full system image backup. Use when OS files are too corrupt for in-place repair."},{"q":"What is the 'DiskPart' command to mark a partition as the active boot partition?","opts":["DiskPart format active","In DiskPart: select partition N → active","DiskPart /bootpartition","bcdedit /active"],"ans":1,"exp":"In DiskPart: 'select disk 0' → 'select partition 1' → 'active'. This marks the partition as bootable (sets the boot flag in the MBR)."},{"q":"A technician needs to see all local user accounts on a Windows machine via command line. Which command is correct?","opts":["tasklist","net user","lusrmgr.msc","whoami /all"],"ans":1,"exp":"'net user' (run as administrator) lists all local user accounts. 'net user [username]' shows detailed info about a specific account."},{"q":"What does 'exFAT' file system provide that FAT32 does not?","opts":["File permissions","NTFS compression","Support for files larger than 4 GB without the overhead of NTFS","Journaling"],"ans":2,"exp":"exFAT removes FAT32's 4 GB file size limit while remaining lightweight (no journaling or permissions like NTFS). Ideal for large flash drives and memory cards."}]},{"title":"Core 2 — Set 2: Security","questions":[{"q":"What is the key functional difference between a virus and a worm?","opts":["Worms encrypt files; viruses do not","Viruses attach to host files and require user action to spread; worms self-replicate across networks without a host file","Viruses only affect Windows; worms affect all OS","Worms are always ransomware"],"ans":1,"exp":"Virus: requires a host file and user action to execute. Worm: self-replicates independently across networks by exploiting vulnerabilities (e.g., WannaCry)."},{"q":"What does UAC (User Account Control) do when a standard user tries to run a program that requires elevation?","opts":["Silently denies access","Prompts for an administrator username and password","Auto-approves the request","Logs the user out"],"ans":1,"exp":"Standard users get a credential prompt (must enter admin credentials). Admin users get a consent prompt (click Yes/No). This enforces least privilege."},{"q":"A company employee receives an email appearing to be from their CEO requesting urgent wire transfer details. This is an example of:","opts":["Phishing","Whaling","Smishing","Vishing"],"ans":1,"exp":"Whaling targets high-value individuals (C-suite executives) with highly targeted spear phishing. BEC (Business Email Compromise) attacks are a subset of whaling."},{"q":"What is the correct NTFS permission precedence rule?","opts":["Most permissive wins","Inherited permissions override explicit permissions","Explicit Deny always overrides Allow","Allow always overrides Deny"],"ans":2,"exp":"Explicit Deny overrides Allow — even if a user has Allow through group membership, an explicit Deny wins. Exception: owner/SYSTEM can override in some cases."},{"q":"Which Windows Firewall profile automatically applies when a laptop connects to a previously unknown network?","opts":["Domain","Private","Public","Custom"],"ans":2,"exp":"Public profile is the most restrictive — applied to new/unknown networks (like hotel Wi-Fi). It blocks file sharing and network discovery by default."},{"q":"What is the purpose of salting a password before hashing?","opts":["Makes the hash shorter","Adds a random unique value before hashing — ensures identical passwords produce different hashes, defeating rainbow tables","Encrypts the hash","Speeds up authentication"],"ans":1,"exp":"A salt is a random value appended to the password before hashing. Since every salt is unique, pre-computed rainbow tables become useless."},{"q":"BitLocker requires this hardware component to store encryption keys securely without requiring a USB key or PIN:","opts":["UEFI","Secure Boot","TPM (Trusted Platform Module)","EFS"],"ans":2,"exp":"TPM stores the BitLocker encryption key. At boot, BitLocker measures the system state; if it matches the stored PCR values, TPM releases the key automatically."},{"q":"A technician discovers a rootkit on a server. What makes rootkits particularly dangerous?","opts":["They spread via email","They operate at the kernel level, hiding their presence from the OS and security tools","They encrypt files for ransom","They only affect browsers"],"ans":1,"exp":"Rootkits hook into the OS kernel to hide files, processes, and network connections — making them invisible to standard AV scans running on the same OS."},{"q":"Which encryption standard is recommended for WPA2 wireless networks and replaces the deprecated TKIP?","opts":["AES-CCMP","RC4-TKIP","DES","3DES"],"ans":0,"exp":"AES-CCMP (Counter Mode CBC-MAC Protocol) is required by WPA2 certification. TKIP was the WPA (v1) algorithm — it is deprecated and insecure."},{"q":"What is credential stuffing?","opts":["Brute-forcing all possible passwords","Using username/password pairs stolen from one breach to try logging into other services","Installing a keylogger","Cracking password hashes offline"],"ans":1,"exp":"Credential stuffing exploits password reuse. Stolen breach databases (username+password lists) are automated against other services (banking, email, etc.)."},{"q":"A technician needs to permanently destroy data on a government SSD. Which method is NIST SP 800-88 compliant?","opts":["7-pass DoD overwrite","Degaussing","ATA Secure Erase (crypto-erase) or physical destruction","Quick format"],"ans":2,"exp":"NIST SP 800-88 recommends Cryptographic Erase (overwriting with random data at firmware level) or physical destruction for SSDs. Standard overwriting is ineffective on SSDs."},{"q":"EFS (Encrypting File System) differs from BitLocker in that:","opts":["EFS encrypts entire disks; BitLocker encrypts files","EFS encrypts individual files and folders using the user's credentials; BitLocker encrypts the entire volume","EFS requires TPM; BitLocker does not","EFS only works on NTFS; BitLocker works on any file system"],"ans":1,"exp":"EFS = per-file NTFS encryption tied to user certificates. BitLocker = full volume/disk encryption. EFS files are not accessible if user profile is deleted."},{"q":"What should a technician do FIRST when discovering malware on a workstation according to CompTIA's 8-step process?","opts":["Run antivirus immediately","Disconnect the machine from the network (quarantine)","Reboot into Safe Mode","Delete suspicious files manually"],"ans":1,"exp":"Step 2 in CompTIA's malware process: Quarantine the infected system by disconnecting from the network to prevent spread to other systems."},{"q":"A phishing email targets a specific executive using their name, title, and recent company activity. This is specifically called:","opts":["Phishing","Spear phishing","Whaling","Vishing"],"ans":1,"exp":"Spear phishing is personalized targeting using specific details about the victim. Whaling is spear phishing specifically targeting executives."},{"q":"Which VPN protocol uses port 443 (HTTPS), making it difficult for firewalls to block?","opts":["IPsec","OpenVPN on UDP 1194","SSL/TLS VPN","L2TP/IPsec"],"ans":2,"exp":"SSL/TLS VPN (e.g., Cisco AnyConnect, GlobalProtect) tunnels over TCP/UDP 443 — the same port as HTTPS, so it typically passes through firewalls unrestricted."},{"q":"What is the principle of least privilege?","opts":["All users get admin rights for convenience","Users are given only the minimum permissions required to perform their job function","Administrators can access all resources","Guest accounts have no restrictions"],"ans":1,"exp":"Least privilege limits the blast radius of a compromise. If an account is hijacked, the attacker only has the permissions that account held."},{"q":"A user reports receiving SMS messages asking them to click a link to verify their bank account. This attack is called:","opts":["Phishing","Vishing","Smishing","Pharming"],"ans":2,"exp":"Smishing = SMS + phishing. Text messages are sent with malicious links or requests for credentials. Vishing = voice/phone calls. Phishing = email."},{"q":"What is the difference between IDS and IPS in network security?","opts":["IDS blocks threats; IPS only alerts","IDS monitors and alerts on threats; IPS actively blocks/prevents them in real-time","Both do the same thing","IPS is for wireless; IDS is for wired"],"ans":1,"exp":"IDS (Intrusion Detection System) = passive — logs and alerts. IPS (Intrusion Prevention System) = active — sits inline and blocks malicious traffic in real-time."},{"q":"Which Windows feature allows a standard user process to run with elevated privileges without a full Admin token?","opts":["EFS","UAC virtualization","Run as Administrator (launches elevated process)","AppLocker"],"ans":2,"exp":"'Run as Administrator' launches a new elevated process using an admin token (either the user's split token or credentials of a different admin account via UAC prompt)."},{"q":"A firewall administrator needs to allow HTTPS traffic inbound to a web server. Which rule should be created?","opts":["Allow inbound TCP port 80","Allow inbound TCP port 443","Allow outbound TCP port 443","Allow inbound UDP port 53"],"ans":1,"exp":"HTTPS = TCP port 443. Inbound means traffic coming FROM the internet TO the server. Port 80 = HTTP (unencrypted). Port 53 = DNS."}]},{"title":"Core 2 — Set 3: Software Troubleshooting","questions":[{"q":"A Windows PC fails to boot and shows 'BOOTMGR is missing.' Which WinRE command should be run first?","opts":["sfc /scannow","bootrec /fixmbr","bootrec /fixboot then bootrec /rebuildbcd","chkdsk /f /r"],"ans":2,"exp":"'bootrec /fixboot' rewrites the boot sector. 'bootrec /rebuildbcd' scans for Windows installs and rebuilds the boot menu. Run both when BOOTMGR is missing."},{"q":"A user reports that an application crashes with 'Missing DLL: vcruntime140.dll.' What is the correct fix?","opts":["Reinstall Windows","Install the correct Visual C++ Redistributable package","Run sfc /scannow","Increase virtual memory"],"ans":1,"exp":"DLL errors usually mean a required runtime library is missing. 'vcruntime140.dll' = Visual C++ 2015-2019 redistributable. Download from Microsoft and install."},{"q":"After a Windows update, a user's USB mouse stops working. Which tool should be used to roll back the driver?","opts":["sfc /scannow","DISM","Device Manager > Driver > Roll Back Driver","System Restore"],"ans":2,"exp":"Device Manager > right-click device > Properties > Driver tab > Roll Back Driver. This restores the previous driver version. Works if 'Roll Back' is not greyed out."},{"q":"A Windows PC is infected with malware that persists after antivirus removal. What does 'Disable System Restore' do in the malware removal process?","opts":["Removes the virus from the registry","Prevents the virus from being restored from a previous restore point","Runs a full offline scan","Removes startup entries"],"ans":1,"exp":"Malware sometimes hides copies in System Restore snapshots. Disabling System Restore (temporarily) removes those snapshots so the virus cannot restore itself."},{"q":"What is WOW64 and what does it do?","opts":["A Windows firewall feature","A 32-bit compatibility layer that allows 32-bit applications to run on 64-bit Windows","A BIOS emulation layer","A virtual memory management tool"],"ans":1,"exp":"WOW64 (Windows-on-Windows 64-bit) is a subsystem that translates 32-bit API calls to 64-bit. It's why 32-bit apps install to C:\\Program Files (x86)."},{"q":"A user says their browser is redirecting all searches to a different search engine. They have unwanted toolbars. What is this most likely?","opts":["DNS poisoning attack","Browser hijacker malware — a type of PUP","Incorrect browser default settings only","Proxy server misconfiguration"],"ans":1,"exp":"Browser hijacking (often a PUP — Potentially Unwanted Program) modifies browser settings, default search engine, and installs toolbars without clear consent."},{"q":"Which BSOD stop code is associated with a driver attempting to access an invalid memory address?","opts":["0x0000001A — MEMORY_MANAGEMENT","0x0000000A — IRQL_NOT_LESS_OR_EQUAL","0x00000050 — PAGE_FAULT_IN_NONPAGED_AREA","0xC000021A — STATUS_SYSTEM_PROCESS_TERMINATED"],"ans":1,"exp":"0x0000000A = IRQL_NOT_LESS_OR_EQUAL. A driver tried to access memory at a higher IRQL than allowed — most commonly caused by a faulty or incompatible driver."},{"q":"A technician runs DISM /Online /Cleanup-Image /CheckHealth and it reports component store corruption. What is the next step?","opts":["Reinstall Windows immediately","Run DISM /Online /Cleanup-Image /RestoreHealth to repair the component store","Run sfc /scannow","Run chkdsk"],"ans":1,"exp":"After CheckHealth shows corruption, run DISM /RestoreHealth — it downloads and replaces corrupted Windows component store files from Windows Update."},{"q":"After a factory reset on an Android phone, the user is asked for the Google account that was previously signed in. This security feature is called:","opts":["Knox","MDM lock","FRP — Factory Reset Protection","Screen lock bypass"],"ans":2,"exp":"FRP (Factory Reset Protection) requires the original Google account credentials after a factory reset — preventing unauthorized reuse of stolen/lost devices."},{"q":"A user's application runs fine when they right-click and 'Run as Administrator' but fails normally. What is the most likely cause?","opts":["The app is infected with malware","The app requires elevation/admin rights to function but is not configured as Always Run as Admin","The app is incompatible with the OS version","The user's profile is corrupted"],"ans":1,"exp":"The app requires admin rights (writes to protected registry keys or Program Files). Fix: right-click shortcut > Properties > Compatibility > 'Run as administrator'."},{"q":"Which Event Viewer Event ID indicates an unexpected system shutdown (e.g., power failure, forced power off)?","opts":["Event ID 6005","Event ID 6006","Event ID 41","Event ID 1001"],"ans":2,"exp":"Event ID 41 (Kernel-Power) = unexpected shutdown/restart without proper OS shutdown sequence. ID 6005 = boot, 6006 = normal shutdown, 1001 = crash dump."},{"q":"A mobile device's app crashes every time it opens. Which step should be tried BEFORE a factory reset?","opts":["Replace the device","Clear the app's cache and data, then reinstall the app","Install a third-party antivirus","Disable Wi-Fi"],"ans":1,"exp":"Clearing app cache/data removes corrupted files. Reinstalling gets a fresh version. Factory reset is a last resort — it destroys all user data."},{"q":"A Windows user complains that the desktop icons are all wrong sizes and windows are misaligned after a remote session. What likely caused this?","opts":["RAM failure","Remote Desktop changed the display resolution and it was not restored","GPU overheating","Corrupted desktop.ini"],"ans":1,"exp":"Remote Desktop defaults to the connecting client's resolution. When disconnecting, Windows may not restore the original resolution — manually adjust in Display Settings."},{"q":"What does the Windows 'Compatibility Mode' option do in application properties?","opts":["Runs the app at higher performance","Runs the app as if it is on an older Windows version, enabling legacy API support","Forces 32-bit mode","Disables app updates"],"ans":1,"exp":"Compatibility Mode instructs Windows to use older API behaviors (e.g., 'Windows 8' or 'Windows XP SP3') to allow apps that worked on older OS versions to function."},{"q":"A user reports that their PC is running slowly, with high disk usage. Task Manager shows 'System and Compressed Memory' at 100% disk. What is likely happening?","opts":["Hard drive failure imminent","Windows is using the page file (virtual memory) excessively due to insufficient RAM","Antivirus scan is running","Windows Update is installing"],"ans":1,"exp":"High disk usage from 'System' + page file activity = not enough RAM. Windows is swapping memory to/from the page file on disk, causing massive slowdown."},{"q":"A company's policy requires all USB storage to be disabled. Which Windows tool enforces this?","opts":["Device Manager — disable USB controllers","Group Policy: Computer Config > Administrative Templates > System > Removable Storage","BitLocker","Windows Firewall"],"ans":1,"exp":"Group Policy 'Removable Storage' settings allow admins to deny read/write access to USB storage devices across all domain-joined machines."},{"q":"A technician is asked to verify whether a suspected Trojan is communicating with an external server. Which command shows active outbound connections?","opts":["ipconfig /all","arp -a","netstat -an | find 'ESTABLISHED'","tracert malware-server.com"],"ans":2,"exp":"'netstat -an' shows all connections. Piping to 'find ESTABLISHED' shows active sessions. Look for unexpected IPs on non-standard ports — sign of C2 activity."},{"q":"A computer is running slowly and the user reports frequent pop-ups. After malware removal, what is step 7 in CompTIA's 8-step process?","opts":["Disable System Restore","Schedule antivirus scans","Document findings, actions taken, and outcomes","Educate the end user"],"ans":2,"exp":"CompTIA 8-step: 7 = Document findings and actions. 8 = Educate end user. Documentation creates an audit trail and informs future prevention."},{"q":"Which tool would you use to check if a specific Windows service is set to start automatically and is currently running?","opts":["Task Manager > Processes","services.msc","msconfig > Startup","Event Viewer"],"ans":1,"exp":"services.msc (Services Management Console) shows all services, their startup type (Automatic/Manual/Disabled), and current status (Running/Stopped)."},{"q":"A user factory-resets their corporate COPE Android device. After reset, they notice corporate apps and email are gone but personal photos were wiped too. Why?","opts":["MDM performed a selective wipe","Factory reset wiped all data as expected — COPE devices are not selective","The MDM profile was removed","Google backup was disabled"],"ans":1,"exp":"Factory reset wipes ALL user data on the device regardless of COPE. An MDM remote wipe can often be selective (corporate data only) — but a manual factory reset is not."}]},{"title":"Core 2 — Set 4: Operational Procedures","questions":[{"q":"A company is planning to deploy a new firewall update across 50 branch offices. According to change management best practices, what document must be created first?","opts":["Incident report","RFC (Request for Change)","CMDB entry","SLA"],"ans":1,"exp":"An RFC (Request for Change) documents the change description, scope, risk assessment, rollback plan, testing results, and requires CAB approval before deployment."},{"q":"What is the difference between RTO and RPO in disaster recovery planning?","opts":["RTO = data loss tolerance; RPO = downtime tolerance","RTO = how long systems can be down; RPO = how much data can be lost","Both measure the same thing","RTO is for hardware; RPO is for software"],"ans":1,"exp":"RTO (Recovery Time Objective) = maximum acceptable downtime. RPO (Recovery Point Objective) = maximum acceptable data loss (how old the backup can be)."},{"q":"A RAID 5 array has 4 drives. One drive fails. What happens?","opts":["All data is lost","The array degrades but continues to function; data can be recovered when a replacement drive is added","The array automatically rebuilds on remaining drives without replacement","The server shuts down automatically"],"ans":1,"exp":"RAID 5 tolerates one drive failure using distributed parity. The array runs in degraded mode. Rebuild begins when a hot spare or replacement drive is added."},{"q":"What is a rollback plan in change management?","opts":["A plan to escalate the change to senior management","A documented procedure to revert to the previous working state if the change fails","A backup of the change approval form","A plan to migrate to new hardware"],"ans":1,"exp":"A rollback plan is mandatory in any RFC — it documents exact steps to restore the previous configuration if the change causes unexpected issues."},{"q":"Hot aisle/cold aisle containment in a data center works by:","opts":["Using hot air to power servers more efficiently","Alternating server rack orientation so intake faces face cold air, and exhaust faces hot air — preventing hot air recirculation","Placing cooling units inside server racks","Using liquid cooling only"],"ans":1,"exp":"Cold aisle = server intake sides face cold air supply. Hot aisle = exhaust sides face hot air return to AC units. This prevents hot/cold air mixing and improves cooling efficiency."},{"q":"What regulation applies to organizations handling EU citizens' personal data, requiring breach notification within 72 hours?","opts":["HIPAA","PCI-DSS","SOX","GDPR"],"ans":3,"exp":"GDPR (General Data Protection Regulation) — EU law requiring 72-hour breach notification to supervisory authorities and specifying rights like right to erasure."},{"q":"A technician is disposing of a hard drive from a medical clinic. What is required under HIPAA?","opts":["Degauss and reuse","Quick format and donate","Physical destruction or certified data sanitization with a Certificate of Destruction","Simple deletion of files"],"ans":2,"exp":"HIPAA requires that PHI (Protected Health Information) on storage media be properly sanitized. Physical destruction or NIST-compliant sanitization with a CoD is required."},{"q":"A differential backup is run Monday through Friday. A failure occurs on Friday. How many backup sets are needed to restore?","opts":["5 (one per day)","2 (Sunday full + Friday differential)","1 (Friday differential only)","6 (full + all 5 differentials)"],"ans":1,"exp":"Differential always backs up changes since the last FULL backup. To restore: you only need the last full (Sunday) + the most recent differential (Friday) = 2 sets."},{"q":"What does a UPS (Uninterruptible Power Supply) provide?","opts":["Surge protection only","Battery backup allowing clean system shutdown during power failures","Backup internet connection","Remote access to servers"],"ans":1,"exp":"UPS provides battery backup power for a defined period (minutes to hours) allowing orderly shutdown or brief continuation during power failures. Double-conversion UPS always runs on battery."},{"q":"Which RAID level requires a minimum of 4 drives and combines striping and mirroring for both performance and redundancy?","opts":["RAID 0","RAID 1","RAID 5","RAID 10"],"ans":3,"exp":"RAID 10 (1+0) mirrors drives first, then stripes across mirror pairs. Requires 4 minimum. Can survive multiple simultaneous failures as long as no mirror pair loses both drives."},{"q":"An IT technician is creating a ticket for a user issue. What is the MOST important information to include?","opts":["The technician's name only","Ticket number, date/time, user info, symptoms, steps taken, resolution, and follow-up actions","Only the solution implemented","The user's password for verification"],"ans":1,"exp":"A complete ticket includes: ticket ID, timestamp, user/asset info, problem description, troubleshooting steps taken (even failed ones), resolution, and follow-up."},{"q":"What is the purpose of the 3-2-1 backup rule?","opts":["3 full backups, 2 incrementals, 1 differential","3 copies of data, on 2 different media types, with 1 copy stored offsite","3 daily backups, 2 weekly, 1 monthly","3 RAID arrays, 2 data centers, 1 cloud backup"],"ans":1,"exp":"3-2-1: 3 total copies, 2 different storage media (e.g., local NAS + tape), 1 offsite (cloud or off-site vault). Protects against hardware failure AND site disaster."},{"q":"Which environmental suppression system replaced halon and is safe for both humans and electronic equipment?","opts":["CO2","Water sprinkler","FM-200","Dry chemical"],"ans":2,"exp":"FM-200 (HFC-227ea) is a clean agent suppression system — it does not leave residue, is safe for electronics, and is safe for occupied spaces. Halon was banned by the Montreal Protocol."},{"q":"A change advisory board (CAB) emergency exception is used when:","opts":["The change is too expensive for normal approval","An urgent change is needed immediately (e.g., critical security patch) and cannot wait for the standard CAB meeting cycle","The CAB is on vacation","The IT director approves all changes personally"],"ans":1,"exp":"Emergency changes follow an expedited approval process — typically requires approval from a designated change authority (CTO/CISO) and must be documented retroactively."},{"q":"What does the term 'change window' refer to in IT operations?","opts":["The browser window showing change requests","An approved time period (usually off-hours) when changes are allowed to be deployed to minimize user impact","The number of changes allowed per sprint","A GUI for managing change requests"],"ans":1,"exp":"Change windows are scheduled maintenance periods (e.g., Saturday 2am–6am) when production changes are allowed. Changes outside the window require emergency approval."},{"q":"An employee is leaving the company. Which account management action should be taken IMMEDIATELY on their last day?","opts":["Archive all their emails first","Disable the account immediately; do not delete it yet","Change their password to something complex","Transfer their files first, then delete the account"],"ans":1,"exp":"Disable (not delete) the account immediately to prevent unauthorized access. Account data and email should be preserved for a defined period per policy before deletion."},{"q":"What is the difference between full and incremental backups?","opts":["Full backs up all data; incremental backs up data changed since the last incremental only","Full is faster; incremental is more complete","Full is for servers; incremental is for workstations","They are the same"],"ans":0,"exp":"Full = all data every time. Incremental = only data changed since the last backup of any type. Incremental is faster but requires all previous incrementals to restore."},{"q":"An organization must retain financial records for 7 years per SOX. This is an example of:","opts":["SLA requirement","Data retention policy","Change management policy","AUP (Acceptable Use Policy)"],"ans":1,"exp":"Data retention policies define how long specific data types must be kept and how they must be disposed of. SOX requires 7-year financial document retention."},{"q":"Which type of documentation describes the expected uptime and support response times between a vendor and customer?","opts":["AUP","NDA","SLA","RFC"],"ans":2,"exp":"SLA (Service Level Agreement) defines measurable service commitments: uptime percentage (e.g., 99.9%), response time, resolution time, and penalties for non-compliance."},{"q":"A company wants to ensure that no single IT employee can approve AND implement a critical system change without oversight. This principle is called:","opts":["Least privilege","Mandatory Access Control","Separation of duties","Need to know"],"ans":2,"exp":"Separation of duties ensures no single person controls an entire critical process end-to-end — reduces insider threat and error. In change management: one person approves, a different person implements."}]},{"title":"Core 2 — Set 5: Mixed Objectives","questions":[{"q":"A technician configures BitLocker on a laptop without a TPM. Which authentication options are available?","opts":["None — TPM is required","USB startup key or PIN/password","Facial recognition only","Smart card only"],"ans":1,"exp":"Without TPM: BitLocker can use a USB startup key (plugged in at boot) or a pre-boot PIN/password. The TPM normally stores the encryption key automatically."},{"q":"Which Windows command adds a new local user account named 'jsmith' with password 'Pass123!'?","opts":["user add jsmith Pass123!","net user jsmith Pass123! /add","lusrmgr /new jsmith","adduser jsmith Pass123!"],"ans":1,"exp":"'net user [username] [password] /add' creates a new local user account. Use '/active:yes' to ensure it is enabled. Works in cmd and PowerShell."},{"q":"A user receives a call from 'Microsoft Support' claiming their PC has a virus and asking for remote access. This is:","opts":["A legitimate Microsoft service call","Vishing — voice phishing / tech support scam","Whaling","Tailgating"],"ans":1,"exp":"Microsoft never calls users unsolicited. This is a vishing (voice phishing) tech support scam — the goal is to get remote access or payment for fake 'repair' services."},{"q":"Which malware type encrypts files and demands payment for the decryption key?","opts":["Spyware","Adware","Ransomware","Rootkit"],"ans":2,"exp":"Ransomware (e.g., WannaCry, Ryuk) encrypts victim files and demands cryptocurrency payment for the decryption key. Backups are the best defense."},{"q":"A Windows laptop joined to a domain is taken home. The user cannot access domain resources. What allows them to work with locally cached files?","opts":["VPN is automatically connected","Offline Files (Client-Side Caching) — syncs specified network files locally","BitLocker provides access","APIPA provides domain access"],"ans":1,"exp":"Windows Offline Files (CSC — Client-Side Caching) syncs specified network shares to local storage so users can access files when disconnected from the domain."},{"q":"What is the difference between HIPAA and PCI-DSS?","opts":["HIPAA is for financial data; PCI-DSS is for health data","HIPAA protects medical/health information in the US; PCI-DSS protects payment card data globally","Both cover the same data types","HIPAA is voluntary; PCI-DSS is mandatory"],"ans":1,"exp":"HIPAA = US healthcare law protecting PHI (medical records, insurance data). PCI-DSS = Payment Card Industry standard protecting cardholder data (card numbers, CVV)."},{"q":"After a hard drive replacement, a technician needs to install Windows on the new drive. The PC uses UEFI. What partition style must be used?","opts":["MBR","GPT","Dynamic","Extended"],"ans":1,"exp":"UEFI-based systems require GPT for the boot drive. UEFI can only boot from GPT disks (unless CSM/Legacy mode is enabled). Windows 11 strictly requires UEFI + GPT."},{"q":"A laptop running Windows 11 Pro shows 'Your organization's IT administrator has limited access.' This means:","opts":["The laptop has malware","The device is enrolled in MDM (Intune/JAMF) and managed by a corporate policy","BitLocker is active","A third-party VPN is blocking access"],"ans":1,"exp":"This message appears on MDM-enrolled devices. Microsoft Intune or another MDM solution has applied compliance policies restricting settings on the device."},{"q":"What is a CMDB (Configuration Management Database)?","opts":["A backup of the Windows registry","A database that tracks all IT assets, their configurations, relationships, and change history","A collection of Group Policy Objects","A network monitoring tool"],"ans":1,"exp":"CMDB stores configuration items (CIs) — hardware, software, network devices — and their relationships. Used in ITIL-based IT service management for change impact analysis."},{"q":"Which Linux command changes the owner of a file to 'admin'?","opts":["chmod admin filename","chown admin filename","setowner admin filename","usermod admin filename"],"ans":1,"exp":"'chown admin filename' changes the file owner to 'admin'. 'chown admin:staff filename' changes both owner and group. chmod changes permissions, not ownership."},{"q":"A user reports that their VPN connects but they can only access internal resources — normal internet traffic goes through VPN too, making it slow. What VPN setting is this?","opts":["Split tunneling disabled (full tunnel)","NAT overload","DNS leaking","Proxy configured"],"ans":0,"exp":"Full tunnel VPN routes ALL traffic through the corporate VPN. Split tunneling sends only corporate-bound traffic through VPN, allowing normal internet traffic to go direct."},{"q":"A technician is writing documentation for an IT process. What is an AUP?","opts":["A BIOS update procedure","Acceptable Use Policy — defines what is and is not allowed on company IT resources","An automatic update policy for Windows","Access User Permissions document"],"ans":1,"exp":"AUP (Acceptable Use Policy) is signed by employees and defines permitted use of company IT resources, consequences for violations, and monitoring practices."},{"q":"What does RAID 0 provide, and what is its critical weakness?","opts":["Fault tolerance only — slow performance","Improved read/write performance via striping — but zero redundancy (one disk failure = total data loss)","Both performance and redundancy","Only used for backups"],"ans":1,"exp":"RAID 0 stripes data across drives for maximum performance. There is NO fault tolerance — if one drive fails, ALL data in the array is lost."},{"q":"An attacker physically follows an authorized employee through a secured door without badging in. This is called:","opts":["Shoulder surfing","Piggybacking/Tailgating","Man-in-the-middle","Social engineering via email"],"ans":1,"exp":"Tailgating (piggybacking) = physically following someone through a secured door without using your own credentials. Counter-measure: security vestibules/mantrap, security awareness training."},{"q":"A company switches from buying physical servers (CapEx) to renting cloud VMs monthly (OpEx). What is the primary financial benefit?","opts":["Higher total cost over time","Predictable monthly costs with no large upfront capital investment","Free hardware upgrades","Reduced IT staffing needs"],"ans":1,"exp":"Cloud/OpEx model converts large upfront capital (CapEx) purchases to predictable operating expenses (OpEx). No depreciation, easier budget planning, scale as needed."},{"q":"What is the purpose of running 'gpresult /r' on a domain workstation?","opts":["Resets all Group Policies","Shows which GPOs are applied to the computer and current user","Updates Group Policy immediately","Generates a security report"],"ans":1,"exp":"'gpresult /r' shows the Resultant Set of Policy — which GPOs applied (and which were filtered/blocked), the source OU, and the domain controller used for auth."},{"q":"A system image backup differs from a file backup in that:","opts":["A system image only backs up the OS; file backup includes user data","A system image is an exact bit-for-bit copy of the entire volume including OS, settings, and data — enables bare-metal restore","File backups are slower","System images are smaller"],"ans":1,"exp":"A system image backup captures the complete disk state. A bare-metal restore rewrites the entire image to new hardware — no reinstall needed. File backups are selective."},{"q":"Which Windows feature allows older (incompatible) 32-bit programs to run on 64-bit Windows?","opts":["Hyper-V","WOW64 (Windows-on-Windows 64-bit subsystem)","Compatibility Mode alone","Boot Camp"],"ans":1,"exp":"WOW64 translates 32-bit Windows API calls to 64-bit equivalents, allowing 32-bit applications to run on 64-bit Windows without modification. Most 32-bit apps work seamlessly."},{"q":"A user asks why their newly encrypted EFS folder cannot be opened by a colleague on the same workstation. What is the reason?","opts":["EFS only works on the C: drive","EFS encrypts using the user's specific certificate — other users cannot access the encrypted files even on the same machine","EFS requires BitLocker to be active","The file permissions need to be set to Allow"],"ans":1,"exp":"EFS is tied to the encrypting user's personal certificate/private key. Even an admin cannot open EFS-encrypted files without the correct certificate, unless the EFS Recovery Agent is configured."},{"q":"A technician needs to remotely access a Windows Server to manage it securely. Which protocol should be used?","opts":["Telnet on port 23","FTP on port 21","RDP on port 3389 with NLA enabled","VNC on port 5900 unencrypted"],"ans":2,"exp":"RDP with NLA (Network Level Authentication) on port 3389 provides encrypted remote desktop access. Telnet and unencrypted VNC transmit data in plaintext — never use for production servers."}]}]};
+const ABBREVS=[{"title":"Core 1 — Hardware & Components","items":[["ATX","Advanced Technology eXtended — standard desktop motherboard form factor (305×244mm)"],["mATX","Micro-ATX — smaller motherboard (244×244mm), fewer expansion slots"],["ITX","Information Technology eXtended — Mini-ITX (170×170mm), smallest common form factor"],["CPU","Central Processing Unit — the primary processor"],["LGA","Land Grid Array — Intel socket design (pins on motherboard, not CPU)"],["PGA","Pin Grid Array — AMD socket design (pins on CPU, not socket)"],["TDP","Thermal Design Power — maximum heat a CPU generates under load (Watts)"],["TIM","Thermal Interface Material — thermal paste applied between CPU and heatsink"],["RAM","Random Access Memory — volatile system memory"],["DIMM","Dual Inline Memory Module — desktop RAM form factor (133mm)"],["SO-DIMM","Small Outline DIMM — laptop RAM form factor (67.6mm)"],["ECC","Error-Correcting Code — RAM that detects and corrects single-bit errors (servers)"],["DDR","Double Data Rate — current standard RAM type; DDR4 or DDR5"],["PCIe","Peripheral Component Interconnect Express — dominant expansion slot standard"],["GPU","Graphics Processing Unit — dedicated graphics card processor"],["VRAM","Video RAM — dedicated RAM on the GPU"],["NIC","Network Interface Card — network adapter"],["SSD","Solid State Drive — flash storage, no moving parts"],["HDD","Hard Disk Drive — magnetic rotating platter storage"],["NVMe","Non-Volatile Memory Express — high-speed SSD protocol over PCIe (up to 7000 MB/s PCIe 4.0)"],["eMMC","embedded MultiMediaCard — soldered flash storage in tablets/Chromebooks"],["SATA","Serial Advanced Technology Attachment — storage interface (max ~600 MB/s)"],["M.2","Form factor for SSDs — supports SATA or NVMe protocol depending on key"],["PSU","Power Supply Unit — converts AC to DC power for PC components"],["EPS","Enhanced Power Supply — 8-pin CPU power connector"],["POST","Power-On Self-Test — hardware check run by BIOS at power-on"],["BIOS","Basic Input/Output System — legacy firmware managing hardware initialization"],["UEFI","Unified Extensible Firmware Interface — modern replacement for BIOS"],["TPM","Trusted Platform Module — hardware chip storing encryption keys securely"],["CMOS","Complementary Metal-Oxide Semiconductor — holds BIOS settings (powered by coin battery)"],["RTC","Real-Time Clock — timekeeping circuit maintained by CMOS battery"],["IPS","In-Plane Switching — LCD panel type with wide color gamut and viewing angles"],["TN","Twisted Nematic — LCD panel type with fast response but narrow viewing angles"],["OLED","Organic Light-Emitting Diode — display with per-pixel lighting (perfect blacks)"],["CCFL","Cold Cathode Fluorescent Lamp — older LCD backlight requiring inverter"],["OPC","Organic Photoconductor — the drum in a laser printer; holds toner electrostatically"],["MFP","Multifunction Printer — printer with scan, copy, fax capabilities"],["PCL","Printer Control Language — HP's page description language"],["SoC","System on Chip — all major components (CPU, GPU, modem) on one die (mobile devices)"],["MDM","Mobile Device Management — software managing/securing mobile devices"],["EMM","Enterprise Mobility Management — broader than MDM, includes MAM and MCM"],["BYOD","Bring Your Own Device — policy allowing personal devices on corporate network"],["COPE","Corporate-Owned Personally-Enabled — company buys device but allows personal use"],["EAS","Exchange ActiveSync — protocol syncing email/contacts/calendar to mobile devices"],["NFC","Near Field Communication — short-range (~20cm) wireless protocol at 13.56 MHz"],["BLE","Bluetooth Low Energy — power-efficient Bluetooth for IoT devices"],["IMEI","International Mobile Equipment Identity — unique mobile device hardware identifier"]]},{"title":"Core 1 — Networking","items":[["OSI","Open Systems Interconnection — 7-layer networking model"],["TCP","Transmission Control Protocol — reliable, connection-oriented Layer 4 protocol"],["UDP","User Datagram Protocol — fast, connectionless Layer 4 protocol"],["IP","Internet Protocol — Layer 3 addressing and routing protocol"],["MAC","Media Access Control — hardware Layer 2 address (burned into NIC)"],["DHCP","Dynamic Host Configuration Protocol — automatically assigns IP addresses"],["DORA","Discover, Offer, Request, Acknowledge — DHCP lease process"],["DNS","Domain Name System — resolves hostnames to IP addresses"],["ARP","Address Resolution Protocol — resolves IP to MAC address"],["NAT","Network Address Translation — maps private IPs to public IPs"],["APIPA","Automatic Private IP Addressing — 169.254.0.0/16 (DHCP failure fallback)"],["CIDR","Classless Inter-Domain Routing — notation like /24 for subnet masks"],["VLAN","Virtual Local Area Network — logical network segmentation on a switch"],["PoE","Power over Ethernet — delivers power over Ethernet cable (802.3af/at/bt)"],["UTP","Unshielded Twisted Pair — standard copper Ethernet cable"],["STP","Shielded Twisted Pair — copper Ethernet cable with EMI shielding"],["SMF","Single-Mode Fiber — 8-10µm core, laser, long distance (10s of km)"],["MMF","Multi-Mode Fiber — 50-62.5µm core, LED, short distance (~300m at 10Gbps)"],["SFP","Small Form-factor Pluggable — hot-swap optical/copper transceiver module"],["OTDR","Optical Time Domain Reflectometer — finds breaks/measures length in fiber"],["SSID","Service Set Identifier — Wi-Fi network name"],["WPA","Wi-Fi Protected Access — wireless security protocol (WPA2 and WPA3 current)"],["TKIP","Temporal Key Integrity Protocol — deprecated WPA encryption (do not use)"],["CCMP","Counter Mode CBC-MAC Protocol — AES-based WPA2 encryption (current)"],["SAE","Simultaneous Authentication of Equals — WPA3 handshake (prevents offline attacks)"],["802.1X","IEEE standard for port-based network access control using RADIUS"],["IaaS","Infrastructure as a Service — cloud provides VMs, storage, networking (AWS EC2)"],["PaaS","Platform as a Service — cloud provides platform (AWS Elastic Beanstalk)"],["SaaS","Software as a Service — cloud provides application (Office 365, Salesforce)"],["DaaS","Desktop as a Service — cloud-hosted virtual desktops"],["VDI","Virtual Desktop Infrastructure — central server delivers desktop environments"],["CDN","Content Delivery Network — distributed servers for fast content delivery"],["SLA","Service Level Agreement — contract defining uptime/support commitments"],["NIST","National Institute of Standards and Technology — US standards body"]]},{"title":"Core 1 — Critical Port Numbers","items":[["FTP","20 (data) / 21 (control) — File Transfer Protocol [TCP]"],["SSH","22 — Secure Shell — encrypted remote terminal [TCP]"],["Telnet","23 — Unencrypted remote terminal [TCP] — DO NOT USE"],["SMTP","25 — Simple Mail Transfer Protocol — sending email [TCP]"],["DNS","53 — Domain Name System [TCP + UDP]"],["DHCP","67 (server) / 68 (client) [UDP]"],["HTTP","80 — HyperText Transfer Protocol — unencrypted web [TCP]"],["HTTPS","443 — HTTP Secure — encrypted web [TCP]"],["POP3","110 — Post Office Protocol v3 — downloads email, deletes from server [TCP]"],["IMAP","143 — Internet Message Access Protocol — syncs email, keeps on server [TCP]"],["LDAP","389 — Lightweight Directory Access Protocol — directory queries [TCP]"],["SMB","445 — Server Message Block — Windows file/printer sharing [TCP]"],["SNMP","161 (queries) / 162 (traps) — Simple Network Management Protocol [UDP]"],["RDP","3389 — Remote Desktop Protocol — Windows remote desktop [TCP]"],["IPP","631 — Internet Printing Protocol [TCP]"],["RAW","9100 — Direct/RAW printing [TCP]"],["Kerberos","88 — Active Directory authentication [TCP/UDP]"],["SFTP","22 — SSH File Transfer Protocol (runs over SSH) [TCP]"]]},{"title":"Core 2 — Operating Systems","items":[["NTFS","New Technology File System — Windows default; supports permissions, EFS, journaling"],["FAT32","File Allocation Table 32 — max 4GB file size; compatible but limited"],["exFAT","Extended FAT — for flash drives/SD cards; no 4GB limit, no permissions"],["MBR","Master Boot Record — legacy partition style; max 2TB, 4 primary partitions"],["GPT","GUID Partition Table — modern; max 128 partitions, required for Windows 11"],["EFI","Extensible Firmware Interface — 100MB system partition on GPT boot drives"],["WIM","Windows Imaging Format — disk image format used by Windows deployment"],["OOBE","Out-Of-Box Experience — Windows setup wizard on first boot"],["Sysprep","System Preparation Tool — removes unique IDs for image deployment"],["WinRE","Windows Recovery Environment — recovery tools (Startup Repair, WinPE)"],["BCD","Boot Configuration Data — Windows boot menu database (edited with bcdedit)"],["WOW64","Windows-on-Windows 64 — subsystem allowing 32-bit apps on 64-bit Windows"],["DLL","Dynamic Link Library — shared code library loaded by multiple applications"],["HKLM","HKEY_LOCAL_MACHINE — registry hive with system-wide hardware and software settings"],["HKCU","HKEY_CURRENT_USER — registry hive with logged-in user settings and preferences"],["HKCR","HKEY_CLASSES_ROOT — file extension associations and COM object registrations"],["PID","Process Identifier — unique number assigned to each running process by Windows"],["GPO","Group Policy Object — policy settings applied to users/computers in Active Directory"],["AD","Active Directory — Microsoft's directory service for domain authentication"],["OU","Organizational Unit — container in AD used to organize users/computers and apply GPOs"],["DC","Domain Controller — server running Active Directory services"],["APFS","Apple File System — macOS file system for SSDs (since macOS High Sierra 2017)"],["HFS+","Hierarchical File System Plus — older macOS file system (pre-APFS)"]]},{"title":"Core 2 — Security","items":[["UAC","User Account Control — prompts for elevation when admin rights are needed"],["SID","Security Identifier — unique ID assigned to every user/group in Windows"],["ACL","Access Control List — list of permissions attached to an object"],["DACL","Discretionary ACL — controls access permissions (who can access what)"],["SACL","System ACL — controls which access events are logged in the Security log"],["EFS","Encrypting File System — per-file NTFS encryption using user certificates"],["FDE","Full Disk Encryption — encrypts entire drive (BitLocker, FileVault)"],["SED","Self-Encrypting Drive — drive with built-in hardware encryption"],["PKI","Public Key Infrastructure — system managing digital certificates and CAs"],["CA","Certificate Authority — trusted entity that issues digital certificates"],["AES","Advanced Encryption Standard — symmetric block cipher; AES-256 is current gold standard"],["RSA","Rivest-Shamir-Adleman — asymmetric (public-key) encryption algorithm"],["TLS","Transport Layer Security — cryptographic protocol for secure communications (HTTPS)"],["SSL","Secure Sockets Layer — deprecated predecessor to TLS"],["MFA","Multi-Factor Authentication — requires 2+ authentication factors"],["VPN","Virtual Private Network — encrypted tunnel over public internet"],["IPsec","Internet Protocol Security — suite of protocols for encrypting IP traffic"],["IKE","Internet Key Exchange — negotiates IPsec security associations"],["AH","Authentication Header — IPsec protocol providing integrity (no encryption)"],["ESP","Encapsulating Security Payload — IPsec protocol providing encryption + integrity"],["RAT","Remote Access Trojan — malware giving attacker remote control"],["C2","Command and Control — attacker's server communicating with malware"],["PUP","Potentially Unwanted Program — adware/browser hijackers"],["IOC","Indicator of Compromise — evidence of a security breach (unusual traffic, files, registry keys)"],["IDS","Intrusion Detection System — passive monitoring and alerting"],["IPS","Intrusion Prevention System — active inline blocking of threats"],["WIDS","Wireless Intrusion Detection System — detects rogue APs and wireless attacks"],["WPS","Wi-Fi Protected Setup — vulnerable to brute force; always disable"]]},{"title":"Core 2 — Operational Procedures","items":[["CMDB","Configuration Management Database — inventory of all IT assets and their relationships"],["ITIL","IT Infrastructure Library — framework for IT service management best practices"],["CAB","Change Advisory Board — committee that reviews and approves change requests"],["RFC","Request for Change — formal document describing a proposed IT change"],["RTO","Recovery Time Objective — maximum acceptable system downtime"],["RPO","Recovery Point Objective — maximum acceptable data loss (time since last backup)"],["SLA","Service Level Agreement — contract defining service metrics and guarantees"],["KPI","Key Performance Indicator — measurable metric for IT service performance"],["ITSM","IT Service Management — processes for delivering IT services effectively"],["AUP","Acceptable Use Policy — defines permitted use of company IT resources"],["NDA","Non-Disclosure Agreement — legally binding confidentiality agreement"],["PII","Personally Identifiable Information — data that identifies a specific individual"],["PHI","Protected Health Information — HIPAA-covered medical/health data"],["GDPR","General Data Protection Regulation — EU data privacy law"],["HIPAA","Health Insurance Portability and Accountability Act — US health data protection law"],["PCI-DSS","Payment Card Industry Data Security Standard — protects card payment data"],["SOX","Sarbanes-Oxley Act — US law requiring financial record accuracy and retention"],["CoD","Certificate of Destruction — document certifying secure data/hardware disposal"],["UPS","Uninterruptible Power Supply — battery backup for power outages"],["PDU","Power Distribution Unit — rack-mounted power strip for data centers"],["HVAC","Heating, Ventilation, and Air Conditioning — environmental control for data centers"],["GPL","GNU General Public License — open-source copyleft license (modified code must also be GPL)"],["EULA","End User License Agreement — software use terms and restrictions"],["FOSS","Free and Open-Source Software — software with publicly available source code"]]},{"title":"RAID Quick Reference","items":[["RAID 0","Striping — 2+ drives, NO fault tolerance, best performance, 1 fail = total loss"],["RAID 1","Mirroring — 2 drives, 1 can fail, 50% storage efficiency, good for boot drives"],["RAID 5","Striping + distributed parity — 3+ drives, 1 can fail, (n-1) usable storage"],["RAID 6","Striping + dual parity — 4+ drives, 2 can fail simultaneously, (n-2) usable storage"],["RAID 10","Mirror + Stripe — 4+ drives, multiple can fail (not same mirror pair), best balance"]]},{"title":"7-Step Troubleshooting Methodology","items":[["Step 1","Identify the problem — gather information, question the user, identify symptoms"],["Step 2","Establish a theory of probable cause — consider obvious causes first (Occam's Razor)"],["Step 3","Test the theory to determine cause — if confirmed go to step 4; if not, new theory"],["Step 4","Establish a plan of action — determine how to resolve and any side effects"],["Step 5","Implement the solution or escalate — fix the problem or pass to higher tier"],["Step 6","Verify full system functionality — confirm fix worked AND nothing else broke"],["Step 7","Document findings, actions, outcomes — create ticket/knowledge base article"]]},{"title":"Laser Printer 7-Step Process","items":[["Step 1","Processing — RIP converts document to bitmap in printer memory"],["Step 2","Charging — corona wire applies uniform negative charge (-600V) to OPC drum"],["Step 3","Exposing — laser neutralizes charged areas on drum creating the latent image"],["Step 4","Developing — negatively charged toner adheres to the laser-exposed (less negative) areas"],["Step 5","Transferring — transfer roller applies positive charge to pull toner from drum to paper"],["Step 6","Fusing — heat (~200°C) and pressure rollers permanently bond toner to paper"],["Step 7","Cleaning — rubber blade removes residual toner from drum; eraser lamp resets charge"]]},{"title":"OSI Model Layers","items":[["Layer 7 — Application","HTTP, HTTPS, FTP, DNS, SMTP, IMAP, POP3 | Mnemonic: Away"],["Layer 6 — Presentation","Encryption, compression, format translation (SSL/TLS) | Pizza"],["Layer 5 — Session","Session management (NetBIOS, RPC, SQL) | Sausage"],["Layer 4 — Transport","TCP, UDP — port numbers, segmentation, flow control | Throw"],["Layer 3 — Network","IP, ICMP, routers — logical addressing and routing | Not"],["Layer 2 — Data Link","Ethernet, Wi-Fi (MAC addresses), switches, frames | Do"],["Layer 1 — Physical","Cables, hubs, repeaters, electrical signals | Please"]]},{"title":"802.11 Wireless Standards","items":[["802.11a","5 GHz | 54 Mbps | 1999 | Range ~35m indoor"],["802.11b","2.4 GHz | 11 Mbps | 1999 | Range ~40m indoor"],["802.11g","2.4 GHz | 54 Mbps | 2003 | Range ~40m indoor"],["802.11n (Wi-Fi 4)","2.4 + 5 GHz | 600 Mbps | 2009 | MIMO introduced"],["802.11ac (Wi-Fi 5)","5 GHz only | 3.5 Gbps | 2013 | MU-MIMO, beamforming"],["802.11ax (Wi-Fi 6)","2.4 + 5 + 6 GHz | 9.6 Gbps | 2019 | OFDMA, better density"]]},{"title":"Common Exam Scenario Types (PBQ)","items":[["Network Diagram","Drag devices into correct network topology — know default gateway, DHCP, DNS placement"],["Cable Installation","Select correct cable type/standard for scenario (Cat6a for new runs, SMF for long distances)"],["Firewall Rules","Create allow/block rules — know direction (inbound vs outbound), port, protocol"],["NTFS Permissions","Assign minimum permissions — remember: Deny overrides Allow; permissions are cumulative"],["Printer Problem","Match symptom to component — ghost=drum, smear=fuser, blank=corona wire, lines=drum scratch"],["IP Addressing","Calculate subnet, determine broadcast address, verify whether IPs are on the same subnet"],["Windows Tools","Navigate to correct tool: diskmgmt.msc, services.msc, eventvwr.msc, regedit, gpedit.msc"],["Malware Removal","Apply 8-step process in correct order — quarantine comes before removal"],["Boot Troubleshooting","Select correct bootrec command for the specific error — know /fixmbr vs /fixboot vs /rebuildbcd"],["Security Scenario","Match attack type to description — phishing vs spear phishing vs whaling vs vishing"]]}];
+const EXTRA=[{"title":"Core 1 — Hardware & Components","items":[["ATX","Advanced Technology eXtended — standard desktop motherboard (305×244mm), most expansion slots"],["mATX","Micro-ATX — smaller motherboard (244×244mm), fewer PCIe slots, fits smaller cases"],["ITX","Mini-ITX (170×170mm) — smallest common form factor, used in HTPCs and compact builds"],["CPU","Central Processing Unit — executes instructions; primary chip on the motherboard"],["LGA","Land Grid Array — Intel socket design: pins on the MOTHERBOARD, CPU has flat pads"],["PGA","Pin Grid Array — AMD socket design (AM4): pins on the CPU, socket has holes"],["AM4","AMD socket for Ryzen 2000–5000 CPUs (PGA design)"],["AM5","AMD socket for Ryzen 7000+ CPUs (LGA design — AMD switched to LGA)"],["LGA1700","Intel socket for 12th/13th gen Core CPUs (Alder Lake / Raptor Lake)"],["TDP","Thermal Design Power — max sustained heat output in watts; determines cooler requirements"],["TIM","Thermal Interface Material — thermal paste/pad between CPU and heatsink"],["IHS","Integrated Heat Spreader — metal lid on top of CPU that contacts the heatsink"],["RAM","Random Access Memory — volatile; loses data when power removed"],["DIMM","Dual Inline Memory Module — desktop RAM (133mm, 288-pin for DDR4/5)"],["SO-DIMM","Small Outline DIMM — laptop RAM (67.6mm, 260-pin for DDR4/5)"],["ECC","Error-Correcting Code RAM — detects/corrects single-bit errors; required for servers"],["DRAM","Dynamic RAM — requires constant refresh; used for main system RAM"],["DDR4","Double Data Rate 4 — speeds 2133–3200 MHz, 1.2V, 288-pin DIMM"],["DDR5","Double Data Rate 5 — speeds 4800–7200 MHz, 1.1V, 288-pin DIMM (different notch than DDR4)"],["PCIe","PCI Express — serial point-to-point bus replacing parallel PCI; measured in lanes (x1,x4,x8,x16)"],["GPU","Graphics Processing Unit — parallel processor for rendering; uses PCIe x16 slot"],["VRAM","Video RAM — dedicated GPU memory (GDDR6/GDDR6X); separate from system RAM"],["NIC","Network Interface Card — provides network connectivity; uses PCIe x1 or integrated"],["SSD","Solid State Drive — NAND flash storage; no moving parts; much faster than HDD"],["HDD","Hard Disk Drive — magnetic spinning platters; 5400/7200 RPM; cheaper per GB"],["NVMe","Non-Volatile Memory Express — protocol for PCIe SSDs; up to 7000 MB/s (PCIe 4.0)"],["eMMC","embedded MultiMediaCard — soldered NAND in tablets/Chromebooks; not replaceable"],["SATA","Serial ATA — interface for 2.5\"/3.5\" drives; max 600 MB/s; uses 7-pin data + 15-pin power"],["M.2","Form factor for SSDs/Wi-Fi cards; 2230/2242/2280 lengths; B-key(SATA), M-key(NVMe), B+M(both)"],["mSATA","Mini-SATA — older small SSD form factor (replaced by M.2)"],["PSU","Power Supply Unit — converts AC mains to DC rails (+3.3V, +5V, +12V, -12V)"],["ATX 24-pin","Main motherboard power connector — provides all rails; must be fully seated"],["EPS 8-pin","CPU power connector (near CPU socket); provides dedicated +12V for processor"],["PCIe 6-pin","GPU supplemental power — provides 75W additional"],["PCIe 8-pin","GPU supplemental power — provides 150W additional"],["POST","Power-On Self-Test — firmware check of CPU, RAM, video, I/O; runs before OS loads"],["BIOS","Basic Input/Output System — legacy firmware (16-bit, 1MB limit, no mouse, MBR only)"],["UEFI","Unified Extensible Firmware Interface — modern firmware (64-bit, GUI, mouse, GPT, Secure Boot)"],["TPM","Trusted Platform Module — hardware chip storing crypto keys; required for Win 11 + BitLocker"],["TPM 2.0","Required version for Windows 11 (TPM 1.2 not sufficient)"],["CMOS","Complementary Metal-Oxide Semiconductor — holds BIOS config; powered by CR2032 battery"],["RTC","Real-Time Clock — tracks date/time; maintained by CMOS battery when system is off"],["Secure Boot","UEFI feature — verifies bootloader digital signature; prevents unsigned OS/malware loading"],["CSM","Compatibility Support Module — legacy BIOS emulation in UEFI for older OSes"],["IPS","In-Plane Switching — LCD type; wide viewing angles (178°), accurate colors, slower response"],["TN","Twisted Nematic — LCD type; fast response (1ms), narrow viewing angles, poor color"],["VA","Vertical Alignment — LCD type; high contrast, better black levels than IPS"],["OLED","Organic LED — per-pixel lighting, perfect blacks, risk of burn-in, no backlight"],["CCFL","Cold Cathode Fluorescent Lamp — older LCD backlight requiring inverter; replaced by LED"],["Digitizer","Touch input layer on laptops/tablets; sits above LCD; converts touch to coordinates"],["Inverter","Converts DC to AC for CCFL backlights; only on older CCFL displays — not needed on LED"],["OPC drum","Organic Photoconductor drum — laser printer component; holds electrostatic charge for toner"],["Corona wire","Charges OPC drum to -600V before laser exposure; wear causes print defects"],["Fuser","Heat + pressure rollers (200°C) that permanently bond toner to paper — toner smear = fuser fail"],["Transfer roller","Applies positive charge to pull toner from drum to paper during printing"],["MFP","Multifunction Printer — scan, copy, print, sometimes fax in one device"],["PCL","Printer Control Language — HP's page description language; raster-based"],["PostScript","Adobe page description language; vector-based; more accurate for graphics/fonts"],["IPP","Internet Printing Protocol — Port 631; modern cloud/network printing standard"],["RAW printing","Direct data to printer — Port 9100; no translation layer"],["Spooler","Print Spooler service — queues print jobs; path: C:\\Windows\\System32\\spool\\PRINTERS"]]},{"title":"Core 1 — Networking Deep Reference","items":[["OSI Layer 1","Physical — cables, hubs, repeaters, electrical signals, bit transmission"],["OSI Layer 2","Data Link — MAC addresses, frames, switches, NICs, error detection (CRC)"],["OSI Layer 3","Network — IP addresses, packets, routers, routing protocols (OSPF, BGP)"],["OSI Layer 4","Transport — TCP/UDP, port numbers, segmentation, flow control, windowing"],["OSI Layer 5","Session — establish/maintain/terminate sessions (NetBIOS, RPC, SQL sessions)"],["OSI Layer 6","Presentation — data format, encryption/decryption, compression (SSL/TLS here)"],["OSI Layer 7","Application — user-facing protocols (HTTP, FTP, DNS, SMTP, IMAP)"],["TCP","Transmission Control Protocol — reliable, ordered, connection-oriented; uses 3-way handshake"],["3-way handshake","SYN → SYN-ACK → ACK; establishes TCP connection before data transfer"],["UDP","User Datagram Protocol — fast, connectionless, no guaranteed delivery (DNS, DHCP, VoIP, streaming)"],["ICMP","Internet Control Message Protocol — used by ping (Echo Request/Reply) and tracert (TTL exceeded)"],["TTL","Time To Live — decremented by each router; when reaches 0, packet dropped (tracert uses this)"],["ARP","Address Resolution Protocol — maps IP to MAC; broadcasts 'Who has IP x.x.x.x?'"],["MAC address","48-bit (6-byte) hardware address; first 3 bytes = OUI (manufacturer), last 3 = unique"],["DHCP","Dynamic Host Configuration Protocol — UDP 67(server)/68(client); assigns IP, mask, gateway, DNS"],["DORA","Discover (broadcast) → Offer (broadcast) → Request (broadcast) → Acknowledge (unicast)"],["DHCP lease","Time-limited IP assignment; client renews at 50% then 87.5% of lease duration"],["DNS","Domain Name System — UDP/TCP 53; resolves FQDNs to IPs; hierarchical distributed database"],["A record","Maps hostname → IPv4 address (e.g., google.com → 142.250.80.46)"],["AAAA record","Maps hostname → IPv6 address"],["MX record","Mail Exchanger — specifies mail server for domain (e.g., nslookup -type=MX gmail.com)"],["CNAME record","Canonical Name — alias pointing to another hostname"],["PTR record","Pointer — reverse DNS lookup; maps IP → hostname"],["TXT record","Text record — used for SPF, DKIM, domain verification"],["TTL (DNS)","Time To Live — how long resolvers cache a DNS record (in seconds)"],["NAT","Network Address Translation — maps private IPs to public; saves IPv4 space"],["PAT","Port Address Translation — maps many private IPs to one public IP using ports (most home routers)"],["APIPA","169.254.0.0/16 — Windows self-assigns when DHCP unreachable; only local communication"],["Default gateway","Router IP on local subnet that forwards traffic to other networks"],["Subnet mask","/24 = 255.255.255.0 (254 hosts) | /25 = .128 (126) | /26 = .192 (62) | /27 = .224 (30)"],["Private ranges","10.0.0.0/8 | 172.16.0.0–172.31.255.255/12 | 192.168.0.0/16 (RFC 1918)"],["Loopback","127.0.0.1 (IPv4) / ::1 (IPv6) — always refers to local machine"],["Broadcast","255.255.255.255 (limited) or x.x.x.255 (directed) — sent to all hosts on subnet"],["VLAN","Virtual LAN — logical segmentation of switch ports; requires trunk/tagged ports between switches"],["Trunk port","Carries multiple VLANs using 802.1Q tagging; used between switches and to routers"],["PoE 802.3af","Power over Ethernet original — max 15.4W; for older IP phones, basic cameras"],["PoE+ 802.3at","PoE Plus — max 30W; for PTZ cameras, VoIP phones with screens"],["PoE++ 802.3bt","PoE++ — max 60W (Type 3) / 90W (Type 4); for laptops, APs"],["STP (loop)","Spanning Tree Protocol — prevents Layer 2 loops by blocking redundant switch paths"],["UTP","Unshielded Twisted Pair — standard copper Ethernet; twisting reduces crosstalk"],["STP (cable)","Shielded Twisted Pair — foil or braid shielding around pairs; used in high-EMI environments"],["Cat5e","1 Gbps / 100m / 100 MHz — current minimum for new installs"],["Cat6","1 Gbps / 100m OR 10 Gbps / 55m / 250 MHz — center spline separates pairs"],["Cat6a","10 Gbps / 100m / 500 MHz — augmented; heavier shielding; for data centers"],["Cat8","25–40 Gbps / 30m / 2000 MHz — for switch-to-server connections in data centers"],["T568A","GW-G-OW-B-BW-O-BrW-Br — used in residential/government (EIA/TIA standard)"],["T568B","OW-O-GW-B-BW-G-BrW-Br — dominant in North American commercial (de facto standard)"],["LC connector","Lucent Connector — small form factor, push-pull latch; dominant in modern fiber"],["SC connector","Subscriber Connector — push-pull (snap); square body; common in older installs"],["ST connector","Straight Tip — bayonet twist-lock; older; used in legacy campus networks"],["SMF","Single-Mode Fiber — 8–10µm core; laser source; 40km+ distance; OS1/OS2 standards"],["MMF","Multi-Mode Fiber — 50–62.5µm core; LED/VCSEL; up to 550m at 10Gbps; OM1–OM4"],["OM1","62.5µm MMF — 10Gbps up to 33m; older orange cable"],["OM3","50µm MMF — 10Gbps up to 300m; aqua cable"],["OM4","50µm MMF — 10Gbps up to 400m; aqua/violet cable — current standard for new installs"],["SFP","Small Form-factor Pluggable — hot-swap transceiver for 1Gbps fiber/copper"],["SFP+","Enhanced SFP — 10Gbps; standard for modern switches"],["QSFP","Quad SFP — 40Gbps; bundles 4×10G lanes"],["OTDR","Optical Time Domain Reflectometer — sends light pulse, measures reflections to find breaks/length"],["802.11a","5 GHz / 54 Mbps / 1999 / OFDM — indoor ~35m; 23 non-overlapping channels"],["802.11b","2.4 GHz / 11 Mbps / 1999 / DSSS — indoor ~40m; 3 non-overlapping channels (1,6,11)"],["802.11g","2.4 GHz / 54 Mbps / 2003 / OFDM — backward compat with b; same 3 channels"],["802.11n","2.4+5 GHz / 600 Mbps / 2009 / OFDM — introduced MIMO (up to 4 spatial streams)"],["802.11ac","5 GHz only / 3.5 Gbps / 2013 — MU-MIMO, 80/160 MHz channels, beamforming"],["802.11ax","2.4+5+6 GHz / 9.6 Gbps / 2019 — OFDMA, MU-MIMO 8x8, BSS coloring, TWT"],["OFDMA","Orthogonal Frequency Division Multiple Access — Wi-Fi 6 feature; serves multiple clients simultaneously"],["MU-MIMO","Multi-User MIMO — simultaneous streams to multiple clients (4x4 on ac, 8x8 on ax)"],["TWT","Target Wake Time — Wi-Fi 6 feature; schedules when devices wake, saving battery"],["WEP","Wired Equivalent Privacy — BROKEN; RC4 cipher with weak 24-bit IV; cracked in minutes"],["WPA","Wi-Fi Protected Access — TKIP encryption; temporary fix for WEP; also vulnerable"],["WPA2","802.11i standard — AES-CCMP encryption; still secure with strong passwords"],["WPA3","2018 — SAE replaces PSK; forward secrecy; 192-bit mode for enterprise; no offline attacks"],["TKIP","Temporal Key Integrity Protocol — WPA(v1) encryption; deprecated; do not use"],["CCMP","Counter Mode CBC-MAC Protocol — AES-based; required by WPA2 certification"],["SAE","Simultaneous Authentication of Equals — WPA3 handshake (Dragonfly); prevents offline dict attacks"],["802.1X","Port-based Network Access Control — requires RADIUS server; EAP authentication"],["RADIUS","Remote Authentication Dial-In User Service — centralized AAA (Authentication, Authorization, Accounting)"],["WPS","Wi-Fi Protected Setup — PIN method has 8-digit vulnerability (cracked in hours); ALWAYS disable"],["IaaS","Infrastructure as a Service — customer manages: OS, apps. Provider manages: hardware, network, storage"],["PaaS","Platform as a Service — customer manages: apps, data. Provider manages: OS, runtime, middleware"],["SaaS","Software as a Service — customer manages: data, access. Provider manages: everything else"],["DaaS","Desktop as a Service — hosted VDI; cloud delivers Windows desktop to thin clients"],["Public cloud","Multi-tenant; shared infrastructure; AWS, Azure, GCP"],["Private cloud","Single-tenant; on-premises or hosted; full control; higher cost"],["Hybrid cloud","Combination of public + private; workloads move between them based on policy"],["Community cloud","Shared by orgs with common interests (e.g., healthcare orgs sharing HIPAA cloud)"],["CapEx","Capital Expenditure — large upfront purchase (buy server); depreciated over time"],["OpEx","Operational Expenditure — ongoing monthly cost (rent cloud VM); predictable budget"],["Elasticity","Ability to rapidly scale resources up or down automatically based on demand"],["CDN","Content Delivery Network — caches content at edge locations globally (Cloudflare, Akamai)"],["Type 1 hypervisor","Bare-metal — runs directly on hardware: VMware ESXi, Microsoft Hyper-V, KVM, Xen"],["Type 2 hypervisor","Hosted — runs inside an OS: VirtualBox, VMware Workstation, Parallels Desktop"],["VM snapshot","Point-in-time capture of VM disk + RAM state; enables instant rollback"],["VM template","Pre-configured master VM image used to rapidly deploy identical VMs"],["Container","Shares host OS kernel; isolated process namespace; Docker; much lighter than full VM"],["SoC","System on Chip — CPU + GPU + modem + NPU + memory controller on one die; mobile devices"],["BYOD","Bring Your Own Device — personal device on corporate network; requires MDM enrollment"],["COPE","Corporate-Owned Personally-Enabled — company buys device; allows limited personal use"],["CYOD","Choose Your Own Device — employee picks from approved device list"],["MDM","Mobile Device Management — push configs, enforce policies, remote wipe"],["MAM","Mobile Application Management — manages specific apps without full device control"],["EMM","Enterprise Mobility Management — MDM + MAM + MCM combined"],["EAS","Exchange ActiveSync — syncs email/contacts/calendar; enforces PIN/encryption/remote wipe policies"],["OTA","Over The Air — wireless OS/app updates and MDM enrollment"],["IMEI","International Mobile Equipment Identity — 15-digit unique hardware ID; carriers blacklist stolen devices"],["ICCID","Integrated Circuit Card Identifier — SIM card unique number"],["NFC","Near Field Communication — 13.56 MHz; ~20cm range; contactless payments, transit cards, pairing"],["BLE","Bluetooth Low Energy — extended battery life; IoT sensors, beacons, fitness trackers"],["IR","Infrared — line-of-sight short range; TV remotes; some laptops have IR port for file transfer"],["APIPA","169.254.0.0/16 — assigned when DHCP fails; allows local communication only; sign of network issue"]]},{"title":"Core 1 — Critical Port Numbers (Memorize All)","items":[["FTP — 20/21","File Transfer Protocol — 20=data transfer, 21=control/commands [TCP] — unencrypted!"],["SFTP — 22","SSH File Transfer Protocol — runs over SSH tunnel [TCP] — encrypted"],["SSH — 22","Secure Shell — encrypted remote terminal; replaced Telnet [TCP]"],["Telnet — 23","Unencrypted remote terminal [TCP] — NEVER use in production; exam trap"],["SMTP — 25","Simple Mail Transfer Protocol — server-to-server email sending [TCP]"],["SMTP (auth) — 587","Authenticated SMTP submission from mail client [TCP] (also 465 for SSL)"],["DNS — 53","Domain Name System [TCP + UDP] — UDP for queries, TCP for zone transfers"],["DHCP — 67/68","Server listens on 67, client on 68 [UDP] — both use broadcast"],["TFTP — 69","Trivial FTP — UDP, no auth, used for PXE boot and network device firmware"],["HTTP — 80","HyperText Transfer Protocol — unencrypted web [TCP]"],["Kerberos — 88","Active Directory authentication [TCP + UDP]"],["POP3 — 110","Post Office Protocol v3 — downloads email, DELETES from server [TCP]"],["IMAP — 143","Internet Message Access Protocol — syncs email, KEEPS on server [TCP]"],["SNMP — 161/162","Simple Network Management Protocol — 161=queries(polls), 162=traps(alerts) [UDP]"],["LDAP — 389","Lightweight Directory Access Protocol — AD directory queries [TCP + UDP]"],["HTTPS — 443","HTTP Secure — TLS encrypted web [TCP]"],["SMB — 445","Server Message Block — Windows file/printer sharing [TCP]"],["SMTP (SSL) — 465","SMTP with SSL/TLS [TCP]"],["LDAPS — 636","LDAP over SSL — encrypted directory queries [TCP]"],["IMAP (SSL) — 993","IMAP with SSL/TLS [TCP]"],["POP3 (SSL) — 995","POP3 with SSL/TLS [TCP]"],["RDP — 3389","Remote Desktop Protocol — Windows remote desktop [TCP] — block on public-facing firewall"],["VNC — 5900","Virtual Network Computing — cross-platform remote desktop [TCP] — unencrypted by default"],["IPP — 631","Internet Printing Protocol [TCP] — modern network printing"],["RAW/JetDirect — 9100","Raw printing / HP JetDirect [TCP]"],["OpenVPN — 1194","OpenVPN default port [UDP]"],["IPsec IKE — 500","Internet Key Exchange for IPsec [UDP]"],["IPsec NAT-T — 4500","IPsec over NAT traversal [UDP]"],["NTP — 123","Network Time Protocol — time synchronization [UDP]"],["Syslog — 514","System logging [UDP]"]]},{"title":"Core 2 — Operating Systems Deep Reference","items":[["Windows Home","Max 128GB RAM; no BitLocker; no gpedit.msc; no domain join; no Hyper-V; no RDP host"],["Windows Pro","Max 2TB RAM; BitLocker; gpedit.msc; domain join; Hyper-V; RDP host; Windows Sandbox"],["Windows Pro WS","Max 6TB RAM; ReFS; WSDD2 (faster domain joins); server-class memory/CPU support"],["Windows Enterprise","All Pro features + DirectAccess, AppLocker, BranchCache, Credential Guard"],["winver","Check Windows version in run dialog"],["gpedit.msc","Group Policy Editor — Pro and above only; local policy management"],["NTFS","New Technology File System — journaling, permissions, EFS, compression, max 16TB volume"],["FAT32","Max 4GB file, max 32GB volume (Windows format tool limit); good for USB compatibility"],["exFAT","Extended FAT — no file size limit; no permissions; ideal for large USB/SD cards"],["ReFS","Resilient File System — Windows Server; integrity streams; no EFS or disk quotas"],["ext4","Linux default file system — journaling, large file support, inodes"],["APFS","Apple File System — SSDs; native encryption; snapshots; clones; space sharing"],["MBR","Master Boot Record — legacy; max 2TB; max 4 primary partitions; 512-byte boot sector"],["GPT","GUID Partition Table — modern; max 128 partitions; max 9.4 ZB; required for UEFI/Win11"],["EFI partition","100MB FAT32 partition on GPT boot drives; stores bootloaders"],["MSR partition","Microsoft Reserved — 16MB; GPT requirement; no drive letter; not visible to users"],["WIM","Windows Imaging Format — single-instance file-based image used by deployment tools"],["WDS","Windows Deployment Services — PXE boot network OS deployment"],["MDT","Microsoft Deployment Toolkit — automates Windows deployment with task sequences"],["Sysprep","System Preparation Tool; /generalize removes SID/hardware info for imaging; /oobe restores OOBE"],["OOBE","Out-Of-Box Experience — initial Windows setup wizard (name, account, region, etc.)"],["unattend.xml","Answer file for unattended Windows installation; stored in sources folder on install media"],["WinPE","Windows Preinstallation Environment — minimal Win used for deployment and recovery"],["WinRE","Windows Recovery Environment — Startup Repair, System Restore, Command Prompt, Image Recovery"],["bootrec /fixmbr","Rewrites Master Boot Record — fixes corrupt MBR without touching partition table"],["bootrec /fixboot","Rewrites Volume Boot Record — fixes corrupt boot sector"],["bootrec /scanos","Scans all disks for Windows installations (shows what BCD can reference)"],["bootrec /rebuildbcd","Rebuilds Boot Configuration Data from scratch using found Windows installs"],["bcdedit","Boot Configuration Data Editor — view/modify boot menu entries (e.g., change boot timeout)"],["HKLM","HKEY_LOCAL_MACHINE — system-wide hardware, software, security, SAM databases"],["HKCU","HKEY_CURRENT_USER — logged-in user preferences, desktop, software settings"],["HKCR","HKEY_CLASSES_ROOT — file extension associations, COM object registrations"],["HKU","HKEY_USERS — all user profiles; HKCU is an alias for the active user subkey here"],["HKCC","HKEY_CURRENT_CONFIG — current hardware profile (display, printer settings)"],["HKLM\\SAM","Security Accounts Manager — local user/group database; only accessible as SYSTEM"],["Run key","HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Run — user autostart programs"],["Run key (system)","HKLM\\Software\\Microsoft\\Windows\\CurrentVersion\\Run — system autostart programs"],["sfc /scannow","System File Checker — scans and repairs protected Windows system files"],["DISM /CheckHealth","Quick check of component store corruption flag (no actual scanning)"],["DISM /ScanHealth","Full scan of component store for corruption (may take 10 min)"],["DISM /RestoreHealth","Repairs component store from Windows Update (run BEFORE sfc when both needed)"],["gpupdate /force","Forces immediate reapplication of all Group Policy Objects"],["gpresult /r","Shows Resultant Set of Policy — which GPOs applied to current user/computer"],["net user","Lists all local accounts; 'net user [name]' shows account details"],["net user /add","Creates a new local user: net user username password /add"],["net localgroup","Lists local groups; 'net localgroup administrators username /add' adds admin"],["net use","Maps network drives: net use Z: \\\\server\\share /user:domain\\user password"],["tasklist","Lists running processes with PID — command line version of Task Manager Details tab"],["taskkill /PID","Kills process by ID: taskkill /PID 1234 /F (force)"],["PID","Process ID — unique number assigned by Windows to each running process"],["WOW64","Windows-on-Windows 64-bit — subsystem enabling 32-bit apps on 64-bit OS"],["Program Files","Default install location for 64-bit applications"],["Program Files (x86)","Default install location for 32-bit applications on 64-bit Windows"],["Event ID 41","Kernel-Power — unexpected shutdown (power loss, hard reboot)"],["Event ID 1001","BugCheck — BSOD crash recorded with minidump reference"],["Event ID 6005","Service Control Manager — EventLog service started = system boot"],["Event ID 6006","Service Control Manager — EventLog service stopped = clean shutdown"],["Event ID 4625","Windows Security — failed logon attempt"],["Event ID 4624","Windows Security — successful logon"],["services.msc","Services Management Console — view/start/stop/configure Windows services"],["perfmon.msc","Performance Monitor — track CPU, RAM, disk, network metrics over time"],["resmon.exe","Resource Monitor — detailed real-time view of CPU, Memory, Disk, Network usage"],["msconfig","System Configuration — boot options, safe mode, startup programs (legacy)"],["msinfo32","System Information — comprehensive hardware/software inventory"],["devmgmt.msc","Device Manager — manage hardware devices and drivers"],["diskmgmt.msc","Disk Management — create/delete/format partitions, assign drive letters"],["DiskPart","Command-line disk partitioning: list disk, select, clean, create partition, format, assign"],["lusrmgr.msc","Local Users and Groups — create/manage local accounts (Pro and above)"],["secpol.msc","Local Security Policy — password policies, lockout, audit settings"],["certmgr.msc","Certificate Manager — view/manage digital certificates for current user"],["mmc.exe","Microsoft Management Console — customizable admin tool; add snap-ins"],["UNC path","Universal Naming Convention — \\\\server\\share format for network resources"],["SMB","Server Message Block — Windows file/printer sharing; Port 445"],["Offline Files","Client-Side Caching — syncs network share files locally for offline access"],["UAC","User Account Control — elevates privileges when needed; Admin=consent, Standard=credentials"],["SID","Security Identifier — unique ID for every user/group/computer (S-1-5-21-...)"],["ACL","Access Control List — ordered list of ACEs defining permissions on an object"],["ACE","Access Control Entry — single permission entry in an ACL (Allow/Deny + user/group + permission)"],["DACL","Discretionary ACL — controls who can access the object"],["SACL","System ACL — controls which accesses are audited to Security event log"],["NTFS Full Control","Read, write, execute, change permissions, take ownership, delete"],["NTFS Modify","Read, write, execute, delete — cannot change permissions or take ownership"],["NTFS Read+Execute","View and run executables — cannot create or modify files"],["NTFS Read","View file/folder contents — cannot modify or execute"],["NTFS Write","Create files/folders, modify content — cannot read what is created"],["Deny overrides Allow","Explicit Deny wins over Allow at all times — even if Allow comes from another group"],["Effective permissions","Cumulative union of all Allow permissions from all groups minus all Deny"],["Inheritance","Permissions flow from parent to child — break inheritance to set unique permissions"],["chmod 777","rwxrwxrwx — full permissions for owner, group, and others (Linux)"],["chmod 755","rwxr-xr-x — owner can rwx; group and others can only r-x"],["chmod 644","rw-r--r-- — owner can rw; group and others can only read (typical config files)"],["chmod 600","rw------- — owner can rw; no one else has access (SSH private keys)"],["sudo","Superuser Do — run command with root privileges (requires sudoers membership)"],["apt","Advanced Package Tool — Debian/Ubuntu package manager: apt install, apt update, apt upgrade"],["yum/dnf","Red Hat/CentOS/Fedora package manager: yum install, dnf update"],["/etc","Linux system-wide configuration files (network, users, services)"],["macOS Terminal","/Applications/Utilities/Terminal — bash/zsh shell access"],["macOS Activity Monitor","Task Manager equivalent — CPU, Memory, Energy, Disk, Network tabs"],["macOS Disk Utility","Partition, format, repair disks; mount/unmount volumes; Restore (clone)"],["macOS FileVault","Full disk encryption using AES-XTS; managed by Recovery Key or iCloud"],["macOS Time Machine","Incremental backup to external drive or network; hourly/daily/weekly snapshots"],["macOS Spotlight","Cmd+Space — system-wide search for files, apps, contacts, web, calculations"],["macOS Mission Control","F3 / gesture — virtual desktops, expose (all windows), Spaces management"],["APFS","Apple File System (2017+) — replaces HFS+; native encryption, snapshots, fast metadata ops"]]},{"title":"Core 2 — Security Deep Reference","items":[["Virus","Attaches to host file; requires user to execute infected file to spread; can be polymorphic"],["Worm","Self-replicates without host file; spreads via network vulnerabilities (e.g., WannaCry)"],["Trojan","Disguised as legitimate software; creates backdoor; does NOT self-replicate"],["RAT","Remote Access Trojan — gives attacker full remote control of compromised machine"],["Ransomware","Encrypts files; demands crypto payment for decryption key (WannaCry, Ryuk, LockBit)"],["Spyware","Silently monitors user activity, keystrokes, screen; sends data to attacker"],["Adware","Displays unwanted ads; often bundled with free software; may redirect browser"],["Keylogger","Records keystrokes; captures passwords, credit cards, messages"],["Rootkit","Hides at kernel/hypervisor level; makes malware invisible to OS and security tools"],["Bootkit","Infects MBR/VBR/UEFI firmware; loads before OS; survives reinstallation"],["Fileless malware","Lives only in memory; no files on disk; uses legitimate tools (PowerShell, WMI)"],["PUP","Potentially Unwanted Program — browser hijackers, toolbars, adware disguised as utilities"],["C2 server","Command and Control — attacker's server communicating with malware on victim systems"],["C2 IOC","Unexpected outbound connections, unusual DNS queries, scheduled tasks, new registry run keys"],["Phishing","Mass email campaign impersonating trusted entity to steal credentials or deliver malware"],["Spear phishing","Targeted phishing using victim-specific details (name, role, recent activity)"],["Whaling","Spear phishing targeting C-suite executives (CEO, CFO) — often BEC attacks"],["BEC","Business Email Compromise — impersonates executive to authorize wire transfers/data"],["Vishing","Voice phishing — phone calls impersonating bank, Microsoft, IRS, tech support"],["Smishing","SMS phishing — text messages with malicious links or call-back numbers"],["Pretexting","Creating fabricated scenario to manipulate target into revealing information"],["Baiting","Leaving infected USB drives or offering fake downloads to lure victims"],["Tailgating","Following authorized person through secure door without badging in"],["Piggybacking","Same as tailgating but victim holds door knowingly (social manipulation)"],["Shoulder surfing","Visually observing victim's screen or keyboard to steal credentials"],["Dumpster diving","Searching discarded documents for sensitive information"],["Brute force","Systematically trying every possible password combination"],["Dictionary attack","Tries words from a wordlist; faster than brute force for common passwords"],["Rainbow table","Pre-computed hash-to-password lookup table; defeated by salting"],["Password spraying","Tries one common password (Password1!) against many accounts to avoid lockout"],["Credential stuffing","Uses breached username/password pairs to try other services (exploits reuse)"],["Pass-the-hash","Uses captured NTLM hash directly for authentication without knowing plaintext"],["Salt","Random unique value prepended to password before hashing; defeats rainbow tables"],["Hash","One-way function: SHA-256, bcrypt (slow/adaptive, best for passwords), MD5 (broken)"],["MFA","Multi-Factor Authentication — something you know + have + are (2+ factors required)"],["TOTP","Time-based One-Time Password — Google Authenticator, Microsoft Authenticator (RFC 6238)"],["FIDO2","Passwordless authentication standard — hardware keys (YubiKey), platform authenticators"],["AES","Advanced Encryption Standard — symmetric block cipher; AES-128 (fast) / AES-256 (strongest)"],["RSA","Rivest-Shamir-Adleman — asymmetric; 2048-bit minimum; used for key exchange, digital signatures"],["ECC","Elliptic Curve Cryptography — smaller keys, same strength as RSA; used in TLS, mobile"],["TLS 1.3","Current TLS standard — removed weak ciphers, 0-RTT handshake, forward secrecy mandatory"],["Forward secrecy","Each session uses unique key; past sessions cannot be decrypted if long-term key compromised"],["PKI","Public Key Infrastructure — CA, certificates, CRL, OCSP for managing digital trust"],["CA","Certificate Authority — trusted entity that signs certificates (DigiCert, Let's Encrypt, internal CA)"],["CRL","Certificate Revocation List — CA-published list of revoked certificates"],["OCSP","Online Certificate Status Protocol — real-time single certificate revocation check"],["Self-signed cert","Certificate signed by its own private key; browser shows warning; not trusted by default"],["BitLocker","Windows FDE — AES-128/256-bit; uses TPM for key storage; recovery key = 48 digits"],["BitLocker no TPM","Requires USB startup key OR pre-boot PIN/password instead of TPM"],["EFS","Encrypting File System — per-file NTFS encryption using user certificate; transparent to user"],["EFS recovery","EFS Recovery Agent (DRA) — designated account that can decrypt any EFS file if user cert lost"],["FileVault 2","macOS full disk encryption — AES-XTS 128-bit; managed by Apple ID or Recovery Key"],["SED","Self-Encrypting Drive — hardware-level AES; Opal standard; managed via HDD password or TCG"],["FDE","Full Disk Encryption — encrypts everything including OS and temp files"],["SID","Security Identifier — unique binary value assigned to every security principal (S-1-5-21-...)"],["UAC levels","Off / Notify always / Notify only for app changes (default) / Never (admin gets no prompt)"],["GPO security","User Config / Computer Config / Windows Settings / Security Settings"],["AppLocker","Windows Enterprise feature — controls which applications users can run (whitelist/blacklist)"],["Windows Defender","Built-in AV/AM; Defender Offline = pre-OS scan using WinPE environment"],["Quarantine","Isolates malware in protected folder; prevents execution but preserves for analysis"],["8-step malware removal","1-Investigate 2-Quarantine 3-Disable System Restore 4-Remediate 5-Schedule scan 6-Re-enable Restore 7-Document 8-Educate"],["Safe Mode","Boot with minimal drivers/services — prevents most malware from loading"],["Safe Mode Networking","Safe Mode + network drivers — allows downloading tools or accessing network shares"],["IOC","Indicator of Compromise — unexpected: outbound connections, autorun entries, scheduled tasks, CPU usage"],["IDS","Intrusion Detection System — passive; logs and alerts on suspicious traffic; does NOT block"],["IPS","Intrusion Prevention System — active; inline; blocks/drops malicious packets in real-time"],["HIDS","Host-based IDS — monitors file system, logs, processes on a single host"],["NIDS","Network-based IDS — monitors traffic on a network segment"],["WIDS","Wireless IDS — detects rogue APs, deauth attacks, evil twin APs"],["UTM","Unified Threat Management — firewall + IPS + AV + content filter + VPN in one appliance"],["VPN","Virtual Private Network — encrypted tunnel over public internet"],["IPsec transport","Encrypts only the payload; original IP headers visible; host-to-host"],["IPsec tunnel","Encrypts entire original packet; new IP header added; used for VPN gateways"],["IKE","Internet Key Exchange — negotiates Security Associations for IPsec (UDP 500 / 4500 for NAT)"],["L2TP/IPsec","L2TP tunneling + IPsec encryption; common before SSL VPNs; uses UDP 1701"],["SSL VPN","TLS-based VPN over port 443; bypasses most firewalls; clientless via browser"],["Split tunneling","Only corporate traffic goes through VPN; personal traffic exits directly"],["Full tunnel","All traffic routes through VPN; more secure but higher latency and bandwidth use"],["SSID hiding","Security theater — AP still responds to probe requests; easily discovered with Wireshark"],["MAC filtering","Easily bypassed — attacker sniffs valid MAC and spoofs it in seconds"],["WPS PIN","8-digit PIN; vulnerable to Pixie Dust attack; crackable in hours; ALWAYS DISABLE"],["Evil twin","Rogue AP mimicking legitimate SSID; harvests credentials from clients who connect"],["Deauth attack","Sends spoofed 802.11 disassociation frames; forces clients to reconnect (for handshake capture)"],["Overwrite","Writes zeros/ones over drive sectors; ineffective on SSDs due to wear leveling"],["Degaussing","Strong magnetic field destroys data on HDDs and tapes; DOES NOT WORK on SSDs or optical"],["Crypto-erase","Encrypts drive then destroys the key; NIST SP 800-88 recommended for SSDs"],["Physical destruction","Shredding, crushing, melting — most thorough method; required for top-secret media"],["CoD","Certificate of Destruction — legally binding document proving compliant media destruction"],["NIST SP 800-88","Guidelines for Media Sanitization — defines Clear, Purge, Destroy methods per media type"]]},{"title":"Core 2 — Operational Procedures Deep Reference","items":[["ITIL","IT Infrastructure Library — framework for aligning IT services with business needs"],["ITSM","IT Service Management — managing IT services using ITIL or similar framework"],["CMDB","Configuration Management Database — records all CIs (assets), their config, and relationships"],["CI","Configuration Item — any component managed in the CMDB (server, switch, software, contract)"],["Incident","Unplanned disruption to an IT service (different from a Problem which is root cause)"],["Problem","Root cause investigation — a Problem record groups multiple related Incidents"],["Change","Formal modification to IT infrastructure requiring CAB approval"],["RFC","Request for Change — documents: description, business justification, risk, rollback, testing"],["CAB","Change Advisory Board — reviews and approves changes; includes IT, business, security reps"],["Emergency change","Bypasses standard CAB; requires designated emergency approver (CISO/CTO); documented retroactively"],["Change window","Pre-approved maintenance time (e.g., Sat 2–6am); changes outside this need emergency approval"],["Rollback plan","Step-by-step procedure to restore prior state if change fails; MANDATORY in every RFC"],["Standard change","Pre-approved, low-risk, routine changes (e.g., user password reset) — no CAB needed"],["SLA","Service Level Agreement — defines: uptime %, response time, resolution time, penalties for breach"],["OLA","Operational Level Agreement — internal SLA between IT teams (help desk ↔ network team)"],["KPI","Key Performance Indicator — measurable metric (ticket resolution time, first-call resolution rate)"],["MTTR","Mean Time To Repair — average time to restore service after failure"],["MTBF","Mean Time Between Failures — average time between hardware/system failures"],["RTO","Recovery Time Objective — maximum acceptable downtime (how long can systems be down?)"],["RPO","Recovery Point Objective — maximum acceptable data loss (how old can the last backup be?)"],["Full backup","Backs up ALL data every time — longest backup time, fastest restore, most storage"],["Incremental backup","Only data changed since LAST BACKUP (any type) — fastest backup, slowest restore"],["Differential backup","Only data changed since LAST FULL backup — medium speed; restore needs full + one diff"],["3-2-1 rule","3 copies, 2 different media types, 1 offsite — industry gold standard for backup strategy"],["Grandfather-Father-Son","Backup rotation: daily(son)/weekly(father)/monthly(grandfather) — balances retention vs cost"],["RAID 0","Striping — 2+ drives, 0 fault tolerance, best performance, 100% capacity used"],["RAID 1","Mirroring — 2+ drives, 1+ can fail (depends on implementation), 50% capacity, good for boot"],["RAID 5","Striped parity — 3+ drives, 1 can fail, (n-1) capacity, good balance for NAS"],["RAID 6","Dual parity — 4+ drives, 2 can fail simultaneously, (n-2) capacity, slower writes"],["RAID 10","Mirror + Stripe — 4+ drives, up to n/2 can fail (not same pair), (n/2) capacity, best perf+redundancy"],["Hot spare","Drive pre-installed in RAID that automatically replaces failed drive; immediate rebuild starts"],["Hot-swap","Replace failed component without powering down the system (drives, PSUs, fans)"],["UPS standby","Switches to battery on power failure (~10ms transfer time); basic protection"],["UPS line-interactive","Always conditions power, faster switch to battery (~2-4ms); handles brownouts"],["UPS double-conversion","Load always runs from battery (AC→DC→AC); zero transfer time; best protection"],["PDU","Power Distribution Unit — rack-mounted power strip; smart PDUs have per-outlet metering"],["Hot aisle","Exhaust side of servers faces hot aisle — hot air goes to AC return; aisle is hot"],["Cold aisle","Intake side of servers faces cold aisle — cold air supplied here; aisle is cold"],["PUE","Power Usage Effectiveness — total facility power / IT equipment power; 1.0 = perfect, typical = 1.5"],["FM-200","Clean agent fire suppression (HFC-227ea) — replaced halon; safe for electronics and personnel"],["Halon","Ozone-depleting suppression agent — banned by Montreal Protocol 1994; legacy systems still exist"],["GDPR","EU regulation — data minimization, right to erasure, 72-hour breach notification, DPA required"],["HIPAA","US health data law — PHI protection, Security Rule (technical safeguards), Breach Notification Rule"],["PHI","Protected Health Information — name+diagnosis, SSN+DOB, medical records, insurance data"],["PCI-DSS","Payment Card Industry Standard — 12 requirements; annual audits for merchants; network segmentation"],["SOX","Sarbanes-Oxley — US financial record retention 7 years; IT controls auditing; CEO/CFO sign off"],["FERPA","Family Educational Rights and Privacy Act — protects student education records in US"],["GLBA","Gramm-Leach-Bliley Act — US financial institutions; protect consumer financial data"],["Data classification","Public → Internal → Confidential → Restricted (top secret) — drives access controls"],["Data retention","How long specific data types must be kept: HIPAA=6yr, SOX=7yr, varies by type/jurisdiction"],["Chain of custody","Documented record of who handled evidence and when — critical for legal admissibility"],["Legal hold","Preservation order requiring retention of data relevant to ongoing/anticipated litigation"],["AUP","Acceptable Use Policy — employees sign; defines permitted/prohibited use of company IT resources"],["NDA","Non-Disclosure Agreement — legally binding; protects confidential business information"],["PII","Personally Identifiable Information — name, SSN, DOB, biometrics; requires protection/minimization"],["Separation of duties","No single person controls an entire critical process end-to-end — reduces fraud/error"],["Dual control","Two people required to perform action (e.g., two keys to launch nuclear missile)"],["Need to know","Access only to information required for specific job function — even if same clearance level"],["Job rotation","Rotate employees through different roles — reduces fraud, cross-trains, exposes any misuse"],["Mandatory vacation","Requires employees to take leave — designed to uncover fraud hidden by always being present"],["EULA","End User License Agreement — no reverse engineering, no redistribution, 1 user (unless site license)"],["GPL","GNU General Public License — copyleft; modified code MUST also be GPL (share-alike requirement)"],["LGPL","Lesser GPL — allows linking from non-GPL software; used for libraries"],["MIT","Permissive open-source; use for anything including proprietary products; attribution required"],["Apache 2.0","Permissive; patent grant included; attribution required; popular for corporate open-source"],["Creative Commons","Content licensing (not software) — various levels from CC-BY to CC-BY-NC-ND"],["Professionalism","On time, proper appearance, set expectations, avoid personal calls, respect privacy, follow up"],["Escalation","When to escalate: beyond expertise, requires higher access, legal/compliance concern, recurring issue"],["Scripting basics","Batch (.bat) = cmd commands; PowerShell (.ps1) = .NET, AD management; Python = cross-platform automation"],["PowerShell remoting","Enable-PSRemoting; Invoke-Command -ComputerName; requires WinRM service"],["Remote support tools","RDP (3389), VNC (5900), TeamViewer, SCCM, Dameware, Intune"]]},{"title":"7-Step Troubleshooting Methodology","items":[["Step 1","Identify the problem — gather info, question user, identify symptoms, duplicate if possible, check logs"],["Step 2","Establish theory of probable cause — consider obvious first (Occam's Razor), research if needed"],["Step 3","Test the theory — if confirmed → step 4; if NOT confirmed → new theory or escalate"],["Step 4","Establish plan of action — determine resolution steps; consider side effects and user impact"],["Step 5","Implement solution or escalate — execute plan; if beyond scope, escalate with full documentation"],["Step 6","Verify full functionality — confirm fix worked AND nothing else broke; have user confirm"],["Step 7","Document findings — what was wrong, what fixed it, time taken, knowledge base update"]]},{"title":"Laser Printer 7-Step Process","items":[["Step 1 — Processing","RIP (Raster Image Processor) converts document to bitmap in printer's memory"],["Step 2 — Charging","Primary corona wire/roller applies uniform -600V to the OPC drum surface"],["Step 3 — Exposing","Laser beam neutralizes charge on specific drum areas creating the latent image (~-100V)"],["Step 4 — Developing","Negatively charged toner is attracted to the less-negative exposed areas on the drum"],["Step 5 — Transferring","Transfer roller applies positive charge to pull toner from drum to paper passing through"],["Step 6 — Fusing","Fuser assembly (heat ~200°C + pressure rollers) permanently bonds toner to paper fibers"],["Step 7 — Cleaning","Rubber cleaning blade scrapes residual toner off drum; erase lamp resets drum charge"]]},{"title":"Printer Troubleshooting Guide","items":[["Ghost image / shadow","Faint secondary image offset ~1 inch — worn/dirty OPC drum (fails to clean between rotations)"],["Toner smearing","Toner wipes off when touched — fuser assembly failure (not fusing heat correctly)"],["Blank pages (laser)","Empty toner cartridge OR failed corona wire (drum not charged, toner will not stick)"],["Faded / light print","Low toner, dirty corona wire, or laser intensity set too low in driver settings"],["Vertical white streaks","Scratched or dirty OPC drum — drum scratch creates consistent white line down page"],["Vertical dark streaks","Dirty fuser roller or debris on the drum"],["Horizontal banding (inkjet)","Clogged print head nozzles — run print head cleaning utility from printer software"],["Incorrect colors (inkjet)","Wrong ink cartridge, empty cartridge, or wrong ICC color profile in print driver"],["Paper jams","Wrong paper size/weight, worn pickup rollers, overloaded tray, damp/curled paper"],["Paper not feeding","Worn pickup roller, static-stuck paper, paper loaded wrong direction"],["Color bleed / wrong hue","Incorrect ICC profile — calibrate using printer vendor color calibration tool"],["Finishing issues","Stapler jam, collation wrong, hole punch misaligned — check MFP finishing unit"],["Network printer offline","Check print spooler service, verify IP reachable, check port/IP in printer properties"],["Spooler fix","services.msc → Print Spooler → Stop → delete files in C:\\Windows\\System32\\spool\\PRINTERS → Start"]]},{"title":"OSI Model — Complete Reference","items":[["Layer 7 Application","HTTP/S, FTP, SMTP, DNS, IMAP, POP3, SNMP, Telnet | Data unit: Data | Mnemonic: Away"],["Layer 6 Presentation","SSL/TLS, MIME, JPEG, MPEG, ASCII | Encryption/Compression/Formatting | Pizza"],["Layer 5 Session","NetBIOS, RPC, SQL, NFS | Establish/Maintain/Terminate sessions | Sausage"],["Layer 4 Transport","TCP, UDP | Port numbers, Segmentation, Flow control, Error recovery | Throw"],["Layer 3 Network","IP, ICMP, IPsec, OSPF, BGP | IP addresses, Routing, Packets | Not"],["Layer 2 Data Link","Ethernet, Wi-Fi (802.11), PPP, ARP | MAC addresses, Frames, Switches | Do"],["Layer 1 Physical","Cables, hubs, repeaters, bits, electrical/optical signals | Please"],["PDU Names","L7-5: Data | L4: Segment (TCP) / Datagram (UDP) | L3: Packet | L2: Frame | L1: Bit"],["Encapsulation","Each layer adds header going down (L7→L1); each layer strips header going up (L1→L7)"],["Switch = L2","Uses MAC addresses; builds CAM table; sends frames to specific port — no broadcasts"],["Router = L3","Uses IP addresses; makes routing decisions; separates broadcast domains"],["Hub = L1","Repeats all signals to all ports; creates one collision domain; obsolete"],["Firewall = L3-L7","Packet filter (L3), stateful (L4), deep packet inspection (L7/application-aware)"]]},{"title":"802.11 Wireless — Complete Reference","items":[["802.11a","5 GHz | 54 Mbps | 1999 | OFDM | ~35m indoor | 23 non-overlapping channels | rarely deployed now"],["802.11b","2.4 GHz | 11 Mbps | 1999 | DSSS | ~40m indoor | channels 1,6,11 (non-overlapping in US)"],["802.11g","2.4 GHz | 54 Mbps | 2003 | OFDM | ~40m | backward compat with b | same 3 non-overlapping channels"],["802.11n (Wi-Fi 4)","2.4+5 GHz | 600 Mbps | 2009 | MIMO (4 streams) | 40 MHz channels | HT (High Throughput)"],["802.11ac (Wi-Fi 5)","5 GHz only | 3.5 Gbps | 2013 | MU-MIMO 8x8 | 80/160 MHz channels | beamforming | VHT"],["802.11ax (Wi-Fi 6)","2.4+5+6 GHz | 9.6 Gbps | 2019 | OFDMA | MU-MIMO 8x8 DL+UL | BSS coloring | TWT | HE"],["802.11ax (Wi-Fi 6E)","Adds 6 GHz band (5.925–7.125 GHz) | Less interference | more channels | same 9.6 Gbps max"],["802.11be (Wi-Fi 7)","2.4+5+6 GHz | 46 Gbps | 2024 | 320 MHz channels | Multi-Link Operation"],["2.4 GHz channels","US: 11 channels, only 1,6,11 are non-overlapping (each 22 MHz wide)"],["5 GHz channels","24+ non-overlapping 20 MHz channels; less range/penetration but less interference"],["6 GHz band","Wi-Fi 6E exclusive; 59 non-overlapping 20MHz channels; no legacy interference"],["SSID","Service Set Identifier — network name; up to 32 characters; broadcast in beacon frames"],["BSS","Basic Service Set — single AP + its clients"],["ESS","Extended Service Set — multiple APs with same SSID forming one logical network (roaming)"],["Ad-hoc mode","Peer-to-peer Wi-Fi (IBSS) — no AP; devices connect directly"],["Infrastructure mode","All clients connect through AP — standard enterprise/home deployment"]]},{"title":"RAID Quick Reference","items":[["RAID 0","Striping | Min drives: 2 | Fault tolerance: NONE (1 fail = total loss) | Capacity: 100% | Use: performance"],["RAID 1","Mirroring | Min drives: 2 | Fault tolerance: 1 drive | Capacity: 50% | Use: OS drives, critical data"],["RAID 5","Striped+parity | Min drives: 3 | Fault tolerance: 1 drive | Capacity: (n-1)/n | Use: NAS, file servers"],["RAID 6","Dual parity | Min drives: 4 | Fault tolerance: 2 drives | Capacity: (n-2)/n | Use: large arrays"],["RAID 10","Stripe of mirrors | Min drives: 4 | Fault tolerance: 1 per mirror pair | Capacity: 50% | Use: databases"],["RAID 50","RAID 5 arrays striped | Min drives: 6 | Better write performance than RAID 5 | enterprise"],["Rebuild time","RAID 5/6: days for large drives; during rebuild, another failure = data loss — monitor closely"],["Hot spare","Pre-installed spare that auto-rebuilds on failure — reduces exposure window significantly"],["RAID ≠ Backup","RAID protects against HARDWARE failure only — not ransomware, accidental deletion, fire, theft"]]},{"title":"Common PBQ Scenario Types — Exam Tips","items":[["Network diagram","Place: modem→router→firewall→switch→clients; AP connects to switch; DHCP usually on router"],["Cable selection","New install = Cat6a; existing = match what's there; long run = fiber; patch panel = punchdown"],["IP scheme","Gateway = .1; DNS = .1 or ISP; DHCP range = .100-.200 (typical); static = outside DHCP range"],["Firewall rules","Inbound = traffic TO server; Allow HTTPS(443) inbound; Block Telnet(23); Outbound = traffic FROM LAN"],["NTFS permissions","Read-only user: Allow Read; Edit user: Allow Modify; Admin: Full Control; Never Allow Write without Read"],["Printer symptoms","Ghost = drum; Smear = fuser; Blank = corona/toner; Lines = drum scratch; Color wrong = ICC profile"],["Malware removal","1:Investigate 2:Quarantine(disconnect) 3:Disable System Restore 4:Remediate 5:Scan 6:Re-enable 7:Document 8:Educate"],["Boot repair order","1:Check BIOS boot order 2:bootrec /fixmbr 3:bootrec /fixboot 4:bootrec /rebuildbcd 5:Startup Repair"],["OS install prep","1:Check hardware requirements 2:Backup data 3:Verify activation key 4:Boot from media 5:Partition (GPT) 6:Install"],["Encryption scenario","FDE = BitLocker/FileVault; File-level = EFS; Transport = TLS; SSD disposal = crypto-erase"],["Wireless security","Disable WPS; Enable WPA3 or WPA2-AES; Disable SSID broadcast optional; Enable 802.1X for enterprise"],["Remote access","Secure = RDP with NLA + firewall rule; SSH for Linux; VPN for network access; never Telnet"],["Account lockout","Policy: 3-5 attempts, 30-min lockout, not indefinite (denial of service risk)"],["Backup selection","RTO low = near-continuous replication; RPO low = frequent backups; large data = incremental"],["Change management","Always: RFC → CAB approval → test in lab → rollback plan → change window → implement → verify → document"],["RAID selection","Performance only = RAID 0; Simple redundancy = RAID 1; Cost-effective redundancy = RAID 5; Critical DB = RAID 10"]]}];
+const ALL_NOTES=[...ABBREVS,...EXTRA];
+const DAY_NOTES={1: `<h3>CompTIA A+ Exam Overview</h3>
+<p>The CompTIA A+ certification requires passing two exams: <strong>220-1101 (Core 1)</strong> and <strong>220-1102 (Core 2)</strong>. Each exam is 90 minutes, up to 90 questions, with a passing score of 675 (Core 1) and 700 (Core 2) on a scale of 100–900.</p>
+<h4>Core 1 Domains (220-1101)</h4>
+<ul>
+<li><strong>1.0 Mobile Devices — 15%</strong>: Laptops, smartphones, tablets</li>
+<li><strong>2.0 Networking — 20%</strong>: Protocols, ports, wireless, cables</li>
+<li><strong>3.0 Hardware — 25%</strong>: CPUs, RAM, storage, motherboards, printers</li>
+<li><strong>4.0 Virtualization &amp; Cloud — 11%</strong>: Cloud models, hypervisors</li>
+<li><strong>5.0 Hardware &amp; Network Troubleshooting — 29%</strong>: Diagnosing hardware and connectivity issues</li>
+</ul>
+<h4>Core 2 Domains (220-1102)</h4>
+<ul>
+<li><strong>1.0 Operating Systems — 31%</strong>: Windows, macOS, Linux installation and management</li>
+<li><strong>2.0 Security — 25%</strong>: Malware, encryption, authentication, hardening</li>
+<li><strong>3.0 Software Troubleshooting — 22%</strong>: OS and application issues</li>
+<li><strong>4.0 Operational Procedures — 22%</strong>: Documentation, backup, change management, safety</li>
+</ul>
+<h4>Exam Format</h4>
+<p>Questions include multiple choice (single and multiple answer) and Performance-Based Questions (PBQs) that appear at the start of the exam. PBQs simulate real-world tasks — drag and drop, simulations, fill-in-the-blank. Budget extra time for PBQs; if stuck, skip and return after completing multiple choice questions.</p>
+<h4>Study Strategy</h4>
+<p>Use the official CompTIA exam objectives as your master checklist. Every testable topic is listed there. Professor Messer's free videos cover each objective. Supplement with hands-on practice — open actual Windows tools, terminals, and settings rather than just reading about them.</p>`,
+
+2: `<h3>Motherboard Form Factors</h3>
+<p>The motherboard (also called the system board or mainboard) is the primary circuit board connecting all components. Form factor determines physical size, mounting hole positions, and power connector placement.</p>
+<h4>ATX — Advanced Technology eXtended</h4>
+<p>Standard ATX measures <strong>305 × 244mm</strong> and is the most common desktop form factor. It provides the most expansion slots (typically 7 PCIe/PCI slots), up to 4 RAM slots, and multiple storage connectors. The 24-pin ATX power connector and 8-pin EPS CPU power connector are standard. Most mid-tower and full-tower cases accept ATX.</p>
+<h4>Micro-ATX (mATX)</h4>
+<p>Measures <strong>244 × 244mm</strong> — square rather than rectangular. Fits in ATX cases (ATX cases have extra mounting holes) and dedicated micro-ATX cases. Typically 4 expansion slots. Good balance of size vs expandability for mainstream desktop builds.</p>
+<h4>Mini-ITX (ITX)</h4>
+<p>Measures <strong>170 × 170mm</strong> — very small. Only 1 expansion slot (usually PCIe x16 for GPU). 2 RAM slots maximum. Used in HTPCs (Home Theater PCs), small form factor systems, and embedded applications. Cannot fit in standard ATX cases without an ITX-specific case.</p>
+<h4>Key Motherboard Components</h4>
+<ul>
+<li><strong>CPU socket</strong>: LGA (Land Grid Array — Intel, pins on socket) or PGA (Pin Grid Array — AMD, pins on CPU)</li>
+<li><strong>RAM slots (DIMMs)</strong>: DDR4 or DDR5; typically 2–4 slots; color-coded for dual-channel pairing</li>
+<li><strong>PCIe slots</strong>: x16 for GPU, x1 or x4 for expansion cards; connected via PCIe lanes</li>
+<li><strong>SATA ports</strong>: 6–8 ports for HDDs/SSDs; L-shaped 7-pin connector</li>
+<li><strong>M.2 slots</strong>: For NVMe SSDs and Wi-Fi cards; supports 2230/2242/2280 lengths</li>
+<li><strong>Front panel headers</strong>: Power button, reset, HDD LED, USB 2.0/3.0, audio jacks</li>
+<li><strong>CMOS battery</strong>: CR2032 coin cell; maintains BIOS settings and real-time clock when system is unpowered</li>
+</ul>
+<h4>Choosing the Right Form Factor</h4>
+<p>ATX for full desktop builds needing maximum expandability. Micro-ATX for compact but capable systems. Mini-ITX for space-constrained environments. The case must match the form factor — always verify before purchasing.</p>`,
+
+3: `<h3>CPUs, Sockets, and Cooling</h3>
+<p>The CPU (Central Processing Unit) is the primary processor that executes instructions. Modern CPUs contain multiple cores — each core can independently process instructions, and hyperthreading allows each core to handle two threads simultaneously.</p>
+<h4>CPU Socket Types</h4>
+<p><strong>Intel LGA (Land Grid Array)</strong>: Pins are on the motherboard socket, not the CPU. The CPU has flat gold contact pads. Intel desktop sockets include LGA1700 (12th/13th gen), LGA1200 (10th/11th gen). The CPU is held by a metal retention bracket. Damage to pins on the socket is expensive to repair.</p>
+<p><strong>AMD AM4 (PGA — Pin Grid Array)</strong>: Pins are on the CPU itself. The socket has holes. Used for Ryzen 2000–5000 series. <strong>AMD AM5 (LGA)</strong>: AMD switched to LGA for Ryzen 7000+ — now uses flat contact pads like Intel. AM4 and AM5 are incompatible.</p>
+<h4>CPU Specifications</h4>
+<ul>
+<li><strong>Core count</strong>: More cores = better for multi-threaded workloads (video editing, VMs)</li>
+<li><strong>Clock speed (GHz)</strong>: Base clock and boost clock; higher = faster single-threaded performance</li>
+<li><strong>TDP (Thermal Design Power)</strong>: Maximum heat generated in watts; determines cooler requirements. A 65W TDP CPU needs a cooler rated for at least 65W</li>
+<li><strong>Cache</strong>: L1 (fastest, smallest), L2, L3 (largest, slowest); stores frequently accessed data near CPU cores</li>
+</ul>
+<h4>CPU Cooling</h4>
+<p><strong>Air cooling</strong>: Heatsink (metal fins) + fan. Thermal paste (TIM — Thermal Interface Material) fills microscopic gaps between CPU IHS (Integrated Heat Spreader) and heatsink base. Apply pea-sized amount in center — clamping force spreads it evenly. More paste is not better; excess can spill onto socket.</p>
+<p><strong>Liquid cooling (AIO)</strong>: All-in-one liquid cooler with pump, radiator, and fans. Better thermal performance for high-TDP CPUs. More complex to install.</p>
+<p><strong>Passive cooling</strong>: Heatsink only, no fan. Used in embedded/IoT applications with low-TDP CPUs.</p>
+<h4>CPU Installation</h4>
+<p>For LGA (Intel): Lift retention arm, place CPU with triangle marker aligned to socket triangle, lower retention arm. For AM4 (AMD): Lift lever, place CPU with triangle aligned, lower lever. Never force the CPU — it should drop in with zero insertion force. Apply thermal paste, attach cooler using X-pattern tightening to ensure even pressure.</p>`,
+
+4: `<h3>RAM — Types, Speeds, and Configuration</h3>
+<p>RAM (Random Access Memory) is the system's working memory — volatile storage that loses all data when power is removed. The CPU reads program instructions and data from RAM; more RAM allows more programs to run simultaneously without using the page file.</p>
+<h4>DDR Generations</h4>
+<ul>
+<li><strong>DDR4</strong>: 2133–3200 MHz base speeds (up to 5000+ MHz overclocked), 1.2V, 288-pin DIMM, notch at center-right. Most common in systems from 2015–2022.</li>
+<li><strong>DDR5</strong>: 4800–6400 MHz base speeds, 1.1V, 288-pin DIMM (different notch position than DDR4 — they are NOT interchangeable), on-module power management IC (PMIC). Standard in systems from 2022+.</li>
+</ul>
+<p>DDR3, DDR4, and DDR5 are physically incompatible — different notch positions prevent wrong installation. Always verify what your motherboard supports before purchasing.</p>
+<h4>Form Factors</h4>
+<p><strong>DIMM (Dual Inline Memory Module)</strong>: Full-size desktop RAM at 133mm length. 288 pins for DDR4/DDR5, 240 pins for DDR3.</p>
+<p><strong>SO-DIMM (Small Outline DIMM)</strong>: Laptop RAM at 67.6mm length. 260 pins for DDR4/DDR5. Also used in some small form factor desktops and NUCs.</p>
+<h4>Dual-Channel Configuration</h4>
+<p>Installing two identical RAM sticks in matching paired slots (typically A2+B2, color-coded on the motherboard) enables dual-channel mode. This effectively doubles memory bandwidth by allowing the CPU to access both sticks simultaneously. Always check the motherboard manual for the correct slot positions — installing in A1+B1 instead of A2+B2 can prevent dual-channel from activating.</p>
+<h4>ECC vs Non-ECC</h4>
+<p><strong>ECC (Error-Correcting Code)</strong> RAM uses extra bits to detect and correct single-bit memory errors. Required in servers and workstations where data integrity is critical (databases, financial systems). Requires a CPU and motherboard with ECC support. Consumer platforms (Intel Core, AMD Ryzen) do not officially support ECC.</p>
+<h4>RAM Capacity and Performance</h4>
+<p>For a modern workstation: 16GB minimum, 32GB recommended. 8GB is functional but limiting with modern applications. RAM speed matters less than capacity for most workloads; ensure XMP/EXPO is enabled in BIOS to run RAM at its rated speed rather than the default JEDEC speed.</p>`,
+
+5: `<h3>Storage Devices — HDD, SSD, NVMe, eMMC</h3>
+<p>Storage devices retain data when power is removed (non-volatile). The type of storage dramatically impacts system performance — an NVMe SSD can be 60× faster than a traditional HDD.</p>
+<h4>HDD — Hard Disk Drive</h4>
+<p>Mechanical storage with spinning magnetic platters and read/write heads. Sequential read speeds: ~100–200 MB/s. Random access is slow due to physical head movement (seek time ~5–10ms). Available in 3.5" (desktop, up to 20TB) and 2.5" (laptop, up to 5TB). Connects via SATA interface. Susceptible to shock and vibration. Identifiable by the clicking/spinning sounds. RPM ratings: 5400 RPM (power-efficient, slower) and 7200 RPM (faster, more common for performance).</p>
+<h4>SATA SSD</h4>
+<p>Solid-state storage using NAND flash chips. No moving parts — immune to shock, nearly silent. Sequential reads: ~550 MB/s (limited by SATA interface, not the drive itself). Available in 2.5" form factor using the same SATA data cable and SATA power connector as HDDs. Also available in M.2 form factor using SATA protocol (B+M key).</p>
+<h4>NVMe SSD</h4>
+<p>Non-Volatile Memory Express — protocol designed specifically for NAND flash over PCIe. Bypasses the AHCI overhead used by SATA. Sequential reads: 3,500 MB/s (PCIe 3.0), 7,000 MB/s (PCIe 4.0), 14,000 MB/s (PCIe 5.0). Installs in M.2 slot (M-key only) or PCIe slot (via adapter card). Dramatically faster than SATA for OS and application loads.</p>
+<h4>M.2 Form Factor</h4>
+<p>M.2 is a physical form factor (not a protocol). M.2 slots can support SATA or NVMe depending on the board and the key notch:</p>
+<ul>
+<li><strong>B-key</strong>: Notch at position 5 — supports SATA and USB 3.0</li>
+<li><strong>M-key</strong>: Notch at position 6 — supports PCIe (NVMe)</li>
+<li><strong>B+M key</strong>: Both notches — supports both SATA and NVMe; most common for drives</li>
+</ul>
+<p>M.2 length codes: 2230 (30mm), 2242 (42mm), 2260 (60mm), 2280 (80mm — most common desktop/laptop NVMe). Verify which lengths your motherboard supports.</p>
+<h4>eMMC</h4>
+<p>Embedded MultiMediaCard — NAND flash soldered directly to the motherboard. Not replaceable or upgradeable. Found in budget tablets, Chromebooks, and some ultrabooks. Speeds similar to older SATA SSDs (~300–400 MB/s sequential). Cannot be upgraded to faster storage without replacing the entire board.</p>`,
+
+6: `<h3>Power Supplies — Connectors, Wattage, and Efficiency</h3>
+<p>The Power Supply Unit (PSU) converts AC mains power (120V/240V AC) to the DC voltages used by computer components: +3.3V, +5V, +12V, and -12V. It is the most critical component — a failing PSU can damage all connected components.</p>
+<h4>Power Rails</h4>
+<ul>
+<li><strong>+12V</strong>: Powers CPU (via EPS connector), GPU, and fans. The most important rail — modern systems draw most power here.</li>
+<li><strong>+5V</strong>: Powers USB ports, SATA logic boards, older expansion cards</li>
+<li><strong>+3.3V</strong>: Powers RAM, PCIe slots, chipset logic</li>
+<li><strong>-12V</strong>: Legacy serial ports; minimal current (≤1A)</li>
+</ul>
+<h4>Key Connectors</h4>
+<ul>
+<li><strong>24-pin ATX</strong>: Main motherboard power; one per system; fully keyed so it only installs one way</li>
+<li><strong>8-pin EPS (4+4)</strong>: CPU power; located near the CPU socket; can be split 4+4 for boards needing only 4 pins</li>
+<li><strong>PCIe 6-pin</strong>: GPU supplemental power — provides 75W additional (total with PCIe slot: 150W)</li>
+<li><strong>PCIe 8-pin (6+2)</strong>: GPU supplemental power — provides 150W additional (total: 225W). High-end GPUs may use two 8-pin connectors</li>
+<li><strong>SATA power</strong>: 15-pin L-shaped connector; powers 2.5" and 3.5" drives</li>
+<li><strong>Molex (4-pin peripheral)</strong>: Legacy connector providing +12V and +5V; older HDDs, fans, and case components</li>
+</ul>
+<h4>80 PLUS Efficiency Ratings</h4>
+<p>80 PLUS certification means the PSU is at least 80% efficient at 20%, 50%, and 100% load. Higher ratings:</p>
+<ul>
+<li><strong>80 PLUS Bronze</strong>: 82–85% efficiency</li>
+<li><strong>80 PLUS Silver</strong>: 85–88% efficiency</li>
+<li><strong>80 PLUS Gold</strong>: 87–90% efficiency — recommended for most builds</li>
+<li><strong>80 PLUS Platinum</strong>: 90–92% efficiency</li>
+<li><strong>80 PLUS Titanium</strong>: 92–94% efficiency — server/workstation grade</li>
+</ul>
+<h4>PSU Types</h4>
+<p><strong>Non-modular</strong>: All cables permanently attached; cheaper; cable management difficult. <strong>Semi-modular</strong>: Essential cables (24-pin, EPS) attached; optional cables detachable. <strong>Fully modular</strong>: All cables detachable; best for clean builds; most expensive. Always buy from reputable brands (Corsair, Seasonic, EVGA, be quiet!) — cheap PSUs can cause fires.</p>
+<h4>Sizing a PSU</h4>
+<p>Add up TDP of all components, then add 20–30% headroom. For a system with a 125W CPU and 350W GPU: 125 + 350 + 100 (board, drives, fans) = 575W minimum; recommend 750W for headroom and efficiency. An oversized PSU runs at partial load (more efficient); undersized causes system instability and potential damage.</p>`,
+
+7: `<h3>Expansion Cards and PCIe Slots</h3>
+<p>Expansion cards add functionality to a computer via standardized slots on the motherboard. PCIe (Peripheral Component Interconnect Express) is the dominant modern standard, replacing older PCI and AGP.</p>
+<h4>PCIe Architecture</h4>
+<p>PCIe uses serial point-to-point lanes. Each lane is a pair of differential signal pairs (TX and RX). More lanes = more bandwidth:</p>
+<ul>
+<li><strong>PCIe 3.0 x1</strong>: ~1 GB/s bandwidth — NIC, sound card, Wi-Fi adapter, USB expansion</li>
+<li><strong>PCIe 3.0 x4</strong>: ~4 GB/s — NVMe SSDs via adapter, some capture cards</li>
+<li><strong>PCIe 3.0 x8</strong>: ~8 GB/s — some network and storage controllers</li>
+<li><strong>PCIe 3.0 x16</strong>: ~16 GB/s — dedicated GPUs; PCIe 4.0 x16 = 32 GB/s; PCIe 5.0 x16 = 64 GB/s</li>
+</ul>
+<p><strong>Backward compatibility</strong>: A PCIe 4.0 card works in a PCIe 3.0 slot at PCIe 3.0 speeds. A PCIe x1 card can be installed in a PCIe x16 slot (the extra lanes are unused but the card functions normally).</p>
+<h4>Common Expansion Cards</h4>
+<ul>
+<li><strong>GPU (Graphics Processing Unit)</strong>: Always uses PCIe x16 slot. Requires additional power via 6-pin or 8-pin PCIe connectors. Has its own VRAM (GDDR6/GDDR6X).</li>
+<li><strong>NIC (Network Interface Card)</strong>: 1GbE or 10GbE network adapter. Uses PCIe x1 or x4.</li>
+<li><strong>Sound card</strong>: Dedicated audio processing. PCIe x1. Most systems use integrated audio.</li>
+<li><strong>RAID controller</strong>: Hardware RAID management for multiple storage devices. PCIe x4 or x8.</li>
+<li><strong>USB/SATA expansion</strong>: Adds more USB or SATA ports. PCIe x1.</li>
+<li><strong>Capture card</strong>: Video capture from external sources. PCIe x1 or x4.</li>
+</ul>
+<h4>Riser Cards</h4>
+<p>Riser cards extend a PCIe slot away from the motherboard, allowing cards to be positioned differently in the case (e.g., vertical GPU mount). Used in small form factor builds and server blades where the card cannot mount directly to the board orientation. Riser cables can introduce slight bandwidth overhead.</p>`,
+
+8: `<h3>Cables and Connectors — Internal and External</h3>
+<p>Understanding connector types and their purposes is essential for hardware assembly and troubleshooting. Each connector is physically keyed to prevent incorrect installation.</p>
+<h4>Storage Connectors</h4>
+<p><strong>SATA data cable</strong>: 7-pin L-shaped connector; carries data between drive and motherboard SATA port; maximum cable length 1 meter; does NOT carry power.</p>
+<p><strong>SATA power cable</strong>: 15-pin connector from PSU; provides +3.3V, +5V, and +12V to 2.5" and 3.5" drives.</p>
+<p><strong>Molex (4-pin peripheral)</strong>: Legacy power connector from PSU; provides +5V and +12V; used for older HDDs, optical drives, some fans and LED strips.</p>
+<p><strong>Berg connector (4-pin mini)</strong>: Very small legacy connector; provided +5V only; used for 3.5" floppy disk drives; rarely seen today.</p>
+<h4>Power Connectors</h4>
+<p><strong>PCIe 6-pin</strong>: GPU supplemental power; 6 pins in 2×3 configuration; provides 75W.</p>
+<p><strong>PCIe 8-pin (6+2)</strong>: GPU power; the "6+2" means 6 pins attached to 2 detachable pins — can serve as either 6-pin or 8-pin. Modern high-end GPUs may use 16-pin (ATX 3.0) connectors.</p>
+<h4>Front Panel Headers</h4>
+<p>Small 2-pin connectors that connect the case's front buttons and LEDs to the motherboard:</p>
+<ul>
+<li>Power switch (PWR_SW): 2-pin, connects to power button</li>
+<li>Reset switch (RST_SW): 2-pin, connects to reset button</li>
+<li>HDD LED (HDD_LED): 2-pin, polarity matters — positive/negative</li>
+<li>Power LED (PWR_LED): 2-pin or 3-pin</li>
+<li>Speaker (SPK): 4-pin, for POST beep codes</li>
+</ul>
+<h4>USB Headers</h4>
+<p><strong>USB 2.0 header</strong>: 9-pin (1 missing for keying); provides two USB 2.0 ports on the case front panel.</p>
+<p><strong>USB 3.0 header</strong>: 19-pin (20-pin with 1 missing); provides two USB 3.2 Gen 1 (5 Gbps) front panel ports.</p>
+<p><strong>USB-C header</strong>: 20-pin; single USB 3.2 Gen 2 or Thunderbolt front panel port on newer motherboards.</p>`,
+
+9: `<h3>Ports and Interfaces — USB, Video, and More</h3>
+<p>External ports allow peripherals to connect to the computer. Understanding port speeds, connector shapes, and compatibility is critical for hardware selection and troubleshooting.</p>
+<h4>USB Standards</h4>
+<table style="width:100%;border-collapse:collapse;font-size:12px">
+<tr style="background:#F0EDE8"><th style="padding:5px;text-align:left;border:1px solid #E2DDD8">Standard</th><th style="padding:5px;text-align:left;border:1px solid #E2DDD8">Speed</th><th style="padding:5px;text-align:left;border:1px solid #E2DDD8">Color</th><th style="padding:5px;text-align:left;border:1px solid #E2DDD8">Connector</th></tr>
+<tr><td style="padding:5px;border:1px solid #E2DDD8">USB 2.0</td><td style="padding:5px;border:1px solid #E2DDD8">480 Mbps</td><td style="padding:5px;border:1px solid #E2DDD8">Black/White</td><td style="padding:5px;border:1px solid #E2DDD8">Type-A, Mini-B, Micro-B</td></tr>
+<tr><td style="padding:5px;border:1px solid #E2DDD8">USB 3.2 Gen 1</td><td style="padding:5px;border:1px solid #E2DDD8">5 Gbps</td><td style="padding:5px;border:1px solid #E2DDD8">Blue</td><td style="padding:5px;border:1px solid #E2DDD8">Type-A, Type-C, Micro-B 3.0</td></tr>
+<tr><td style="padding:5px;border:1px solid #E2DDD8">USB 3.2 Gen 2</td><td style="padding:5px;border:1px solid #E2DDD8">10 Gbps</td><td style="padding:5px;border:1px solid #E2DDD8">Teal/Red</td><td style="padding:5px;border:1px solid #E2DDD8">Type-A, Type-C</td></tr>
+<tr><td style="padding:5px;border:1px solid #E2DDD8">USB 3.2 Gen 2×2</td><td style="padding:5px;border:1px solid #E2DDD8">20 Gbps</td><td style="padding:5px;border:1px solid #E2DDD8">—</td><td style="padding:5px;border:1px solid #E2DDD8">Type-C only</td></tr>
+<tr><td style="padding:5px;border:1px solid #E2DDD8">USB4 Gen 3×2</td><td style="padding:5px;border:1px solid #E2DDD8">40 Gbps</td><td style="padding:5px;border:1px solid #E2DDD8">—</td><td style="padding:5px;border:1px solid #E2DDD8">Type-C only</td></tr>
+</table>
+<h4>Thunderbolt</h4>
+<p><strong>Thunderbolt 3 &amp; 4</strong>: Uses USB-C connector; 40 Gbps bandwidth; supports DisplayPort, PCIe, and USB simultaneously; can daisy-chain up to 6 devices; provides up to 100W power delivery. Thunderbolt 4 added minimum performance requirements. The lightning bolt symbol distinguishes Thunderbolt ports from standard USB-C.</p>
+<h4>Video Connectors</h4>
+<ul>
+<li><strong>HDMI</strong>: Most common; HDMI 2.0 supports 4K@60Hz; HDMI 2.1 supports 4K@144Hz / 8K@60Hz; carries audio and video</li>
+<li><strong>DisplayPort</strong>: High-performance; DP 1.4 supports 8K@60Hz; can carry USB data via USB-C (DP Alt Mode); used in gaming monitors</li>
+<li><strong>DVI (Digital Visual Interface)</strong>: Digital and/or analog; DVI-D (digital only), DVI-A (analog only), DVI-I (both); no audio; older displays</li>
+<li><strong>VGA (Video Graphics Array)</strong>: 15-pin analog connector; legacy only; maximum 2560×1600; no audio; avoid for new installations</li>
+</ul>
+<h4>Audio Connectors</h4>
+<p>3.5mm TRS jacks (standard headphone size): Line out (green), Line in (blue), Microphone (pink). Some motherboards include optical S/PDIF out for surround sound receivers.</p>`,
+
+10: `<h3>BIOS and UEFI — Firmware and Boot Process</h3>
+<p>The BIOS (Basic Input/Output System) or UEFI (Unified Extensible Firmware Interface) is firmware stored in a flash chip on the motherboard. It is the first software that runs when the computer is powered on, before the OS loads.</p>
+<h4>BIOS vs UEFI</h4>
+<p><strong>Legacy BIOS</strong>: Text-based interface; 16-bit code; 1MB size limit; uses MBR (Master Boot Record) partition style; supports drives up to 2.1TB only; no mouse support; no Secure Boot.</p>
+<p><strong>UEFI</strong>: Modern replacement; 32/64-bit code; no size limit; graphical interface with mouse support; uses GPT (GUID Partition Table) partition style; supports drives larger than 2.1TB; supports Secure Boot; faster boot times via fast boot options; stores boot variables in NVRAM.</p>
+<h4>POST — Power-On Self-Test</h4>
+<p>When powered on, the BIOS/UEFI runs POST to verify critical hardware:</p>
+<ol>
+<li>Initializes CPU and RAM</li>
+<li>Checks for video card — outputs to screen</li>
+<li>Tests RAM</li>
+<li>Scans for storage devices</li>
+<li>Checks keyboard/mouse</li>
+<li>Passes control to boot device</li>
+</ol>
+<p>If POST fails, the system emits beep codes (AMI BIOS: 1 short = OK, 3 long = video/GPU error, continuous = RAM failure) or displays error messages. A POST card (plugs into PCIe) shows hex codes indicating which step failed.</p>
+<h4>Key BIOS/UEFI Settings</h4>
+<ul>
+<li><strong>Boot order</strong>: Priority list of devices to boot from (SSD, USB, network/PXE)</li>
+<li><strong>Secure Boot</strong>: Verifies bootloader digital signature; required for Windows 11; prevents unsigned OS loading</li>
+<li><strong>TPM (Trusted Platform Module)</strong>: Hardware key storage chip; required for Windows 11 and BitLocker; version 2.0 required</li>
+<li><strong>XMP/EXPO</strong>: Enables RAM to run at rated speed rather than default JEDEC speed</li>
+<li><strong>Virtualization (Intel VT-x / AMD-V)</strong>: Must be enabled for hypervisors and WSL 2</li>
+<li><strong>Fast Boot</strong>: Skips some POST checks for faster startup; disable when troubleshooting</li>
+</ul>
+<h4>CMOS and the BIOS Battery</h4>
+<p>BIOS settings (including date/time) are stored in CMOS memory powered by a CR2032 coin cell battery. When this battery dies (every 5–10 years), the BIOS loses its settings and resets to defaults, causing the clock to reset to 2000 or similar. To clear BIOS settings: remove the CMOS battery for 30 seconds, or short the CLR_CMOS jumper on the motherboard.</p>`,
+
+11: `<h3>Laptop Displays — LCD Types, Backlights, Digitizers</h3>
+<p>Laptop displays consist of multiple layers: the LCD panel, backlight, and (in touchscreens) a digitizer layer. Understanding each component helps diagnose display failures.</p>
+<h4>LCD Panel Types</h4>
+<p><strong>TN (Twisted Nematic)</strong>: Oldest technology; fastest response time (1ms); lowest cost; poor viewing angles (colors shift significantly off-axis); limited color accuracy. Common in budget gaming laptops.</p>
+<p><strong>IPS (In-Plane Switching)</strong>: Wide 178° viewing angles; accurate color reproduction (sRGB coverage); slower response (4–10ms); more expensive. Standard in professional and premium laptops.</p>
+<p><strong>VA (Vertical Alignment)</strong>: Highest contrast ratio; better blacks than IPS; slower response; moderate viewing angles. Less common in laptops.</p>
+<p><strong>OLED (Organic LED)</strong>: Individual pixel-level lighting (true black); infinite contrast; thin and flexible; risk of burn-in with static content; excellent for media consumption. Found in premium ultrabooks and phones.</p>
+<h4>Backlight Technology</h4>
+<p><strong>CCFL (Cold Cathode Fluorescent Lamp)</strong>: Older backlight; uses an inverter board to convert DC to AC for the lamp; failure of the inverter = dark screen with visible image in bright light; symptom of dim/flickering screens.</p>
+<p><strong>LED backlight</strong>: Modern standard; directly replaces CCFL; no inverter needed; thinner, lighter, more energy-efficient. If a screen is completely dark but you can see a very faint image with a flashlight, the LED backlight or its driver circuit has failed.</p>
+<h4>Digitizer (Touch Layer)</h4>
+<p>The digitizer is a transparent layer placed over the LCD that detects touch input by measuring capacitance changes. In laptops, it sits between the glass outer layer and the LCD panel. Damage to the digitizer (cracks, dead zones) affects touch but not the display image. A cracked screen often breaks both the LCD and digitizer requiring full assembly replacement.</p>
+<h4>Common Display Failures</h4>
+<ul>
+<li>Completely black screen: check video cable connection, backlight LED circuit, or GPU</li>
+<li>Dark image visible with flashlight: CCFL inverter or backlight failure</li>
+<li>Vertical lines/artifacts: GPU issue or loose LVDS/eDP cable</li>
+<li>Touch not working but display OK: digitizer failure</li>
+<li>Screen works only at certain angles: loose or damaged display cable</li>
+</ul>`,
+
+12: `<h3>Laptop Hardware — Internals, Upgrades, and Disassembly</h3>
+<p>Unlike desktops, laptops are designed for portability over upgradability. However, many laptops allow RAM and storage upgrades. Always consult iFixit or the manufacturer's service manual before disassembly.</p>
+<h4>Laptop RAM</h4>
+<p><strong>SO-DIMM</strong>: Small Outline DIMM; 67.6mm length; 260-pin DDR4/DDR5; installs at an angle then clicks flat. Some modern laptops have RAM soldered directly to the motherboard — check specifications before purchasing.</p>
+<p>Signs of soldered RAM: no upgrade path listed on manufacturer's site, extremely thin chassis, Apple Silicon Macs. Signs of socketed RAM: iFixit teardown shows SO-DIMM slots, specs list "expandable to X GB."</p>
+<h4>Laptop Storage</h4>
+<p>Most modern laptops use M.2 NVMe drives. Common sizes: 2230 (Surface devices, some Ultrabooks) and 2280 (most laptops). Older laptops use 2.5" SATA drives. When upgrading, verify the M.2 key (M-key for NVMe, B+M key for SATA) and length supported by the chassis.</p>
+<h4>Wi-Fi and Bluetooth Cards</h4>
+<p>Wireless cards in laptops typically connect via M.2 2230 or M.2 2242 slots (often labeled "WLAN" separately from the main NVMe slot) or mini-PCIe on older systems. Wi-Fi + Bluetooth is typically a single combo card (Intel AX210, Qualcomm QCNFA765). Antenna cables connect to the card's U.FL connectors and route around the display bezel — be careful not to break these during disassembly.</p>
+<h4>Keyboard Replacement</h4>
+<p>Tools needed: spudger (plastic pry tool), JIS screwdrivers (Japanese Industrial Standard — looks like Phillips but different angles), tweezers. Most laptop keyboards are held by hidden screws under rubber feet or bottom panel, plus plastic clips along the top. The keyboard ribbon cable connects to a ZIF (Zero Insertion Force) connector — lift the tab before pulling, close tab to secure.</p>
+<h4>Disassembly Best Practices</h4>
+<ul>
+<li>Photograph the device before opening — helps remember screw locations</li>
+<li>Use a magnetic screw mat — laptop screws are small and easily lost</li>
+<li>Disconnect the battery immediately after opening — prevents shorts</li>
+<li>Never force plastic clips — work around the device patiently</li>
+<li>Ground yourself with an ESD wrist strap — static can damage components</li>
+</ul>`,
+
+13: `<h3>Laptop Power — Batteries, USB-C PD, Docking Stations</h3>
+<p>Laptop power management covers the battery, charging circuits, and how modern laptops can receive power and transmit data through a single USB-C port.</p>
+<h4>Laptop Battery Technology</h4>
+<p>Modern laptops use <strong>Li-Ion (Lithium Ion)</strong> or <strong>Li-Po (Lithium Polymer)</strong> batteries. Battery capacity is measured in <strong>Wh (Watt-hours)</strong> — a 72Wh battery provides 72 watts for one hour, or 36W for two hours. mAh ratings are also used but are meaningless without the voltage; Wh = mAh × voltage / 1000.</p>
+<p><strong>Battery Management System (BMS)</strong>: Monitors each cell's voltage and temperature; prevents overcharge, over-discharge, and thermal runaway. When the BMS fails, the laptop may show 0% or 100% incorrectly — battery replacement required.</p>
+<p>Most laptops charge via a proprietary barrel connector (older) or USB-C with Power Delivery (modern). Li-Ion batteries naturally degrade — after 500–1000 full charge cycles, capacity drops to ~80% of original.</p>
+<h4>USB Power Delivery (USB-C PD)</h4>
+<p>USB PD allows USB-C ports to deliver variable voltage and current for charging. Requires a PD-compliant charger and cable:</p>
+<ul>
+<li>USB PD standard: up to 100W (20V × 5A)</li>
+<li>USB PD 3.1: up to 240W (48V × 5A) — for high-performance laptops</li>
+<li>Common laptop charging: 45W (budget), 65W (mainstream), 100W (gaming/workstation)</li>
+</ul>
+<p>A USB-C charger will only deliver the wattage the laptop requests via PD negotiation. Using a lower-watt charger will charge slowly or maintain but not charge under load. Using a higher-watt charger is safe — the laptop only draws what it needs.</p>
+<h4>Docking Stations</h4>
+<p>Docking stations connect via USB-C (Thunderbolt 4 provides the most bandwidth) and expand a laptop's connectivity:</p>
+<ul>
+<li>Multiple monitors (via HDMI/DisplayPort)</li>
+<li>Gigabit Ethernet</li>
+<li>Multiple USB-A ports</li>
+<li>Audio jacks</li>
+<li>Power delivery back to laptop (typically 65–96W)</li>
+</ul>
+<p>Thunderbolt 4 docks support two 4K displays; USB-C 3.2 Gen 2 docks may support only one. Always verify monitor count and resolution support before purchasing.</p>`,
+
+14: `<h3>Printer Types and the Laser Printing Process</h3>
+<p>The CompTIA A+ exam focuses heavily on laser printers, their components, and the 7-step printing process. Understanding what each component does allows you to diagnose print defects.</p>
+<h4>Printer Types</h4>
+<p><strong>Laser printer</strong>: Uses electrically charged toner powder fused to paper with heat. High volume, low cost per page, sharp text. Used in offices. Monochrome or color (4 toner cartridges: CMYK).</p>
+<p><strong>Inkjet printer</strong>: Tiny ink droplets sprayed through microscopic nozzles. Better color accuracy for photos; lower upfront cost; higher cost per page; nozzles clog if unused. Not ideal for high-volume text printing.</p>
+<p><strong>Thermal printer</strong>: Heat applied to special heat-sensitive paper creates the image. No ink or toner — only the special paper. Used for receipt printers, label printers, shipping labels. Direct thermal uses heat-sensitive paper; thermal transfer uses a ribbon. Receipts fade over time.</p>
+<p><strong>Impact/Dot matrix printer</strong>: Pins strike an inked ribbon against paper. Loud; slow; still used where carbon copies are needed (multi-part forms, invoices). Only printer type that can create multiple copies simultaneously.</p>
+<h4>The 7-Step Laser Printing Process</h4>
+<ol>
+<li><strong>Processing</strong>: The printer's RIP (Raster Image Processor) converts the document from the computer into a rasterized bitmap stored in the printer's memory. The page data is fully prepared before printing begins.</li>
+<li><strong>Charging</strong>: The primary corona wire (or charge roller) applies a uniform negative charge of approximately -600V to the entire surface of the OPC (Organic Photoconductor) drum, making it uniformly dark.</li>
+<li><strong>Exposing</strong>: A laser beam scans across the drum, neutralizing the negative charge in specific spots (where toner will be placed). These exposed areas become slightly positive (~-100V) relative to the rest, creating the invisible latent image.</li>
+<li><strong>Developing</strong>: Negatively charged toner particles (from the toner cartridge) are attracted to the less-negative exposed areas on the drum. The toner adheres to the latent image, making it visible.</li>
+<li><strong>Transferring</strong>: The transfer roller/corona wire applies a positive charge to the paper as it passes, pulling the negatively charged toner off the drum and onto the paper. The toner is now on the paper but not yet bonded.</li>
+<li><strong>Fusing</strong>: The fuser assembly uses heat (~200°C) and pressure rollers to melt and permanently bond the toner particles into the paper fibers. This is why laser-printed pages come out warm. A failed fuser = toner wipes off easily.</li>
+<li><strong>Cleaning</strong>: A rubber cleaning blade scrapes remaining toner off the drum. An erase lamp or discharge roller resets the drum's charge back to neutral, ready for the next page.</li>
+</ol>`,
+
+15: `<h3>Printer Configuration and Troubleshooting</h3>
+<p>Installing, configuring, and troubleshooting printers is a core A+ technician skill. Network printers, driver management, and the print spooler are key areas.</p>
+<h4>Printer Drivers</h4>
+<p>A printer driver translates print jobs from the OS into the printer's language. Without the correct driver, print quality degrades or printing fails entirely. Driver types:</p>
+<ul>
+<li><strong>PCL (Printer Control Language)</strong>: HP's language; raster-based; fast for text; widely compatible</li>
+<li><strong>PostScript</strong>: Adobe's language; vector-based; better for complex graphics; used in professional printing</li>
+<li><strong>Generic/Universal drivers</strong>: Limited functionality; use when manufacturer driver unavailable</li>
+</ul>
+<h4>Network Printing Protocols</h4>
+<ul>
+<li><strong>IPP (Internet Printing Protocol)</strong>: TCP port 631; modern standard; supports HTTPS encryption for secure printing; used by Cloud Print and CUPS</li>
+<li><strong>LPD/LPR (Line Printer Daemon/Remote)</strong>: TCP port 515; legacy Unix printing protocol</li>
+<li><strong>RAW/JetDirect</strong>: TCP port 9100; sends data directly to printer; fastest; no encryption; HP JetDirect proprietary</li>
+<li><strong>SMB</strong>: Port 445; Windows file sharing used for shared printers; requires Windows printer sharing enabled</li>
+</ul>
+<h4>Print Spooler</h4>
+<p>The Windows Print Spooler service (spoolsv.exe) queues print jobs for orderly delivery to the printer. Spooled files are stored in <code>C:\Windows\System32\spool\PRINTERS\</code>.</p>
+<p>When a print job gets stuck: open Services (services.msc), stop Print Spooler, delete all files in the PRINTERS folder, restart Print Spooler. This clears all stuck jobs. Note: stopping the spooler cancels all pending print jobs.</p>
+<h4>Laser Printer Defect Diagnosis</h4>
+<ul>
+<li><strong>Ghost image / shadow ~1 inch offset</strong>: Worn OPC drum — not cleaning residual toner between rotations</li>
+<li><strong>Toner smears when touched</strong>: Fuser failure — toner not being bonded to paper</li>
+<li><strong>Blank pages</strong>: Empty toner or failed corona wire (drum not charged, toner won't adhere)</li>
+<li><strong>Consistent vertical white line</strong>: Scratch on OPC drum surface</li>
+<li><strong>Consistent vertical dark line</strong>: Dirty or damaged fuser roller</li>
+<li><strong>Faded overall print</strong>: Low toner; dirty corona wire; laser intensity too low</li>
+<li><strong>Incorrect colors (color laser)</strong>: Wrong ICC profile; miscalibrated color unit; wrong cartridge installed</li>
+</ul>`,
+
+16: `<h3>The OSI Model and Data Encapsulation</h3>
+<p>The OSI (Open Systems Interconnection) model provides a framework for understanding how network communication works. Each layer has specific responsibilities and interacts only with the layers directly above and below it.</p>
+<h4>The 7 OSI Layers (memorize: Please Do Not Throw Sausage Pizza Away)</h4>
+<ol>
+<li><strong>Layer 1 — Physical</strong>: Raw bits transmitted as electrical, optical, or radio signals. Cables, hubs, repeaters, NIC hardware, wireless radio. No addressing — just 1s and 0s.</li>
+<li><strong>Layer 2 — Data Link</strong>: Frames transmitted between devices on the same network segment using MAC addresses. Switches operate here. Error detection via CRC. Sub-layers: MAC (Media Access Control) and LLC (Logical Link Control).</li>
+<li><strong>Layer 3 — Network</strong>: Packets routed between networks using IP addresses. Routers operate here. Protocols: IP, ICMP, IPsec, OSPF, BGP. Determines best path for data.</li>
+<li><strong>Layer 4 — Transport</strong>: Segments (TCP) or datagrams (UDP) with port numbers. TCP provides reliable ordered delivery with acknowledgments; UDP provides fast connectionless delivery. Flow control and error recovery (TCP).</li>
+<li><strong>Layer 5 — Session</strong>: Establishes, maintains, and terminates communication sessions. NetBIOS, RPC, SQL sessions, NFS. Manages dialog control and synchronization.</li>
+<li><strong>Layer 6 — Presentation</strong>: Data formatting, encryption/decryption, compression. SSL/TLS lives here. Ensures data is in a usable format for the application layer. JPEG, MPEG, ASCII encoding.</li>
+<li><strong>Layer 7 — Application</strong>: User-facing protocols. HTTP, HTTPS, FTP, SMTP, DNS, IMAP, POP3, SNMP. The applications themselves do not live at Layer 7 — the protocols they use do.</li>
+</ol>
+<h4>Data Encapsulation</h4>
+<p>As data travels down the OSI stack from sending device: L7 adds application header → L4 adds port numbers (segment) → L3 adds IP addresses (packet) → L2 adds MAC addresses and CRC (frame) → L1 converts to bits. On the receiving device, each layer strips its header going up. This is encapsulation/decapsulation.</p>
+<h4>TCP/IP Model (4 layers)</h4>
+<p>The practical model used on the internet: Network Access (L1+L2), Internet (L3), Transport (L4), Application (L5-L7). The TCP/IP model is what's actually implemented; OSI is a conceptual framework.</p>`,
+
+17: `<h3>Network Protocols and Port Numbers</h3>
+<p>Port numbers allow multiple network services to run on the same IP address simultaneously. The OS delivers incoming data to the correct application based on the destination port. Memorizing all exam-required ports is essential for the A+ test.</p>
+<h4>Well-Known Ports (0–1023) — Critical for Exam</h4>
+<table style="width:100%;border-collapse:collapse;font-size:12px">
+<tr style="background:#F0EDE8"><th style="padding:5px;border:1px solid #E2DDD8;text-align:left">Port</th><th style="padding:5px;border:1px solid #E2DDD8;text-align:left">Protocol</th><th style="padding:5px;border:1px solid #E2DDD8;text-align:left">TCP/UDP</th><th style="padding:5px;border:1px solid #E2DDD8;text-align:left">Purpose</th></tr>
+<tr><td style="padding:5px;border:1px solid #E2DDD8">20/21</td><td style="padding:5px;border:1px solid #E2DDD8">FTP</td><td style="padding:5px;border:1px solid #E2DDD8">TCP</td><td style="padding:5px;border:1px solid #E2DDD8">File transfer (20=data, 21=control)</td></tr>
+<tr><td style="padding:5px;border:1px solid #E2DDD8">22</td><td style="padding:5px;border:1px solid #E2DDD8">SSH / SFTP</td><td style="padding:5px;border:1px solid #E2DDD8">TCP</td><td style="padding:5px;border:1px solid #E2DDD8">Encrypted remote terminal / Secure file transfer</td></tr>
+<tr><td style="padding:5px;border:1px solid #E2DDD8">23</td><td style="padding:5px;border:1px solid #E2DDD8">Telnet</td><td style="padding:5px;border:1px solid #E2DDD8">TCP</td><td style="padding:5px;border:1px solid #E2DDD8">Unencrypted remote terminal — NEVER use</td></tr>
+<tr><td style="padding:5px;border:1px solid #E2DDD8">25</td><td style="padding:5px;border:1px solid #E2DDD8">SMTP</td><td style="padding:5px;border:1px solid #E2DDD8">TCP</td><td style="padding:5px;border:1px solid #E2DDD8">Sending email server-to-server</td></tr>
+<tr><td style="padding:5px;border:1px solid #E2DDD8">53</td><td style="padding:5px;border:1px solid #E2DDD8">DNS</td><td style="padding:5px;border:1px solid #E2DDD8">TCP+UDP</td><td style="padding:5px;border:1px solid #E2DDD8">Name resolution (UDP queries, TCP zone transfers)</td></tr>
+<tr><td style="padding:5px;border:1px solid #E2DDD8">67/68</td><td style="padding:5px;border:1px solid #E2DDD8">DHCP</td><td style="padding:5px;border:1px solid #E2DDD8">UDP</td><td style="padding:5px;border:1px solid #E2DDD8">IP address assignment (67=server, 68=client)</td></tr>
+<tr><td style="padding:5px;border:1px solid #E2DDD8">80</td><td style="padding:5px;border:1px solid #E2DDD8">HTTP</td><td style="padding:5px;border:1px solid #E2DDD8">TCP</td><td style="padding:5px;border:1px solid #E2DDD8">Unencrypted web traffic</td></tr>
+<tr><td style="padding:5px;border:1px solid #E2DDD8">110</td><td style="padding:5px;border:1px solid #E2DDD8">POP3</td><td style="padding:5px;border:1px solid #E2DDD8">TCP</td><td style="padding:5px;border:1px solid #E2DDD8">Email download (deletes from server)</td></tr>
+<tr><td style="padding:5px;border:1px solid #E2DDD8">143</td><td style="padding:5px;border:1px solid #E2DDD8">IMAP</td><td style="padding:5px;border:1px solid #E2DDD8">TCP</td><td style="padding:5px;border:1px solid #E2DDD8">Email sync (keeps on server)</td></tr>
+<tr><td style="padding:5px;border:1px solid #E2DDD8">389</td><td style="padding:5px;border:1px solid #E2DDD8">LDAP</td><td style="padding:5px;border:1px solid #E2DDD8">TCP+UDP</td><td style="padding:5px;border:1px solid #E2DDD8">Active Directory directory queries</td></tr>
+<tr><td style="padding:5px;border:1px solid #E2DDD8">443</td><td style="padding:5px;border:1px solid #E2DDD8">HTTPS</td><td style="padding:5px;border:1px solid #E2DDD8">TCP</td><td style="padding:5px;border:1px solid #E2DDD8">Encrypted web traffic (TLS)</td></tr>
+<tr><td style="padding:5px;border:1px solid #E2DDD8">445</td><td style="padding:5px;border:1px solid #E2DDD8">SMB</td><td style="padding:5px;border:1px solid #E2DDD8">TCP</td><td style="padding:5px;border:1px solid #E2DDD8">Windows file/printer sharing</td></tr>
+<tr><td style="padding:5px;border:1px solid #E2DDD8">161/162</td><td style="padding:5px;border:1px solid #E2DDD8">SNMP</td><td style="padding:5px;border:1px solid #E2DDD8">UDP</td><td style="padding:5px;border:1px solid #E2DDD8">Network device management (161=poll, 162=trap)</td></tr>
+<tr><td style="padding:5px;border:1px solid #E2DDD8">3389</td><td style="padding:5px;border:1px solid #E2DDD8">RDP</td><td style="padding:5px;border:1px solid #E2DDD8">TCP</td><td style="padding:5px;border:1px solid #E2DDD8">Windows Remote Desktop Protocol</td></tr>
+</table>`,
+
+18: `<h3>IPv4 Addressing and Subnetting</h3>
+<p>Every device on an IP network needs a unique IP address. IPv4 uses 32-bit addresses expressed as four octets in dotted-decimal notation (e.g., 192.168.1.100). Subnetting divides large networks into smaller, more manageable segments.</p>
+<h4>IP Address Classes (Legacy)</h4>
+<ul>
+<li><strong>Class A</strong>: 1.0.0.0–126.255.255.255; /8 default mask; 126 networks, 16 million hosts each</li>
+<li><strong>Class B</strong>: 128.0.0.0–191.255.255.255; /16 default mask; 16,384 networks, 65,534 hosts each</li>
+<li><strong>Class C</strong>: 192.0.0.0–223.255.255.255; /24 default mask; 2 million networks, 254 hosts each</li>
+</ul>
+<h4>Private (RFC 1918) Ranges</h4>
+<ul>
+<li>10.0.0.0/8 — Class A private (10.0.0.1 through 10.255.255.254)</li>
+<li>172.16.0.0/12 — Class B private (172.16.0.1 through 172.31.255.254)</li>
+<li>192.168.0.0/16 — Class C private (192.168.0.1 through 192.168.255.254)</li>
+<li>127.0.0.0/8 — Loopback (127.0.0.1 = localhost)</li>
+<li>169.254.0.0/16 — APIPA (Windows self-assigns when DHCP fails)</li>
+</ul>
+<h4>CIDR Notation and Subnet Masks</h4>
+<p>CIDR (Classless Inter-Domain Routing) notation uses a prefix length indicating how many bits are the network portion. The subnet mask has all 1s in the network bits and all 0s in the host bits:</p>
+<ul>
+<li>/24 = 255.255.255.0 = 256 addresses, 254 usable hosts</li>
+<li>/25 = 255.255.255.128 = 128 addresses, 126 usable hosts</li>
+<li>/26 = 255.255.255.192 = 64 addresses, 62 usable hosts</li>
+<li>/27 = 255.255.255.224 = 32 addresses, 30 usable hosts</li>
+<li>/28 = 255.255.255.240 = 16 addresses, 14 usable hosts</li>
+<li>/30 = 255.255.255.252 = 4 addresses, 2 usable hosts (point-to-point links)</li>
+</ul>
+<h4>Usable Hosts Formula</h4>
+<p>Usable hosts = 2^(host bits) - 2. The -2 accounts for the network address (all host bits = 0) and broadcast address (all host bits = 1). For /26: host bits = 32-26 = 6, usable = 2^6 - 2 = 62.</p>`,
+
+19: `<h3>IPv6 Addressing</h3>
+<p>IPv6 was developed to solve IPv4 address exhaustion. IPv4 provides approximately 4.3 billion addresses — far too few for the modern internet. IPv6 provides 340 undecillion (3.4 × 10^38) addresses.</p>
+<h4>IPv6 Address Format</h4>
+<p>128-bit address expressed as 8 groups of 4 hexadecimal digits separated by colons:</p>
+<p><code>2001:0db8:0000:0042:0000:8a2e:0370:7334</code></p>
+<p><strong>Abbreviation rules</strong>: (1) Leading zeros in each group can be omitted: <code>2001:db8:0:42:0:8a2e:370:7334</code>. (2) One consecutive sequence of all-zero groups can be replaced with <code>::</code>: <code>2001:db8:0:42::8a2e:370:7334</code>. The :: can only appear once in an address.</p>
+<h4>IPv6 Address Types</h4>
+<ul>
+<li><strong>Global Unicast (2000::/3)</strong>: Globally routable, equivalent to public IPv4. All addresses starting with 2 or 3. Assigned by ISP.</li>
+<li><strong>Link-Local (fe80::/10)</strong>: Automatically assigned to every IPv6-capable interface; not routable; used for neighbor discovery on local segment only. You will always see a fe80:: address in ipconfig.</li>
+<li><strong>Unique Local (fc00::/7)</strong>: Private, not globally routable; equivalent to RFC 1918. Range: fc00:: to fdff::.</li>
+<li><strong>Loopback (::1)</strong>: Equivalent to 127.0.0.1 in IPv4.</li>
+<li><strong>Multicast (ff00::/8)</strong>: Sent to a group of devices. ff02::1 = all nodes on segment. ff02::2 = all routers.</li>
+<li><strong>Anycast</strong>: Same address assigned to multiple devices; packet delivered to nearest one (used for DNS servers, CDNs).</li>
+</ul>
+<h4>IPv6 vs IPv4 Key Differences</h4>
+<ul>
+<li>No broadcast in IPv6 — replaced by multicast</li>
+<li>No ARP — replaced by NDP (Neighbor Discovery Protocol) using ICMPv6</li>
+<li>Auto-configuration: SLAAC (Stateless Address Autoconfiguration) allows devices to generate their own address from the /64 prefix + EUI-64</li>
+<li>IPv6 header is simpler and fixed-length (40 bytes)</li>
+<li>Dual-stack: devices can have both IPv4 and IPv6 simultaneously</li>
+</ul>`,
+
+20: `<h3>Network Devices — Hubs, Switches, Routers, APs, Firewalls</h3>
+<p>Network infrastructure devices each operate at specific OSI layers and perform distinct functions. Understanding which layer a device operates at determines how it forwards traffic.</p>
+<h4>Hub (Layer 1 — Physical)</h4>
+<p>A hub is a simple repeater that broadcasts any received signal out ALL ports. All devices connected to a hub share the same bandwidth and the same collision domain. One device transmitting blocks all others (CSMA/CD). Obsolete — replaced by switches. Never used in modern networks.</p>
+<h4>Switch (Layer 2 — Data Link)</h4>
+<p>A switch forwards frames based on MAC addresses. It learns MAC-to-port mappings in its CAM table (Content Addressable Memory) by observing source MAC addresses in incoming frames. When a destination MAC is known, the frame goes only to that port. Unknown MACs are flooded (broadcast to all except source). Switches create separate collision domains per port, eliminating collisions. VLANs provide logical segmentation within a switch.</p>
+<h4>Router (Layer 3 — Network)</h4>
+<p>A router makes forwarding decisions based on IP addresses. It connects different networks and IP subnets. Each router interface is in a different network. Routers maintain routing tables listing paths to destination networks. The default gateway is the router interface on the local subnet. Routers separate broadcast domains — broadcasts do not cross routers.</p>
+<h4>Wireless Access Point (Layer 2)</h4>
+<p>An AP bridges wireless clients to a wired network. The AP translates between 802.11 wireless frames and Ethernet frames. Enterprise APs (Cisco, Aruba, Ubiquiti) are managed centrally; consumer APs are standalone. An AP combined with a router and switch in one device = wireless router (common in homes).</p>
+<h4>Firewall (Layer 3–7)</h4>
+<p>Controls traffic based on rules. Packet filter (Layer 3–4): blocks based on IP/port. Stateful (Layer 4): tracks connection state. Next-gen/UTM (Layer 7): inspects application content, blocks malware, filters URLs.</p>`,
+
+21: `<h3>Wireless Networking Standards — 802.11</h3>
+<p>Wi-Fi is defined by the IEEE 802.11 family of standards. Each generation brings higher speeds, better efficiency, or new frequency bands. The Wi-Fi Alliance brands these as Wi-Fi 4, 5, 6, etc.</p>
+<h4>802.11 Standards Comparison</h4>
+<table style="width:100%;border-collapse:collapse;font-size:12px">
+<tr style="background:#F0EDE8"><th style="padding:5px;border:1px solid #E2DDD8">Standard</th><th style="padding:5px;border:1px solid #E2DDD8">Wi-Fi Name</th><th style="padding:5px;border:1px solid #E2DDD8">Frequency</th><th style="padding:5px;border:1px solid #E2DDD8">Max Speed</th><th style="padding:5px;border:1px solid #E2DDD8">Key Feature</th></tr>
+<tr><td style="padding:5px;border:1px solid #E2DDD8">802.11a</td><td style="padding:5px;border:1px solid #E2DDD8">—</td><td style="padding:5px;border:1px solid #E2DDD8">5 GHz</td><td style="padding:5px;border:1px solid #E2DDD8">54 Mbps</td><td style="padding:5px;border:1px solid #E2DDD8">OFDM, less interference</td></tr>
+<tr><td style="padding:5px;border:1px solid #E2DDD8">802.11b</td><td style="padding:5px;border:1px solid #E2DDD8">—</td><td style="padding:5px;border:1px solid #E2DDD8">2.4 GHz</td><td style="padding:5px;border:1px solid #E2DDD8">11 Mbps</td><td style="padding:5px;border:1px solid #E2DDD8">First mass market</td></tr>
+<tr><td style="padding:5px;border:1px solid #E2DDD8">802.11g</td><td style="padding:5px;border:1px solid #E2DDD8">—</td><td style="padding:5px;border:1px solid #E2DDD8">2.4 GHz</td><td style="padding:5px;border:1px solid #E2DDD8">54 Mbps</td><td style="padding:5px;border:1px solid #E2DDD8">Backward compat with b</td></tr>
+<tr><td style="padding:5px;border:1px solid #E2DDD8">802.11n</td><td style="padding:5px;border:1px solid #E2DDD8">Wi-Fi 4</td><td style="padding:5px;border:1px solid #E2DDD8">2.4 + 5 GHz</td><td style="padding:5px;border:1px solid #E2DDD8">600 Mbps</td><td style="padding:5px;border:1px solid #E2DDD8">MIMO introduced</td></tr>
+<tr><td style="padding:5px;border:1px solid #E2DDD8">802.11ac</td><td style="padding:5px;border:1px solid #E2DDD8">Wi-Fi 5</td><td style="padding:5px;border:1px solid #E2DDD8">5 GHz only</td><td style="padding:5px;border:1px solid #E2DDD8">3.5 Gbps</td><td style="padding:5px;border:1px solid #E2DDD8">MU-MIMO, beamforming</td></tr>
+<tr><td style="padding:5px;border:1px solid #E2DDD8">802.11ax</td><td style="padding:5px;border:1px solid #E2DDD8">Wi-Fi 6/6E</td><td style="padding:5px;border:1px solid #E2DDD8">2.4/5/6 GHz</td><td style="padding:5px;border:1px solid #E2DDD8">9.6 Gbps</td><td style="padding:5px;border:1px solid #E2DDD8">OFDMA, TWT, BSS Coloring</td></tr>
+</table>
+<h4>2.4 GHz vs 5 GHz</h4>
+<p><strong>2.4 GHz</strong>: Better range and wall penetration (longer wavelength). Only 3 non-overlapping channels (1, 6, 11) in North America — causes congestion in apartments. Shared with Bluetooth, microwaves, baby monitors.</p>
+<p><strong>5 GHz</strong>: 23+ non-overlapping 20MHz channels. Less interference. Higher speeds but shorter range — doesn't penetrate walls as well. Best for high-throughput applications where the AP is nearby.</p>
+<h4>Wi-Fi 6 Improvements (802.11ax)</h4>
+<ul>
+<li><strong>OFDMA</strong>: Divides channel into Resource Units; serves multiple clients simultaneously on same channel</li>
+<li><strong>MU-MIMO</strong>: 8×8 streams (up from 4×4 in Wi-Fi 5); simultaneous uplink and downlink</li>
+<li><strong>BSS Coloring</strong>: Labels frames from different networks; reduces unnecessary backoff in dense environments</li>
+<li><strong>TWT (Target Wake Time)</strong>: Schedules device wake times; significantly extends IoT battery life</li>
+</ul>`,
+
+22: `<h3>Wireless Security — WEP, WPA, WPA2, WPA3</h3>
+<p>Wireless networks are inherently more vulnerable than wired networks because the signal travels through the air. Proper security configuration is essential.</p>
+<h4>WEP — Wired Equivalent Privacy (BROKEN)</h4>
+<p>WEP was the original Wi-Fi encryption (1999). Uses RC4 cipher with a 24-bit Initialization Vector (IV). The IV is too small — IVs repeat after collecting enough packets, allowing the key to be mathematically derived. Tools like Aircrack-ng can crack WEP in minutes. <strong>Never use WEP under any circumstances.</strong></p>
+<h4>WPA — Wi-Fi Protected Access</h4>
+<p>WPA (2003) was a temporary fix for WEP vulnerabilities while the full 802.11i standard was developed. Uses TKIP (Temporal Key Integrity Protocol) — generates a new key for each packet. Weak against modern attacks including TKIP MIC failure attacks. Should not be used in new deployments.</p>
+<h4>WPA2 — IEEE 802.11i Standard</h4>
+<p>WPA2 (2004) is the current enterprise standard. Uses <strong>AES-CCMP</strong> (Counter Mode with CBC-MAC Protocol) — strong AES 128-bit block cipher. Two modes:</p>
+<ul>
+<li><strong>WPA2-Personal (WPA2-PSK)</strong>: Shared pre-shared key; all users use same password; vulnerable to offline dictionary attacks if captured handshake</li>
+<li><strong>WPA2-Enterprise (802.1X)</strong>: Each user authenticates individually with credentials or certificates against a RADIUS server; much more secure</li>
+</ul>
+<h4>WPA3</h4>
+<p>WPA3 (2018) adds significant security improvements:</p>
+<ul>
+<li><strong>SAE (Simultaneous Authentication of Equals)</strong>: Replaces PSK handshake. Uses Dragonfly key exchange. Prevents offline dictionary attacks — attacker must interact with the AP for each guess.</li>
+<li><strong>Forward secrecy</strong>: Each session uses unique keys; past sessions cannot be decrypted even if long-term key is compromised</li>
+<li><strong>192-bit Enterprise mode</strong>: For government/defense environments</li>
+<li><strong>WPA3 Transition mode</strong>: Allows WPA2 and WPA3 clients to coexist</li>
+</ul>
+<h4>WPS — Wi-Fi Protected Setup (DISABLE THIS)</h4>
+<p>WPS allows devices to join Wi-Fi by pressing a button or entering an 8-digit PIN. The PIN method has a critical flaw — it can be brute-forced in hours using tools like Reaver. The first 4 digits and last 4 digits are validated separately, reducing the search space from 10^8 to 11,000 combinations. Always disable WPS on every router/AP.</p>`,
+
+23: `<h3>DHCP and DNS</h3>
+<p>DHCP (Dynamic Host Configuration Protocol) automates IP address assignment. DNS (Domain Name System) translates human-readable hostnames to IP addresses. Both are fundamental network services.</p>
+<h4>DHCP — The DORA Process</h4>
+<p>When a device connects to a network and needs an IP address, it goes through four steps:</p>
+<ol>
+<li><strong>Discover</strong>: Client broadcasts a DHCPDISCOVER packet (src: 0.0.0.0, dst: 255.255.255.255) — "Is there a DHCP server on this network?"</li>
+<li><strong>Offer</strong>: All DHCP servers on the network respond with DHCPOFFER (still broadcast) offering an IP address and lease terms</li>
+<li><strong>Request</strong>: Client broadcasts DHCPREQUEST selecting one server's offer (also broadcast to inform other DHCP servers their offer was declined)</li>
+<li><strong>Acknowledge</strong>: Selected DHCP server sends DHCPACK confirming the lease (now unicast to client's MAC address)</li>
+</ol>
+<p>DHCP provides: IP address, subnet mask, default gateway, DNS server(s), lease duration. Lease is renewed at 50% of lease time (client directly contacts server) and again at 87.5% (client broadcasts).</p>
+<h4>DNS Record Types</h4>
+<ul>
+<li><strong>A record</strong>: hostname → IPv4 address (e.g., www.example.com → 93.184.216.34)</li>
+<li><strong>AAAA record</strong>: hostname → IPv6 address</li>
+<li><strong>MX record</strong>: Mail eXchange — specifies mail server for domain (nslookup -type=MX domain.com)</li>
+<li><strong>CNAME</strong>: Canonical Name — alias pointing to another hostname (mail.example.com → smtp.example.com)</li>
+<li><strong>PTR</strong>: Pointer record — reverse DNS; IP → hostname (used in email authentication)</li>
+<li><strong>TXT</strong>: Text record — SPF, DKIM, domain verification</li>
+<li><strong>SOA</strong>: Start of Authority — master DNS server for the zone</li>
+<li><strong>NS</strong>: Name Server records — authoritative DNS servers for the domain</li>
+</ul>
+<h4>DNS Resolution Process</h4>
+<p>When you type www.google.com: (1) Check local DNS cache; (2) Query configured DNS server (recursive resolver); (3) Resolver queries root servers (.); (4) Root refers to .com TLD servers; (5) TLD refers to google.com authoritative servers; (6) Authoritative server returns the A record. Result cached per TTL.</p>`,
+
+24: `<h3>Network Command-Line Tools</h3>
+<p>These tools are tested directly on the exam — expect questions requiring you to identify which command accomplishes a specific network diagnostic task.</p>
+<h4>ping</h4>
+<p>Tests ICMP (Layer 3) reachability between two hosts. Sends Echo Request; expects Echo Reply. Tests basic Layer 1-3 connectivity, RTT (Round Trip Time), and packet loss. <code>ping 8.8.8.8</code> tests internet connectivity. <code>ping hostname</code> also tests DNS resolution. Firewall rules may block ICMP — a failed ping does not always mean the host is unreachable.</p>
+<h4>tracert / traceroute</h4>
+<p>Maps the path packets take between source and destination by sending probes with incrementing TTL values. Each router that drops the packet due to TTL=0 sends an ICMP TTL Exceeded response, revealing that router's IP and RTT. Use to identify where packets are being dropped or delayed. Windows: <code>tracert google.com</code>; Linux/Mac: <code>traceroute google.com</code>.</p>
+<h4>nslookup</h4>
+<p>Queries DNS servers. <code>nslookup google.com</code> returns the IP(s) for google.com. <code>nslookup -type=MX gmail.com</code> returns mail server records. <code>nslookup google.com 8.8.8.8</code> queries a specific DNS server. Use to diagnose DNS failures and verify record configurations.</p>
+<h4>ipconfig (Windows)</h4>
+<p><code>ipconfig</code>: Shows IP, subnet mask, default gateway for all adapters. <code>ipconfig /all</code>: Also shows MAC address, DHCP server, DNS servers, lease times. <code>ipconfig /release</code>: Releases current DHCP lease. <code>ipconfig /renew</code>: Requests new DHCP lease. <code>ipconfig /flushdns</code>: Clears local DNS resolver cache — use when DNS changes are not taking effect.</p>
+<h4>netstat</h4>
+<p><code>netstat -an</code>: Shows all active connections and listening ports with numeric addresses. <code>netstat -anb</code>: Also shows which process owns each connection (requires admin). Use to detect unauthorized listening services or suspicious outbound connections (malware C2).</p>
+<h4>arp</h4>
+<p><code>arp -a</code>: Shows the ARP cache — the table of IP-to-MAC address mappings the machine has learned. Use to find the MAC address of a device given its IP, or to detect ARP poisoning attacks (two IPs with the same MAC may indicate ARP spoofing).</p>
+<h4>pathping</h4>
+<p>Windows tool combining ping and tracert — shows per-hop statistics over multiple probes. Reveals packet loss at specific hops. Takes ~5 minutes to complete. More detailed than tracert for diagnosing intermittent issues.</p>`,
+
+25: `<h3>Network Cables — Cat5e, Cat6, Cat6a, Cat8, T568A/B</h3>
+<p>Copper Ethernet cables carry data as electrical differential signals. The cable category determines maximum speed and distance. Proper termination with the correct standard is essential for reliable operation.</p>
+<h4>Ethernet Cable Categories</h4>
+<table style="width:100%;border-collapse:collapse;font-size:12px">
+<tr style="background:#F0EDE8"><th style="padding:5px;border:1px solid #E2DDD8">Category</th><th style="padding:5px;border:1px solid #E2DDD8">Max Speed</th><th style="padding:5px;border:1px solid #E2DDD8">Max Distance</th><th style="padding:5px;border:1px solid #E2DDD8">Bandwidth</th><th style="padding:5px;border:1px solid #E2DDD8">Notes</th></tr>
+<tr><td style="padding:5px;border:1px solid #E2DDD8">Cat5e</td><td style="padding:5px;border:1px solid #E2DDD8">1 Gbps</td><td style="padding:5px;border:1px solid #E2DDD8">100m</td><td style="padding:5px;border:1px solid #E2DDD8">100 MHz</td><td style="padding:5px;border:1px solid #E2DDD8">Most existing infrastructure</td></tr>
+<tr><td style="padding:5px;border:1px solid #E2DDD8">Cat6</td><td style="padding:5px;border:1px solid #E2DDD8">1 Gbps (10G at 55m)</td><td style="padding:5px;border:1px solid #E2DDD8">100m (55m@10G)</td><td style="padding:5px;border:1px solid #E2DDD8">250 MHz</td><td style="padding:5px;border:1px solid #E2DDD8">Center spline separating pairs</td></tr>
+<tr><td style="padding:5px;border:1px solid #E2DDD8">Cat6a</td><td style="padding:5px;border:1px solid #E2DDD8">10 Gbps</td><td style="padding:5px;border:1px solid #E2DDD8">100m</td><td style="padding:5px;border:1px solid #E2DDD8">500 MHz</td><td style="padding:5px;border:1px solid #E2DDD8">Minimum for new 10G installs</td></tr>
+<tr><td style="padding:5px;border:1px solid #E2DDD8">Cat8</td><td style="padding:5px;border:1px solid #E2DDD8">25–40 Gbps</td><td style="padding:5px;border:1px solid #E2DDD8">30m</td><td style="padding:5px;border:1px solid #E2DDD8">2000 MHz</td><td style="padding:5px;border:1px solid #E2DDD8">Data center, switch-to-server</td></tr>
+</table>
+<h4>T568A vs T568B Wiring Standards</h4>
+<p>Both standards define the pin-to-pair assignments for RJ-45 connectors on Cat cables. The difference is in pairs 2 and 3 (orange and green) are swapped:</p>
+<ul>
+<li><strong>T568A</strong> (Pins 1-8): GW–G–OW–B–BW–O–BrW–Br (Green/White, Green, Orange/White, Blue, Blue/White, Orange, Brown/White, Brown)</li>
+<li><strong>T568B</strong> (Pins 1-8): OW–O–GW–B–BW–G–BrW–Br (Orange/White, Orange, Green/White, Blue, Blue/White, Green, Brown/White, Brown)</li>
+</ul>
+<p><strong>T568B is the dominant standard</strong> in North American commercial installations. T568A is required by the US government (TIA-568) and used in residential wiring. Both standards work equally well — just be consistent: both ends of a straight-through cable must use the same standard. A crossover cable uses T568A on one end and T568B on the other.</p>
+<h4>Auto-MDIX</h4>
+<p>Modern switches and NICs support Auto-MDIX (Auto Medium Dependent Interface Crossover) which electronically detects and adjusts for straight-through vs crossover cables. In practice, you can use either cable type between modern devices. Auto-MDIX eliminates the need to stock crossover cables for like-device connections.</p>`,
+
+26: `<h3>Fiber Optic Cables — SMF, MMF, and Connectors</h3>
+<p>Fiber optic cables transmit data as pulses of light through glass or plastic strands. Immune to electromagnetic interference, supports much longer distances than copper, and used in data centers and campus backbones.</p>
+<h4>Single-Mode Fiber (SMF)</h4>
+<p>Core diameter: <strong>8–10 micrometers</strong>. Uses a laser light source. Supports transmission distances of <strong>40km or more</strong>. The small core allows only one mode (path) of light to propagate, eliminating modal dispersion. Used for long-distance runs: between buildings, campus links, WAN connections. Cable jacket color: <strong>yellow</strong>. OS1 (indoor) and OS2 (outdoor) standards.</p>
+<h4>Multi-Mode Fiber (MMF)</h4>
+<p>Core diameter: <strong>50–62.5 micrometers</strong>. Uses LED or VCSEL (Vertical Cavity Surface Emitting Laser) light source. Multiple light modes travel simultaneously, causing modal dispersion that limits distance. MMF grades:</p>
+<ul>
+<li><strong>OM1</strong>: 62.5µm, orange; 10G up to 33m</li>
+<li><strong>OM2</strong>: 50µm, orange; 10G up to 82m</li>
+<li><strong>OM3</strong>: 50µm, aqua; 10G up to 300m; 40G/100G up to 100m</li>
+<li><strong>OM4</strong>: 50µm, aqua/violet; 10G up to 400m; most common for new installations</li>
+</ul>
+<h4>Fiber Connectors</h4>
+<ul>
+<li><strong>LC (Lucent Connector)</strong>: Small push-pull RJ-45-style latch; half the size of SC; dominant in modern switches and SFP modules; available in duplex (two fibers side by side)</li>
+<li><strong>SC (Subscriber Connector)</strong>: Larger push-pull snap connector; square profile; common in older infrastructure and patch panels</li>
+<li><strong>ST (Straight Tip)</strong>: Bayonet-style twist-and-lock; round connector; legacy campus networks; being replaced by LC/SC</li>
+<li><strong>FC (Ferrule Connector)</strong>: Threaded coupling; high vibration environments; test equipment</li>
+</ul>
+<h4>SFP and SFP+ Modules</h4>
+<p>SFP (Small Form-factor Pluggable) and SFP+ modules are hot-swappable transceivers that plug into switch SFP cages. They convert electrical signals to optical and vice versa. SFP = 1 Gbps; SFP+ = 10 Gbps; QSFP = 40 Gbps. Insert the appropriate module for the cable type (SMF, MMF, or DAC copper direct-attach cable).</p>`,
+
+27: `<h3>Network Troubleshooting Methodology</h3>
+<p>CompTIA defines a specific 7-step troubleshooting methodology. This process applies to ALL technical problems, not just networking. The exam will test your knowledge of the correct order and the purpose of each step.</p>
+<h4>The 7-Step CompTIA Troubleshooting Process</h4>
+<ol>
+<li><strong>Identify the problem</strong>: Gather information from the user, identify symptoms, question what changed recently, duplicate the problem if possible. Ask open-ended questions then closed questions to narrow the scope. Check logs, error messages, and system events.</li>
+<li><strong>Establish a theory of probable cause</strong>: Consider the simplest/most obvious cause first (Occam's Razor). Research the symptoms if needed. Create a list of potential causes ranked by likelihood.</li>
+<li><strong>Test the theory to determine the cause</strong>: Test your most likely theory. If it is CONFIRMED — move to Step 4. If NOT confirmed — establish a new theory and test it. If no theory can be confirmed, escalate to higher-level support.</li>
+<li><strong>Establish a plan of action</strong>: Determine the steps to resolve the problem. Consider side effects: will the fix cause other issues? Does it require downtime? Need to back up data first? Get proper authorization if needed.</li>
+<li><strong>Implement the solution or escalate</strong>: Execute the plan. If it is beyond your scope or permissions, escalate with full documentation of everything tried so far. Don't just pass the problem — pass all your findings.</li>
+<li><strong>Verify full system functionality</strong>: Confirm the original problem is resolved AND that nothing else was broken by the fix. Have the user verify it works. Implement preventive measures to stop recurrence.</li>
+<li><strong>Document findings, actions, and outcomes</strong>: Update the ticket with: what the problem was, what caused it, what fixed it, and how long it took. This creates institutional knowledge and helps future technicians.</li>
+</ol>
+<h4>Applied Example</h4>
+<p>Problem: "User cannot access the internet." Step 1: Can they ping 192.168.1.1 (gateway)? Step 2: Theory — DNS failure (they can ping but can't browse by hostname). Step 3: Test with nslookup — DNS server unreachable confirmed. Step 4: Plan — update DNS server setting. Step 5: Set correct DNS (8.8.8.8) and test. Step 6: User confirms browsing works, internal shares also work. Step 7: Document the cause (DNS setting incorrect after VPN software install).</p>`,
+
+28: `<h3>Network Troubleshooting Tools</h3>
+<p>Physical and software tools help diagnose network problems at different OSI layers. Knowing which tool to use for which problem is testable on the exam.</p>
+<h4>Cable Tester</h4>
+<p>Tests copper Ethernet cables for continuity, shorts, opens, crossed pairs, and split pairs. Send unit connects to one end; remote unit connects to other end. Most testers show pin-by-pin connectivity. More advanced TDR (Time Domain Reflectometer) testers can locate the exact distance to a break. Essential for verifying new cable installations and diagnosing physical connectivity failures.</p>
+<h4>Toner Probe (Fox and Hound)</h4>
+<p>Two-piece tool: toner generator connects to one end of the cable; probe wand held near cables emits a tone when detecting the toner signal. Used to identify and trace cable runs through walls, ceilings, and patch panels without disconnecting anything. Critical for labeling unknown cables in legacy installations.</p>
+<h4>OTDR — Optical Time Domain Reflectometer</h4>
+<p>Fiber-specific tool that sends a pulse of light into a fiber and measures reflections along its length. The time delay of reflections reveals the exact distance to: fiber breaks, fusion splice quality, connectors, and the far end. OTDR trace shows a graph of signal loss vs distance. Identifies specific fault locations in long fiber runs where visual inspection is impossible.</p>
+<h4>Loopback Adapter</h4>
+<p>RJ-45 plug with TX pins wired directly to RX pins. Allows a NIC to send data to itself. Used to test if a NIC's transmit and receive hardware is functioning correctly without needing a remote device. Also available for fiber (LC, SC loopback), serial, and other interfaces.</p>
+<h4>Wi-Fi Analyzer</h4>
+<p>Software (Acrylic Wi-Fi, NetSpot, inSSIDer) or hardware tool that shows all visible SSIDs, signal strength (dBm), channel assignments, and security protocols. Use to: find least-congested Wi-Fi channel, identify dead spots requiring additional APs, detect rogue APs and evil twin attacks, and diagnose co-channel interference. Signal strength: -50 dBm = excellent, -70 dBm = acceptable, -80 dBm = poor.</p>
+<h4>PoE Tester</h4>
+<p>Verifies that a switch port is delivering PoE power correctly. Tests voltage and current delivered to verify compliance with 802.3af/at/bt standards. Prevents damage to PoE devices from incorrect power delivery.</p>`,
+
+29: `<h3>Cloud Computing — Service Models and Deployment</h3>
+<p>Cloud computing delivers computing resources (servers, storage, software) over the internet on a pay-per-use basis. NIST SP 800-145 provides the authoritative definition used in IT certifications.</p>
+<h4>NIST's 5 Essential Characteristics</h4>
+<ol>
+<li><strong>On-demand self-service</strong>: Users provision resources themselves without human interaction with the provider (spin up a VM in minutes via a web console)</li>
+<li><strong>Broad network access</strong>: Available over the network from any device (PC, phone, tablet) anywhere</li>
+<li><strong>Resource pooling</strong>: Multi-tenant model — physical resources shared across customers; users don't know or control exact physical location</li>
+<li><strong>Rapid elasticity</strong>: Resources can be scaled up or down automatically — auto-scaling during peak traffic; scale back during off-hours</li>
+<li><strong>Measured service</strong>: Usage is monitored and customers are billed only for what they consume (pay-per-GB, pay-per-hour, pay-per-request)</li>
+</ol>
+<h4>Service Models</h4>
+<p><strong>IaaS (Infrastructure as a Service)</strong>: Provider delivers virtualized hardware — servers, storage, networking. Customer manages: OS, middleware, applications, data. Examples: AWS EC2, Azure VMs, Google Compute Engine. Customer has most control and most responsibility.</p>
+<p><strong>PaaS (Platform as a Service)</strong>: Provider delivers runtime environment. Customer manages: applications and data only. Examples: AWS Elastic Beanstalk, Azure App Service, Heroku. Used for application deployment without managing servers.</p>
+<p><strong>SaaS (Software as a Service)</strong>: Provider manages everything including the application. Customer manages: data and user access only. Examples: Office 365, Salesforce, Google Workspace. Least control, least responsibility for customer.</p>
+<h4>Deployment Models</h4>
+<ul>
+<li><strong>Public cloud</strong>: Multi-tenant; shared infrastructure; AWS, Azure, GCP; lowest cost</li>
+<li><strong>Private cloud</strong>: Single-tenant; on-premises or hosted exclusively for one organization; highest control/cost</li>
+<li><strong>Hybrid cloud</strong>: Combination of public + private; sensitive data on-prem, scalable workloads in public</li>
+<li><strong>Community cloud</strong>: Shared by organizations with common requirements (e.g., HIPAA-compliant healthcare cloud)</li>
+</ul>`,
+
+30: `<h3>Cloud Characteristics and VDI</h3>
+<p>Beyond the basic service models, cloud computing enables specific architectural patterns that change how IT services are designed and delivered.</p>
+<h4>CapEx vs OpEx</h4>
+<p><strong>CapEx (Capital Expenditure)</strong>: Large upfront purchase depreciated over time — buying servers, networking equipment, data center space. Requires budget approval, procurement cycle, physical space, power, cooling. High initial investment.</p>
+<p><strong>OpEx (Operational Expenditure)</strong>: Monthly/recurring expenses — cloud subscriptions. Predictable monthly billing. No upfront investment. Scales up or down with business needs. Cloud computing converts CapEx to OpEx — a fundamental financial benefit for businesses.</p>
+<h4>VDI — Virtual Desktop Infrastructure</h4>
+<p>VDI hosts full desktop environments (Windows 10/11 VMs) on central servers. Users connect via thin clients (minimal hardware — just enough to display and connect). Benefits: centralized management (update one golden image), security (data never leaves the data center), any-device access. Drawbacks: latency sensitivity, high server infrastructure cost. Examples: VMware Horizon, Citrix Virtual Apps, Microsoft AVD (Azure Virtual Desktop).</p>
+<h4>DaaS — Desktop as a Service</h4>
+<p>Cloud-hosted VDI — the VDI servers are managed by a cloud provider rather than the organization. Examples: Amazon WorkSpaces, Microsoft Azure Virtual Desktop. Lower upfront cost than on-premises VDI but higher ongoing cost. Good for remote workforces.</p>
+<h4>SAN vs NAS</h4>
+<p><strong>NAS (Network Attached Storage)</strong>: File-level storage accessed over standard Ethernet using NFS (Linux) or SMB/CIFS (Windows). Appears as a network share. Easy to manage, good for file sharing.</p>
+<p><strong>SAN (Storage Area Network)</strong>: Block-level storage accessed over dedicated fiber channel or iSCSI network. Appears to servers as a local disk. High performance for databases and virtual machine storage.</p>
+<h4>CDN — Content Delivery Network</h4>
+<p>Distributes content to edge servers globally close to users. When you visit a website, static assets (images, videos, scripts) are served from the nearest CDN edge node rather than the origin server. Reduces latency and load on origin servers. Examples: Cloudflare, Akamai, AWS CloudFront.</p>`,
+31: `<h3>Virtualization — Hypervisors and VMs</h3>
+<p>Virtualization allows multiple operating systems to run simultaneously on a single physical host by abstracting hardware resources. A hypervisor manages the virtual machines and controls access to physical hardware.</p>
+<h4>Type 1 Hypervisors (Bare-Metal)</h4>
+<p>Type 1 hypervisors run directly on the physical hardware — no host OS underneath. They have direct hardware access, making them highly efficient. Examples: <strong>VMware ESXi</strong>, <strong>Microsoft Hyper-V</strong> (Windows Server role), <strong>KVM</strong> (Linux kernel module), <strong>Xen</strong>. Used in enterprise data centers and server virtualization. The hypervisor is the OS.</p>
+<h4>Type 2 Hypervisors (Hosted)</h4>
+<p>Type 2 hypervisors run as applications on top of a conventional host OS. The hypervisor relies on the host OS for hardware access. Examples: <strong>VMware Workstation</strong>, <strong>Oracle VirtualBox</strong>, <strong>Parallels Desktop</strong> (macOS), <strong>VMware Fusion</strong> (macOS). Used for development, testing, and learning environments on personal workstations. Slightly less efficient due to the extra OS layer.</p>
+<h4>Virtual Machine Components</h4>
+<ul>
+<li><strong>vCPU</strong>: Virtual CPU — one or more physical CPU cores allocated to the VM. Overcommitting vCPUs (more vCPUs than physical cores) is possible but degrades performance.</li>
+<li><strong>vRAM</strong>: Virtual RAM — portion of physical RAM reserved for the VM. Cannot be overcommitted without causing swapping.</li>
+<li><strong>vNIC</strong>: Virtual network adapter — connected to a virtual switch (vSwitch) that bridges to physical NICs.</li>
+<li><strong>Virtual disk</strong>: A file (VMDK for VMware, VHD/VHDX for Hyper-V) stored on the host, appearing as a physical disk to the VM.</li>
+</ul>
+<h4>Snapshots vs Clones</h4>
+<p><strong>Snapshot</strong>: Point-in-time record of VM disk state + RAM. Enables instant rollback if a change causes problems. Not a backup — snapshots grow over time and degrade performance. Always take a snapshot before major changes; delete after verifying success.</p>
+<p><strong>Clone</strong>: Full independent copy of the VM. A linked clone shares the base disk; a full clone is completely independent. Used for rapid deployment of multiple identical VMs from a template.</p>`,
+
+32: `<h3>Mobile Devices — Android and iOS Architecture</h3>
+<p>Mobile devices run specialized operating systems optimized for battery life, touch input, and always-on connectivity. The CompTIA A+ exam focuses on managing, troubleshooting, and securing mobile devices in enterprise environments.</p>
+<h4>Android</h4>
+<p>Open-source OS based on the Linux kernel, developed by Google. Multiple manufacturers (Samsung, OnePlus, Google Pixel) ship Android with custom modifications (skins). Android allows sideloading apps (installing APKs outside the Google Play Store) which increases flexibility but also security risk. Developer mode can be unlocked by tapping Build Number 7 times — enables ADB (Android Debug Bridge) for USB debugging.</p>
+<h4>iOS</h4>
+<p>Apple's closed-source OS for iPhone and iPad. Strict app sandboxing — apps cannot access each other's data. All apps must come from the App Store (except enterprise-provisioned apps). Jailbreaking removes iOS security restrictions by exploiting kernel vulnerabilities to gain root access — voids warranty, removes security controls, violates MDM policies.</p>
+<h4>Mobile Device Connectivity</h4>
+<ul>
+<li><strong>Wi-Fi</strong>: 802.11a/b/g/n/ac/ax depending on device generation</li>
+<li><strong>Bluetooth</strong>: Short-range 2.4 GHz; pairing required; versions 4.2, 5.0, 5.3 in modern devices</li>
+<li><strong>NFC (Near Field Communication)</strong>: 13.56 MHz; ~20cm range; contactless payments (Apple Pay, Google Pay), transit cards, peer device pairing</li>
+<li><strong>Cellular (4G LTE / 5G)</strong>: Voice and data over carrier network; SIM card identifies subscriber</li>
+<li><strong>IR (Infrared)</strong>: Line-of-sight; some Android phones include IR blaster for TV remote control</li>
+<li><strong>GPS</strong>: Satellite positioning; A-GPS uses cell towers for faster initial fix</li>
+</ul>
+<h4>Mobile Device Synchronization</h4>
+<p>Modern mobile devices sync contacts, email, calendar, photos, and app data via cloud services: iCloud (iOS), Google One/Drive (Android), Microsoft Exchange/Intune. Enterprise devices sync via MDM profiles that push configuration, enforce policies, and allow remote management.</p>`,
+
+33: `<h3>Mobile Device Management (MDM) and BYOD</h3>
+<p>Organizations must balance employee device flexibility with security requirements. MDM, MAM, and device policies provide the technical controls needed in enterprise mobile deployments.</p>
+<h4>MDM — Mobile Device Management</h4>
+<p>MDM platforms (Microsoft Intune, Jamf, MobileIron) manage enrolled devices by pushing profiles and policies. MDM capabilities include:</p>
+<ul>
+<li>Enforce screen lock PIN/biometric requirements</li>
+<li>Require device encryption (iOS always encrypted; Android requires enabling)</li>
+<li>Push Wi-Fi, VPN, and email configuration profiles</li>
+<li>Restrict features (camera disable, app whitelist/blacklist)</li>
+<li>Remote lock and remote wipe (full factory reset or selective wipe)</li>
+<li>Detect jailbreak/root and block corporate access</li>
+<li>Enforce OS version minimums</li>
+</ul>
+<h4>MAM — Mobile Application Management</h4>
+<p>MAM manages specific applications rather than the whole device. Useful for BYOD scenarios — wraps corporate apps (Outlook, Teams) with encryption and DLP policies without requiring full device enrollment. User retains control of personal apps and data. Selective wipe removes only managed app data, leaving personal photos/contacts untouched.</p>
+<h4>Device Ownership Models</h4>
+<ul>
+<li><strong>BYOD (Bring Your Own Device)</strong>: Personal device used for work; enrolled in MDM for policy compliance; employee owns hardware; cheapest for company</li>
+<li><strong>COPE (Corporate-Owned, Personally-Enabled)</strong>: Company buys device; allows limited personal use; company has full MDM control</li>
+<li><strong>CYOD (Choose Your Own Device)</strong>: Employee picks from approved device list; company purchases; full MDM enrollment</li>
+<li><strong>COBO (Corporate-Owned, Business-Only)</strong>: Strictly work use; often kiosk mode; maximum control</li>
+</ul>
+<h4>Mobile Security Controls</h4>
+<p>Screen lock types ranked by security: Swipe (none) → PIN → Password → Pattern → Fingerprint/Face (biometric — most convenient, good security). Enterprise policy should require minimum 6-digit PIN. Biometrics store templates in hardware Secure Enclave (iOS) or TrustZone (Android) — never leaves the device.</p>`,
+
+34: `<h3>Windows Editions and Installation</h3>
+<p>Windows comes in multiple editions with different feature sets. Choosing the correct edition and understanding the installation process are fundamental A+ skills.</p>
+<h4>Windows 10/11 Editions</h4>
+<table style="width:100%;border-collapse:collapse;font-size:12px">
+<tr style="background:#F0EDE8"><th style="padding:5px;border:1px solid #E2DDD8">Edition</th><th style="padding:5px;border:1px solid #E2DDD8">Key Features</th><th style="padding:5px;border:1px solid #E2DDD8">Max RAM</th></tr>
+<tr><td style="padding:5px;border:1px solid #E2DDD8">Home</td><td style="padding:5px;border:1px solid #E2DDD8">Basic; no BitLocker, no gpedit.msc, no domain join, no Hyper-V</td><td style="padding:5px;border:1px solid #E2DDD8">128 GB</td></tr>
+<tr><td style="padding:5px;border:1px solid #E2DDD8">Pro</td><td style="padding:5px;border:1px solid #E2DDD8">BitLocker, gpedit.msc, domain join, Hyper-V, RDP host, Windows Sandbox</td><td style="padding:5px;border:1px solid #E2DDD8">2 TB</td></tr>
+<tr><td style="padding:5px;border:1px solid #E2DDD8">Pro Workstation</td><td style="padding:5px;border:1px solid #E2DDD8">All Pro + ReFS, 4-CPU support, 6 TB RAM</td><td style="padding:5px;border:1px solid #E2DDD8">6 TB</td></tr>
+<tr><td style="padding:5px;border:1px solid #E2DDD8">Enterprise</td><td style="padding:5px;border:1px solid #E2DDD8">All Pro + DirectAccess, AppLocker, BranchCache, Credential Guard</td><td style="padding:5px;border:1px solid #E2DDD8">2 TB</td></tr>
+</table>
+<h4>Windows 11 Requirements</h4>
+<p>Windows 11 has stricter hardware requirements than Windows 10: 64-bit CPU with 2+ cores at 1 GHz+, 4 GB RAM minimum, 64 GB storage, UEFI with Secure Boot enabled, <strong>TPM 2.0</strong> (this is the most commonly tested requirement), DirectX 12 GPU, 720p display minimum.</p>
+<h4>Installation Methods</h4>
+<ul>
+<li><strong>Clean install</strong>: Formats drive, fresh Windows; all data and apps lost; preferred for problematic systems</li>
+<li><strong>Upgrade install</strong>: Preserves apps, settings, and data; Windows.old folder created for 10-day rollback</li>
+<li><strong>Unattended install</strong>: Uses answer file (unattend.xml) to automate all prompts; used for large deployments</li>
+<li><strong>Network install (WDS/PXE)</strong>: Boots from network; downloads WIM image from deployment server; used for mass deployment</li>
+</ul>
+<h4>Installation Process</h4>
+<p>Create bootable USB with Media Creation Tool or Rufus. Set BIOS boot order to USB first. Language/Time/Keyboard → Install Now → Enter product key (or skip) → Select edition → Accept license → Custom install → Select/format partition → Installation copies files → Multiple reboots → OOBE (Out-of-Box Experience) — name, account, region, privacy settings.</p>`,
+
+35: `<h3>Windows File Systems and Disk Management</h3>
+<p>Understanding file systems, partition styles, and disk management tools allows technicians to properly configure storage, recover data, and manage drives.</p>
+<h4>File Systems</h4>
+<ul>
+<li><strong>NTFS (New Technology File System)</strong>: Default Windows file system. Features: journaling (crash recovery), permissions (ACLs), encryption (EFS), compression, quotas, maximum single file size: 16 TB. Required for Windows system drives.</li>
+<li><strong>FAT32</strong>: Maximum single file size: 4 GB (major limitation). Maximum volume: 32 GB (Windows format limit). Compatible with virtually all devices (USB drives, cameras, game consoles). No permissions or journaling.</li>
+<li><strong>exFAT (Extended FAT)</strong>: No practical file size limit. No permissions. Designed for flash drives and SD cards. Compatible with Windows, macOS, and Linux without additional drivers. Best choice for large USB drives needing cross-platform compatibility.</li>
+<li><strong>ReFS (Resilient File System)</strong>: Windows Server; integrity checksums; automatic repair; no EFS or disk quotas; used for Storage Spaces and large-scale storage.</li>
+</ul>
+<h4>Partition Styles</h4>
+<p><strong>MBR (Master Boot Record)</strong>: Legacy style; 512-byte boot sector; maximum drive size 2.2 TB; maximum 4 primary partitions (or 3 primary + 1 extended with logical partitions inside); used with BIOS boot.</p>
+<p><strong>GPT (GUID Partition Table)</strong>: Modern standard; maximum drive size 9.4 ZB; up to 128 partitions on Windows; required for UEFI boot and drives larger than 2.2 TB; includes protective MBR for backward compatibility; includes EFI System Partition (ESP).</p>
+<h4>Disk Management (diskmgmt.msc)</h4>
+<p>GUI tool for: initializing new disks (MBR or GPT), creating/deleting/formatting partitions, assigning/changing drive letters, extending/shrinking volumes (NTFS only), converting basic to dynamic disk.</p>
+<h4>DiskPart Commands</h4>
+<p>Command-line disk tool used in WinPE and advanced scenarios: <code>list disk</code>, <code>select disk 0</code>, <code>clean</code> (wipes partition table), <code>create partition primary</code>, <code>format fs=ntfs quick</code>, <code>assign letter=D</code>.</p>`,
+
+36: `<h3>Windows Registry and Boot Process</h3>
+<p>The Windows Registry is a hierarchical database storing configuration for the OS, hardware, and installed applications. The boot process follows a specific sequence from power-on to the Windows desktop.</p>
+<h4>Registry Hives</h4>
+<ul>
+<li><strong>HKEY_LOCAL_MACHINE (HKLM)</strong>: System-wide settings — hardware configuration, installed software, security database (SAM), system configuration. Not user-specific.</li>
+<li><strong>HKEY_CURRENT_USER (HKCU)</strong>: Settings for the currently logged-in user — desktop preferences, application settings, user-specific software configuration.</li>
+<li><strong>HKEY_CLASSES_ROOT (HKCR)</strong>: File extension associations and COM object registrations. Merge of HKLM\Software\Classes and HKCU\Software\Classes.</li>
+<li><strong>HKEY_USERS (HKU)</strong>: Settings for all user profiles on the system. HKCU is an alias for the current user's subkey within HKU.</li>
+<li><strong>HKEY_CURRENT_CONFIG (HKCC)</strong>: Current hardware profile — display settings, printer settings for active session.</li>
+</ul>
+<h4>Critical Registry Paths</h4>
+<ul>
+<li>Autostart (system): <code>HKLM\Software\Microsoft\Windows\CurrentVersion\Run</code></li>
+<li>Autostart (user): <code>HKCU\Software\Microsoft\Windows\CurrentVersion\Run</code></li>
+<li>Installed software: <code>HKLM\Software\Microsoft\Windows\CurrentVersion\Uninstall</code></li>
+<li>SAM (local accounts): <code>HKLM\SAM</code> — accessible only as SYSTEM</li>
+</ul>
+<h4>Windows Boot Sequence (UEFI)</h4>
+<ol>
+<li>Power on → UEFI firmware initializes hardware (POST)</li>
+<li>UEFI reads EFI System Partition, finds Windows Boot Manager (bootmgfw.efi)</li>
+<li>Boot Manager reads BCD (Boot Configuration Data) — lists available OS options</li>
+<li>Windows Boot Loader (winload.efi) loads: kernel (ntoskrnl.exe), HAL (hal.dll), boot drivers</li>
+<li>Kernel initializes, loads Session Manager (smss.exe)</li>
+<li>smss.exe starts winlogon.exe, lsass.exe, services.exe</li>
+<li>Logon screen displayed by winlogon.exe</li>
+</ol>
+<h4>Boot Recovery Tools</h4>
+<p><code>bootrec /fixmbr</code>: Rewrites MBR (BIOS/MBR systems). <code>bootrec /fixboot</code>: Rewrites Volume Boot Record. <code>bootrec /rebuildbcd</code>: Scans all drives for Windows installations and rebuilds BCD. <code>bcdedit</code>: Views/modifies BCD entries directly.</p>`,
+
+37: `<h3>Windows Command-Line Tools</h3>
+<p>Command-line proficiency is expected of A+ technicians. These tools are tested directly on the exam — you must know the exact commands and what each does.</p>
+<h4>System Maintenance Commands</h4>
+<p><code>sfc /scannow</code>: System File Checker — scans protected Windows system files and replaces corrupted files from a cached copy in C:\Windows\System32\dllcache. Run as administrator. Takes ~10 minutes. Fixes corrupt OS files.</p>
+<p><code>DISM /Online /Cleanup-Image /CheckHealth</code>: Quick check for corruption flag in WIM component store. <code>/ScanHealth</code>: Full scan (10 min). <code>/RestoreHealth</code>: Repairs component store from Windows Update. Run DISM before SFC when both are needed.</p>
+<p><code>chkdsk C: /f /r</code>: <code>/f</code> fixes file system errors; <code>/r</code> includes /f plus scans for bad sectors and recovers readable data. Requires volume to be unmounted (system volume runs on next reboot).</p>
+<h4>User and Group Management</h4>
+<p><code>net user</code>: Lists all local accounts. <code>net user username</code>: Shows account details. <code>net user username password /add</code>: Creates new user. <code>net user username /delete</code>: Removes user. <code>net localgroup Administrators username /add</code>: Adds user to Administrators group.</p>
+<h4>Group Policy</h4>
+<p><code>gpupdate /force</code>: Immediately applies all Group Policy changes. <code>gpresult /r</code>: Shows Resultant Set of Policy (which GPOs applied). <code>gpresult /h report.html</code>: Generates HTML report of all applied policies.</p>
+<h4>Network Commands</h4>
+<p><code>ipconfig /all</code>: Full IP configuration. <code>netstat -anb</code>: All connections with owning process (admin required). <code>nslookup</code>: DNS queries. <code>ping</code>, <code>tracert</code>: Connectivity testing. <code>net use Z: \\server\share</code>: Maps network drive.</p>
+<h4>Task and Process Management</h4>
+<p><code>tasklist</code>: Lists running processes. <code>tasklist /FI "PID eq 1234"</code>: Filter by PID. <code>taskkill /PID 1234 /F</code>: Force-terminate by PID. <code>taskkill /IM notepad.exe /F</code>: Terminate by image name.</p>`,
+
+38: `<h3>Windows Administrative Tools</h3>
+<p>Windows provides a rich set of graphical management tools. Knowing where these tools are and what they do is directly tested on the A+ exam.</p>
+<h4>Computer Management (compmgmt.msc)</h4>
+<p>All-in-one management console combining: Task Scheduler, Event Viewer, Shared Folders, Local Users and Groups, Performance Monitor, Device Manager, Disk Management, and Services and Applications. A single stop for most local administration tasks.</p>
+<h4>Event Viewer (eventvwr.msc)</h4>
+<p>Views Windows logs: Application, Security, Setup, System, and custom application logs. Critical Event IDs:</p>
+<ul>
+<li>4624: Successful logon</li>
+<li>4625: Failed logon — watch for repeated failures (brute force)</li>
+<li>41: Kernel-Power — unexpected shutdown (power loss, crash)</li>
+<li>1001: BugCheck — BSOD crash recorded</li>
+<li>6005/6006: EventLog started/stopped (system boot/shutdown)</li>
+<li>7045: New service installed (potential malware)</li>
+</ul>
+<h4>Task Manager (Ctrl+Shift+Esc)</h4>
+<p>Tabs: Processes (running apps and background processes with CPU/RAM usage), Performance (real-time graphs), App history, Startup (programs launching at boot — disable unwanted ones here), Users, Details (PID, handles, modules), Services. Press Ctrl+Alt+Del → Task Manager, or right-click taskbar → Task Manager.</p>
+<h4>Resource Monitor (resmon.exe)</h4>
+<p>More detail than Task Manager: CPU per-process and per-thread, Memory working set and commit, Disk read/write per process and per file, Network per-process connections. Use to identify which process is causing high I/O.</p>
+<h4>Performance Monitor (perfmon.msc)</h4>
+<p>Logs and graphs performance counters over time. Create data collector sets for baseline documentation. Key counters: Processor % Processor Time, Memory Available MB, Disk % Idle Time, Network Bytes Total/sec. Use for capacity planning and diagnosing performance degradation.</p>
+<h4>Services (services.msc)</h4>
+<p>View, start, stop, pause, and configure Windows services. Set startup type: Automatic (starts at boot), Automatic (Delayed Start) (starts shortly after boot), Manual (starts on demand), Disabled (cannot start). Log on as: Local System (most powerful), Local Service, Network Service, or custom service account.</p>`,
+
+39: `<h3>NTFS Permissions and Access Control</h3>
+<p>NTFS file system permissions control who can access files and folders and what they can do. Understanding how permissions combine and interact is critical for both the exam and real-world security.</p>
+<h4>NTFS Permission Levels</h4>
+<ul>
+<li><strong>Full Control</strong>: Read, write, execute, modify, delete, change permissions, take ownership</li>
+<li><strong>Modify</strong>: Read, write, execute, delete — cannot change permissions or take ownership</li>
+<li><strong>Read &amp; Execute</strong>: View contents, run executables — cannot create or modify</li>
+<li><strong>List Folder Contents</strong>: View folder contents only (folders only)</li>
+<li><strong>Read</strong>: View file content and attributes — cannot modify or run</li>
+<li><strong>Write</strong>: Create files and write to existing ones — cannot read content</li>
+</ul>
+<h4>Key Permission Rules</h4>
+<p><strong>Deny overrides Allow</strong>: An explicit Deny on any permission overrides any Allow for that permission, even if the Allow comes from group membership. Use Deny sparingly — it can block access unexpectedly.</p>
+<p><strong>Permissions are cumulative</strong>: A user's effective permissions are the combination (union) of all Allow permissions from all groups they belong to, minus any Deny permissions.</p>
+<p><strong>Inheritance</strong>: Permissions set on a folder are inherited by all subfolders and files. Breaking inheritance allows setting unique permissions on a subfolder. Right-click → Properties → Security → Advanced → Disable Inheritance.</p>
+<p><strong>NTFS vs Share permissions</strong>: When accessing over the network, the effective permission is the MORE RESTRICTIVE of the NTFS permission and the Share permission. NTFS permissions apply both locally and over network; Share permissions apply only over network.</p>
+<h4>Taking Ownership</h4>
+<p>Administrators can take ownership of any file even without explicit permissions, then grant themselves access. This is how you recover access to files when original owner account is deleted. Right-click → Properties → Security → Advanced → Owner → Change.</p>`,
+
+40: `<h3>User Account Control (UAC) and Account Types</h3>
+<p>Windows uses UAC to enforce the principle of least privilege — even administrators run with standard user tokens by default and must explicitly elevate for privileged operations.</p>
+<h4>UAC Behavior</h4>
+<p>UAC prompts appear when an application requires elevated privileges:</p>
+<ul>
+<li><strong>For Administrator accounts</strong>: Consent prompt — "Do you want to allow this app to make changes?" Yes/No. User is already logged in as admin but the token is restricted.</li>
+<li><strong>For Standard User accounts</strong>: Credential prompt — must enter admin username and password to proceed. Standard user cannot approve their own elevation.</li>
+</ul>
+<p>UAC can be configured via Local Security Policy or registry: Off (never prompt — dangerous), Default (notify for app changes), Always notify, Notify without dim screen (VMs).</p>
+<h4>Account Types</h4>
+<p><strong>Administrator</strong>: Full control of the local system. Member of local Administrators group. Can install software system-wide, modify system files, change security settings. Even with admin account, UAC restricts until explicitly elevated.</p>
+<p><strong>Standard User</strong>: Can run applications, change personal settings, install software to user profile. Cannot install to Program Files, modify system files, or change system settings without elevation.</p>
+<p><strong>Guest</strong>: Minimal access; disabled by default in Windows 10/11; no password; should remain disabled in enterprise environments.</p>
+<p><strong>Service accounts</strong>: Local System (most powerful — full local access), Local Service (reduced privileges, no network credentials), Network Service (reduced privileges with network identity), or domain service accounts (for specific applications).</p>
+<h4>Principle of Least Privilege</h4>
+<p>Users and processes should have only the minimum access required to perform their job function — nothing more. This limits damage from: accidental mistakes, malware running under that user's token, compromised accounts. IT staff should have a regular user account for daily work and a separate admin account used only when needed.</p>`,
+
+41: `<h3>Windows Networking — DNS, DHCP, File Sharing</h3>
+<p>Windows integrates deeply with network services. Understanding how Windows clients interact with DNS, DHCP, and file sharing services is essential for troubleshooting connectivity and access issues.</p>
+<h4>Windows DNS Client</h4>
+<p>Windows maintains a local DNS resolver cache. When you type a hostname, Windows checks: hosts file (C:\Windows\System32\drivers\etc\hosts) first, then local DNS cache, then DNS server(s). <code>ipconfig /displaydns</code> shows the cache. <code>ipconfig /flushdns</code> clears it. The hosts file can override DNS — used to block sites or redirect for testing, but also by malware.</p>
+<h4>Windows DHCP Client</h4>
+<p>Windows uses DHCP by default. If no DHCP server responds, Windows assigns an APIPA address (169.254.x.x/16) after 1 minute of trying. Commands: <code>ipconfig /release</code> (drops current lease), <code>ipconfig /renew</code> (requests new DHCP address). Useful for troubleshooting stale DHCP assignments or switching to a different network.</p>
+<h4>Windows File Sharing (SMB)</h4>
+<p>Windows shares folders via SMB (Server Message Block) on port 445. To share: right-click folder → Properties → Sharing → Advanced Sharing → Share this folder → set share permissions. Access via UNC path: <code>\\computername\sharename</code> or <code>\\192.168.1.100\sharename</code>.</p>
+<p><strong>Administrative shares</strong>: Automatically created by Windows — C$ (entire C drive), ADMIN$ (Windows folder), IPC$ (inter-process communication). Accessible by administrators only. Cannot be permanently deleted but can be disabled via registry.</p>
+<h4>Mapped Network Drives</h4>
+<p><code>net use Z: \\server\share /persistent:yes</code>: Maps a network share as drive Z and reconnects at logon. In File Explorer: This PC → Map Network Drive. For domain environments, logon scripts can map drives automatically for all users via GPO.</p>`,
+
+42: `<h3>Windows Remote Management</h3>
+<p>Remote desktop and remote management tools allow technicians to support users and manage servers without being physically present.</p>
+<h4>Remote Desktop Protocol (RDP)</h4>
+<p>RDP (port 3389) provides full graphical desktop access to remote Windows machines. Enable in: Settings → System → Remote Desktop → Enable (Windows 10/11 Pro and above required on host). Requires the user to be in the Remote Desktop Users group or be an administrator. Client: <code>mstsc.exe</code>. Connection: enter IP or hostname, enter credentials.</p>
+<p><strong>Security:</strong> Always use Network Level Authentication (NLA) — pre-authenticates before creating the full desktop session. Change RDP port from default 3389 to reduce automated scan exposure. Use VPN before RDP for internet-facing machines — never expose RDP directly to internet without additional controls.</p>
+<h4>Windows Quick Assist</h4>
+<p>Built into Windows 10/11 (Start → Quick Assist). Helper generates a 6-digit code; user enters the code. Helper can view-only or take full control. User can see all helper actions and stop sharing at any time. Best option for remote user support without third-party software. Requires Microsoft account sign-in for the helper.</p>
+<h4>VNC (Virtual Network Computing)</h4>
+<p>Cross-platform remote desktop that works on Windows, macOS, and Linux. Uses port 5900 (additional monitors: 5901, 5902). Unencrypted by default — always tunnel through SSH or VPN. Clients: RealVNC, TigerVNC, TightVNC. Allows desktop sharing across different operating systems.</p>
+<h4>SSH Remote Management</h4>
+<p>Windows 10/11 includes OpenSSH client and server (optional feature). Enable SSH server: Settings → Apps → Optional Features → Add OpenSSH Server. Connect from any SSH client: <code>ssh username@hostname</code>. Provides secure command-line access. For Linux servers, SSH is the primary remote management method.</p>`,
+
+43: `<h3>macOS and Linux Overview</h3>
+<p>A+ technicians must be familiar with macOS and Linux for troubleshooting in mixed-OS environments. Both are Unix-based and share common command-line tools.</p>
+<h4>macOS Key Tools</h4>
+<ul>
+<li><strong>Activity Monitor</strong>: Task Manager equivalent — CPU, Memory, Energy, Disk, Network tabs. Shows processes, memory pressure, page-outs (excessive = insufficient RAM).</li>
+<li><strong>Disk Utility</strong>: Format, partition, repair disks. First Aid runs fsck (file system check). Restore creates bootable clones.</li>
+<li><strong>System Information (About This Mac → System Report)</strong>: Hardware inventory, installed software, network configuration.</li>
+<li><strong>Terminal</strong>: bash/zsh shell; /Applications/Utilities/Terminal. All Unix commands available.</li>
+<li><strong>Finder</strong>: File manager equivalent; Go → Go to Folder (Cmd+Shift+G) to navigate to specific paths.</li>
+</ul>
+<h4>macOS File System</h4>
+<p><strong>APFS (Apple File System)</strong>: Introduced macOS High Sierra (2017). Replaces HFS+. Features: native AES encryption, snapshots, clones (instant file copies sharing storage), space sharing between volumes, optimized for SSD. All modern Macs use APFS by default.</p>
+<h4>macOS Backup — Time Machine</h4>
+<p>Time Machine backs up to external drive or network share: hourly for 24 hours, daily for a month, weekly until drive full. Recover individual files by entering Time Machine (browse back in time) or full system restore from macOS Recovery. Limitation: files created after last hourly backup are lost if drive fails before next backup.</p>
+<h4>Linux Fundamentals</h4>
+<p>Linux is used on servers, development workstations, and embedded systems. File system hierarchy: / (root), /home (user home directories), /etc (configuration files), /var (logs, databases), /usr (user programs), /tmp (temporary files). Package managers: <code>apt</code> (Debian/Ubuntu), <code>yum</code>/<code>dnf</code> (RHEL/CentOS/Fedora), <code>pacman</code> (Arch). Key commands: <code>ls</code>, <code>cd</code>, <code>cp</code>, <code>mv</code>, <code>rm</code>, <code>chmod</code>, <code>chown</code>, <code>sudo</code>, <code>grep</code>, <code>ps</code>, <code>top</code>.</p>`,
+
+44: `<h3>Linux File Permissions and User Management</h3>
+<p>Linux uses a different permission model than Windows — based on owner, group, and others with read, write, and execute permissions.</p>
+<h4>Linux Permission Structure</h4>
+<p>Each file/directory has three permission sets: owner (user), group, and others (everyone else). Each set has three bits: r (read=4), w (write=2), x (execute=1).</p>
+<p>Example: <code>-rwxr-xr-- 1 touhid staff 4096 Jan 1 12:00 script.sh</code></p>
+<ul>
+<li>First character: - (file), d (directory), l (symlink)</li>
+<li>rwx: owner can read, write, execute</li>
+<li>r-x: group members can read and execute, not write</li>
+<li>r--: others can only read</li>
+</ul>
+<h4>chmod Command</h4>
+<p><strong>Symbolic mode</strong>: <code>chmod u+x file</code> (add execute for owner), <code>chmod g-w file</code> (remove write from group), <code>chmod o=r file</code> (set others to read only).</p>
+<p><strong>Octal mode</strong>: Each permission set represented as sum of r(4)+w(2)+x(1):</p>
+<ul>
+<li><code>chmod 755</code>: rwxr-xr-x — owner full, group+others read+execute (web server files)</li>
+<li><code>chmod 644</code>: rw-r--r-- — owner read+write, others read only (config files)</li>
+<li><code>chmod 600</code>: rw------- — owner read+write only (SSH private keys)</li>
+<li><code>chmod 777</code>: rwxrwxrwx — everyone full access (avoid in production)</li>
+</ul>
+<h4>User Management Commands</h4>
+<p><code>sudo</code>: Run command as root (requires sudoers membership). <code>su username</code>: Switch to another user. <code>useradd</code>/<code>adduser</code>: Create user. <code>passwd username</code>: Change password. <code>usermod -aG groupname username</code>: Add user to group. <code>id username</code>: Show user's UID, GID, and group memberships. <code>whoami</code>: Show current username.</p>`,
+
+45: `<h3>Core 1 Review — Hardware and Networking Summary</h3>
+<p>Day 45 marks the midpoint. Core 1 (220-1101) covers hardware, mobile devices, networking, virtualization, and troubleshooting. This is a full review session to consolidate knowledge before the final 45 days of Core 2 content.</p>
+<h4>Hardware Recap</h4>
+<ul>
+<li>Motherboard form factors: ATX (305×244mm), mATX (244×244mm), Mini-ITX (170×170mm)</li>
+<li>CPU sockets: Intel LGA (pins on board), AMD PGA/AM4 (pins on CPU), AMD AM5 (LGA)</li>
+<li>RAM: DDR4 vs DDR5 (different notch, not interchangeable); DIMM (desktop), SO-DIMM (laptop)</li>
+<li>Storage: HDD (~200 MB/s), SATA SSD (~550 MB/s), NVMe (3,500–7,000 MB/s)</li>
+<li>PSU connectors: 24-pin ATX (motherboard), 8-pin EPS (CPU), 6/8-pin PCIe (GPU)</li>
+<li>PCIe: x16 for GPU; x1 for NIC/sound/capture; backward compatible across generations</li>
+</ul>
+<h4>Networking Recap</h4>
+<ul>
+<li>OSI layers: Physical, Data Link (MAC/switches), Network (IP/routers), Transport (TCP/UDP/ports), Session, Presentation, Application</li>
+<li>Key ports: FTP 20/21, SSH 22, Telnet 23, SMTP 25, DNS 53, DHCP 67/68, HTTP 80, HTTPS 443, SMB 445, RDP 3389</li>
+<li>IPv4: Private ranges (10.x, 172.16-31.x, 192.168.x); APIPA 169.254.x.x; loopback 127.0.0.1</li>
+<li>Wi-Fi: 802.11ac=Wi-Fi 5=5GHz; 802.11ax=Wi-Fi 6=2.4+5+6GHz+OFDMA</li>
+<li>Security: WEP=broken, WPA2-AES=current minimum, WPA3+SAE=best</li>
+<li>Cable: Cat6a for new 10G installs; T568B dominant in commercial; LC connector for modern fiber</li>
+</ul>
+<h4>Before the Exam</h4>
+<p>Take a full 90-question Core 1 practice exam under timed conditions. For every wrong answer, identify the specific objective it maps to and re-read that section. PBQs require hands-on comfort — practice using Device Manager, Disk Management, and network configuration tools directly on Windows.</p>`,
+
+46: `<h3>Malware Types and Attack Vectors</h3>
+<p>Security is 25% of the Core 2 exam. Understanding malware types, how they spread, and how to remove them is essential. The A+ exam focuses on recognition and removal, not deep technical exploitation.</p>
+<h4>Malware Types</h4>
+<ul>
+<li><strong>Virus</strong>: Attaches to a host file; requires user action to execute and spread; can be polymorphic (changes signature to evade detection)</li>
+<li><strong>Worm</strong>: Self-replicates without user action via network vulnerabilities; spreads automatically (WannaCry spread via SMB vulnerability EternalBlue)</li>
+<li><strong>Trojan Horse</strong>: Disguised as legitimate software; creates backdoor; does NOT self-replicate</li>
+<li><strong>RAT (Remote Access Trojan)</strong>: Gives attacker full remote control of the victim machine</li>
+<li><strong>Ransomware</strong>: Encrypts user files; demands payment (cryptocurrency) for decryption key; backup is the primary defense</li>
+<li><strong>Spyware</strong>: Silently monitors activity, collects credentials, browsing history; sends to attacker</li>
+<li><strong>Adware</strong>: Displays unwanted ads; often bundled with free software installers</li>
+<li><strong>Keylogger</strong>: Records all keystrokes; captures passwords, credit card numbers; can be software or hardware (USB between keyboard and PC)</li>
+<li><strong>Rootkit</strong>: Hides at kernel or hypervisor level; makes malware invisible to the OS and security tools; very difficult to remove</li>
+<li><strong>Bootkit</strong>: Infects MBR/UEFI; loads before the OS; survives reinstallation of the OS</li>
+</ul>
+<h4>Indicators of Malware Infection</h4>
+<ul>
+<li>Unexpected outbound network connections (netstat shows unknown destinations)</li>
+<li>New scheduled tasks or autorun registry entries</li>
+<li>Antivirus disabled or cannot update</li>
+<li>High CPU/memory usage from unknown processes</li>
+<li>Browser redirects, changed homepage, new toolbars</li>
+<li>Security sites blocked or redirected</li>
+<li>Pop-up alerts, fake virus warnings demanding payment</li>
+</ul>`,
+
+47: `<h3>Social Engineering Attacks</h3>
+<p>Social engineering exploits human psychology rather than technical vulnerabilities. Many security breaches begin with social engineering to gain initial access or credentials. The A+ exam tests recognition of these techniques.</p>
+<h4>Social Engineering Techniques</h4>
+<ul>
+<li><strong>Phishing</strong>: Mass email campaign impersonating trusted entities (banks, Microsoft, Amazon) to steal credentials or deliver malware. Links lead to convincing fake login pages.</li>
+<li><strong>Spear phishing</strong>: Targeted phishing using victim-specific details (name, role, colleague names, recent events). Much higher success rate than generic phishing.</li>
+<li><strong>Whaling</strong>: Spear phishing targeting high-value executives (CEO, CFO). Often used for Business Email Compromise (BEC) — CEO impersonation requesting wire transfers.</li>
+<li><strong>Vishing (Voice phishing)</strong>: Phone calls impersonating IT support, bank fraud department, IRS, or technical support. Creates urgency to get victim to reveal credentials or install remote access tools.</li>
+<li><strong>Smishing (SMS phishing)</strong>: Text messages with malicious links or fake account alerts. Hard to verify sender identity on mobile.</li>
+<li><strong>Pretexting</strong>: Creating a fabricated scenario (pretext) to manipulate the target. Example: "I'm from IT, we're auditing accounts, I need your password to verify access."</li>
+<li><strong>Tailgating/Piggybacking</strong>: Following an authorized person through a secure door without badging in. Tailgating = without victim's knowledge; piggybacking = victim holds door knowingly after being manipulated.</li>
+<li><strong>Shoulder surfing</strong>: Observing someone entering passwords or viewing sensitive screens. Use privacy screens in public.</li>
+<li><strong>Dumpster diving</strong>: Searching discarded documents for sensitive information. Always use cross-cut shredders for sensitive documents.</li>
+<li><strong>Baiting</strong>: Leaving infected USB drives in parking lots or common areas hoping curious employees will plug them in.</li>
+</ul>
+<h4>Defense</h4>
+<p>Security awareness training is the primary defense against social engineering. Users should: verify caller identity through official channels before revealing anything, be skeptical of urgency, never plug in unknown USB devices, use privacy screens, and report suspicious contacts.</p>`,
+
+48: `<h3>Malware Removal — The 8-Step Process</h3>
+<p>CompTIA defines a specific 8-step malware removal process. The exam will test the correct order — these steps must be memorized in sequence.</p>
+<h4>The 8 Steps (in order)</h4>
+<ol>
+<li><strong>Investigate and identify symptoms</strong>: Gather information about what the malware is doing. Check running processes (tasklist, Process Explorer), network connections (netstat), event logs, and autorun entries. Identify the malware type if possible.</li>
+<li><strong>Quarantine the infected system</strong>: Immediately disconnect from the network (unplug Ethernet, disable Wi-Fi). This stops the malware from: spreading to other systems, receiving new commands from C2 servers, and exfiltrating additional data.</li>
+<li><strong>Disable System Restore</strong>: System Restore points can contain the malware. If System Restore runs after removal, it could reinfect the system. Disable it before scanning: Control Panel → System → System Protection → Configure → Disable.</li>
+<li><strong>Remediate</strong>: Run anti-malware tools in Safe Mode or from a bootable rescue disk. Use multiple tools (malware may disable one tool). Update definitions before scanning. Options: quarantine (safer, preserves for analysis) or delete.</li>
+<li><strong>Schedule scans and run updates</strong>: After initial removal, enable System Restore, run a full system scan with updated definitions, and apply all pending OS and application updates to close the vulnerability that allowed infection.</li>
+<li><strong>Enable System Restore and create a restore point</strong>: Re-enable System Restore and immediately create a clean restore point to mark the current clean state.</li>
+<li><strong>Document findings</strong>: Record what was found, how it infected the system, what was done to remove it, and how long it took. Update the knowledge base for future reference.</li>
+<li><strong>Educate the end user</strong>: Explain how the infection occurred (clicked link, opened attachment, unknown USB). Provide guidance on recognizing phishing, safe browsing, and reporting suspicious emails. User education is the most cost-effective security control.</li>
+</ol>`,
+
+49: `<h3>Encryption — AES, RSA, TLS, PKI</h3>
+<p>Encryption protects data confidentiality by making it unreadable without the key. The A+ exam tests understanding of encryption types, algorithms, and where they're used.</p>
+<h4>Symmetric Encryption</h4>
+<p>Same key is used to encrypt and decrypt. Fast — suitable for bulk data encryption. Key distribution problem: how do you securely share the key?</p>
+<ul>
+<li><strong>AES (Advanced Encryption Standard)</strong>: Current gold standard. AES-128 (fast, sufficient for most uses) and AES-256 (stronger, used for government/financial). Block cipher — encrypts fixed-size 128-bit blocks. Used for: disk encryption (BitLocker), file encryption (EFS), VPNs (IPsec), TLS session data.</li>
+<li><strong>3DES</strong>: Legacy; applies DES three times; being phased out</li>
+</ul>
+<h4>Asymmetric Encryption</h4>
+<p>Key pair: public key (freely shared) and private key (never shared). Data encrypted with public key can only be decrypted with the corresponding private key. Slow — used for key exchange and digital signatures, not bulk data.</p>
+<ul>
+<li><strong>RSA</strong>: Most common asymmetric algorithm; 2048-bit minimum; used in TLS handshake and digital certificates</li>
+<li><strong>ECC (Elliptic Curve)</strong>: Smaller key sizes, same strength as RSA; used in mobile devices and modern TLS</li>
+</ul>
+<h4>How TLS Works (HTTPS)</h4>
+<p>TLS uses BOTH asymmetric and symmetric encryption:</p>
+<ol>
+<li>Client connects to server; server presents its certificate (public key)</li>
+<li>Client verifies certificate against trusted CA</li>
+<li>Asymmetric key exchange establishes a shared symmetric session key</li>
+<li>All further communication encrypted with AES (symmetric) — fast!</li>
+</ol>
+<h4>PKI — Public Key Infrastructure</h4>
+<p>The system of CAs, certificates, and revocation that establishes digital trust:</p>
+<ul>
+<li><strong>CA (Certificate Authority)</strong>: Issues and signs digital certificates (DigiCert, Let's Encrypt)</li>
+<li><strong>Certificate</strong>: Contains public key + identity information + CA's digital signature</li>
+<li><strong>CRL (Certificate Revocation List)</strong>: Published list of revoked certificates</li>
+<li><strong>OCSP (Online Certificate Status Protocol)</strong>: Real-time single certificate revocation check</li>
+</ul>`,
+
+50: `<h3>Windows Security — BitLocker, EFS, Windows Defender</h3>
+<p>Windows provides multiple built-in security tools for encryption, file protection, and malware defense. Understanding when to use each tool is testable on the exam.</p>
+<h4>BitLocker — Full Disk Encryption</h4>
+<p>BitLocker encrypts entire drives (system drive or data drives) using AES-128 or AES-256. Requires Windows Pro or Enterprise. Managed in Control Panel → BitLocker Drive Encryption.</p>
+<p><strong>TPM-only mode</strong>: TPM chip stores the encryption key; auto-unlocks during verified boot. No user interaction required. Most common for laptops to protect data if stolen.</p>
+<p><strong>TPM + PIN mode</strong>: Requires pre-boot PIN entry in addition to TPM. Stronger — protects against cold boot attacks.</p>
+<p><strong>Without TPM</strong>: Requires USB startup key or pre-boot password. Use on systems without TPM (older hardware).</p>
+<p><strong>Recovery key</strong>: 48-digit numeric key generated during setup. MUST be backed up (save to Microsoft account, Active Directory, USB, or print). Without recovery key, encrypted data is permanently inaccessible if the TPM is cleared or motherboard is replaced.</p>
+<h4>EFS — Encrypting File System</h4>
+<p>Per-file/folder encryption on NTFS volumes. Transparent to the file owner — no password needed to open. Encrypted with owner's certificate. Risk: if user certificate is deleted (account deleted, reinstalled OS), files become permanently inaccessible without a Data Recovery Agent (DRA). EFS is less commonly used than BitLocker; BitLocker provides whole-volume protection that's simpler to manage.</p>
+<h4>Windows Defender Antivirus</h4>
+<p>Built-in AV included in Windows 10/11 at no cost. Real-time protection, on-demand scanning, cloud-based protection. Access via Windows Security (Settings → Privacy &amp; Security → Windows Security). Automatically disabled when third-party AV is installed.</p>
+<p><strong>Windows Defender Offline Scan</strong>: Reboots into a pre-OS environment (WinPE) to scan for bootkits and rootkits that hide from the OS. Available in Windows Security → Virus &amp; Threat Protection → Scan Options.</p>`,
+
+51: `<h3>Firewalls and Network Security</h3>
+<p>Firewalls control network traffic based on rules. Windows includes a software firewall; enterprise networks use hardware firewalls at the network perimeter and segment boundaries.</p>
+<h4>Windows Defender Firewall</h4>
+<p>Enabled by default; stateful firewall tracking TCP connection state. Access via: Control Panel → Windows Defender Firewall, or <code>wf.msc</code> (Windows Firewall with Advanced Security — full rule management).</p>
+<p><strong>Firewall profiles</strong>:</p>
+<ul>
+<li><strong>Domain</strong>: Active when connected to a domain network (corporate); most permissive</li>
+<li><strong>Private</strong>: Home/trusted networks; moderate rules</li>
+<li><strong>Public</strong>: Untrusted networks (coffee shop Wi-Fi); most restrictive; blocks inbound discovery</li>
+</ul>
+<p>Windows automatically selects the profile. At a public Wi-Fi location, Public profile activates — this is why network discovery is off by default in public places.</p>
+<h4>Creating Firewall Rules</h4>
+<p>In wf.msc → Inbound Rules → New Rule: Rule type (Program, Port, Predefined, Custom) → Port specification (TCP/UDP, port number) → Action (Allow/Block) → Profile → Name. Example: block Telnet: New inbound rule → Port → TCP → 23 → Block → All profiles.</p>
+<h4>Network-Level Firewalls</h4>
+<ul>
+<li><strong>Packet filter</strong>: Blocks based on source/destination IP and port; stateless; fast</li>
+<li><strong>Stateful firewall</strong>: Tracks connection state; allows return traffic for established connections automatically</li>
+<li><strong>Next-gen firewall (NGFW)</strong>: Deep packet inspection; application awareness; IPS; URL filtering; SSL inspection</li>
+<li><strong>UTM (Unified Threat Management)</strong>: Combines firewall, IPS, AV, content filter, VPN in one appliance; common in small-medium businesses</li>
+</ul>
+<h4>IDS vs IPS</h4>
+<p><strong>IDS (Intrusion Detection System)</strong>: Passive — monitors and alerts on suspicious traffic. Does NOT block anything. Network-based (NIDS) or host-based (HIDS).</p>
+<p><strong>IPS (Intrusion Prevention System)</strong>: Active — inline with traffic; detects AND blocks suspicious traffic in real-time. Can cause false positives blocking legitimate traffic.</p>`,
+
+52: `<h3>VPNs and Remote Access Security</h3>
+<p>VPNs create encrypted tunnels over public networks, allowing remote users to access corporate resources securely as if they were on the local network.</p>
+<h4>VPN Protocols</h4>
+<ul>
+<li><strong>IPsec (Internet Protocol Security)</strong>: Operates at Layer 3. Two modes: <em>Transport</em> (encrypts only payload, IP headers visible — host-to-host) and <em>Tunnel</em> (encrypts entire original packet, adds new headers — site-to-site VPN). Uses IKE (Internet Key Exchange, UDP 500) for key negotiation, NAT-T (UDP 4500) when NAT is involved.</li>
+<li><strong>SSL/TLS VPN</strong>: Operates over TCP 443. Works through most firewalls. Clientless (browser-based) or client-based. Common: Cisco AnyConnect, GlobalProtect, OpenVPN.</li>
+<li><strong>L2TP/IPsec</strong>: L2TP for tunneling + IPsec for encryption. UDP 1701. Common in older mobile VPN clients.</li>
+<li><strong>WireGuard</strong>: Modern, fast, simple VPN protocol using UDP. Growing adoption for both corporate and personal use.</li>
+</ul>
+<h4>Split Tunneling vs Full Tunnel</h4>
+<p><strong>Full tunnel</strong>: ALL traffic routes through VPN, including personal browsing. More secure (all traffic inspected by corporate firewall) but slower and higher corporate bandwidth cost.</p>
+<p><strong>Split tunneling</strong>: Only traffic destined for corporate subnets goes through VPN; internet traffic exits directly. Faster and lower bandwidth usage on VPN, but personal browsing not protected by corporate security.</p>
+<h4>Site-to-Site VPN</h4>
+<p>Connects two entire networks (e.g., headquarters and branch office) via encrypted tunnel between two VPN gateways. Users at the branch access headquarter resources as if on the same LAN. Always-on; users are unaware of the VPN.</p>
+<h4>Remote Access VPN</h4>
+<p>Individual users connect to corporate network from home or road. Client software on user's device creates tunnel to corporate VPN concentrator. User must manually connect or configure always-on VPN.</p>`,
+
+53: `<h3>Authentication and Access Control</h3>
+<p>Authentication verifies identity (who you are). Authorization determines what authenticated identities can access. These two concepts together form access control.</p>
+<h4>Authentication Factors</h4>
+<ul>
+<li><strong>Something you know</strong>: Password, PIN, security questions. Weakest — can be guessed, stolen, forgotten.</li>
+<li><strong>Something you have</strong>: Smart card, hardware token (YubiKey), one-time password (OTP) from authenticator app or SMS, certificate on device.</li>
+<li><strong>Something you are</strong>: Biometrics — fingerprint, face recognition, iris scan, voice print. Convenient; risk of permanent compromise (cannot change fingerprints). Stored in hardware Secure Enclave.</li>
+</ul>
+<h4>Multi-Factor Authentication (MFA)</h4>
+<p>Requires two or more different factor categories. Password alone = single factor. Password + authenticator app code = MFA (something you know + something you have). MFA dramatically reduces account compromise risk — 99.9% of automated attacks are defeated by MFA (Microsoft statistics).</p>
+<h4>Single Sign-On (SSO)</h4>
+<p>Users authenticate once and gain access to all authorized applications without logging in again. Enterprise SSO uses federated identity: SAML, OAuth, OpenID Connect. Example: log into corporate network once, then access email, SharePoint, Salesforce without separate logins. Reduces password fatigue but creates a single point of failure.</p>
+<h4>RADIUS — Centralized Authentication</h4>
+<p>Remote Authentication Dial-In User Service: centralized AAA (Authentication, Authorization, Accounting) server. Used for 802.1X network access control (enterprise Wi-Fi, wired port authentication). UDP ports 1812 (auth) and 1813 (accounting). When a user connects to enterprise Wi-Fi, the AP passes credentials to RADIUS server which validates against Active Directory.</p>
+<h4>Password Best Practices</h4>
+<p>Length matters more than complexity: a 16-character passphrase ("CorrectHorseBatteryStaple") is stronger than "P@$$w0rd". NIST SP 800-63B recommends: 8 character minimum, no complexity requirements, check against known-breached password lists, allow paste (enables password managers), don't mandate periodic rotation (users just change P1 to P2).</p>`,
+
+54: `<h3>Windows Active Directory Basics</h3>
+<p>Active Directory (AD) is Microsoft's directory service for centralized identity, authentication, and policy management in Windows domains. It is the backbone of most enterprise Windows environments.</p>
+<h4>Active Directory Structure</h4>
+<ul>
+<li><strong>Forest</strong>: Top-level container; multiple domains in a forest share a schema and global catalog</li>
+<li><strong>Domain</strong>: Core unit; example.com; shares policies, authentication, and namespace</li>
+<li><strong>Organizational Unit (OU)</strong>: Container for organizing objects (users, computers, groups); GPOs are linked to OUs</li>
+<li><strong>Domain Controller (DC)</strong>: Server running AD DS; authenticates users; stores AD database</li>
+</ul>
+<h4>Active Directory Objects</h4>
+<ul>
+<li><strong>User account</strong>: Represents a person or service; has SID, UPN (user@domain.com), display name, group memberships</li>
+<li><strong>Computer account</strong>: Represents a domain-joined workstation or server; has machine password that auto-rotates every 30 days</li>
+<li><strong>Security group</strong>: Collection of users/computers used to assign permissions to resources</li>
+<li><strong>Distribution group</strong>: Email distribution list only — cannot be used to assign permissions</li>
+</ul>
+<h4>Group Policy Objects (GPOs)</h4>
+<p>GPOs push settings to users and computers in the domain. Linked to Sites, Domains, or OUs. Processing order: Local → Site → Domain → OU (LSDOU). Later policies override earlier ones (OU GPO overrides Domain GPO). Settings include: password policies, software deployment, security settings, mapped drives, startup/logon scripts, and more.</p>
+<h4>Joining a Domain</h4>
+<p>To join a Windows PC to a domain: Settings → System → About → Domain or Workgroup → Change → Domain → enter domain name → provide credentials with domain join rights → reboot. The computer account is created in the default Computers OU. After joining, users log in with their domain credentials.</p>`,
+
+55: `<h3>Data Destruction and Privacy</h3>
+<p>Proper data disposal prevents sensitive information from being recovered from retired media. Different media types require different sanitization methods.</p>
+<h4>Data Sanitization Methods</h4>
+<p><strong>Clearing (Overwriting)</strong>: Writes zeros or random data over all addressable storage locations. Effective for HDDs. For SSDs, overwrite is unreliable because of wear leveling — data may remain in over-provisioned areas not addressed by the OS. NIST SP 800-88 specifies when clearing is appropriate.</p>
+<p><strong>Purging</strong>: More thorough than clearing; uses device-specific commands. For SSDs: ATA Secure Erase command or crypto-erase. Ensures all storage locations (including over-provisioning) are sanitized. Required for media going to lower-sensitivity environments.</p>
+<p><strong>Crypto-erase</strong>: Encrypts the entire drive then destroys or changes the encryption key — rendering all data permanently inaccessible. Most appropriate method for SSDs and NVMe drives. Used by BitLocker-encrypted drives when decryption key is discarded.</p>
+<p><strong>Degaussing</strong>: Applies a powerful alternating magnetic field to destroy data on magnetic media (HDDs, tapes). DOES NOT work on SSDs (non-magnetic) or optical discs. Destroys the drive's servo tracks — drive becomes unusable even if you wanted to reuse it.</p>
+<p><strong>Physical destruction</strong>: Shredding (industrial shredder grinds media to fine particles), crushing (punch press deforms platters), melting (smelting). Most thorough method. Required for highest-classification media.</p>
+<h4>Certificate of Destruction (CoD)</h4>
+<p>Legal document from a certified data destruction vendor confirming that the media was destroyed in accordance with standards (NIST SP 800-88). Required by HIPAA, PCI-DSS, and government regulations. Keep on file as audit evidence.</p>
+<h4>PII and Privacy Laws</h4>
+<p><strong>PII (Personally Identifiable Information)</strong>: Any data that identifies a specific individual — name + SSN, DOB, biometrics, medical records. Must be protected, minimized, and securely destroyed. Key regulations: GDPR (EU — 72-hour breach notification), HIPAA (healthcare PHI), PCI-DSS (payment card data).</p>`,
+
+56: `<h3>Wireless Network Security Threats</h3>
+<p>Wireless networks face unique threats because the signal travels through the air and can be intercepted or attacked remotely. Understanding these threats helps configure defenses.</p>
+<h4>Rogue Access Point</h4>
+<p>An unauthorized AP connected to the corporate network by an employee or attacker. Bypasses the organization's wireless security controls. Detection: wireless scanners, NAC (Network Access Control), 802.1X port authentication on all switch ports.</p>
+<h4>Evil Twin</h4>
+<p>An attacker creates an AP with the same SSID as a legitimate network, positioned closer to clients so they receive a stronger signal and auto-connect. The attacker intercepts all traffic — a MITM (Man-in-the-Middle) attack. Defense: certificate-based 802.1X authentication (client validates server certificate), VPN, HTTPS everywhere. SSID hiding does not prevent this — the SSID is in probe responses.</p>
+<h4>Deauthentication Attack</h4>
+<p>Sends forged 802.11 deauthentication frames (which are unauthenticated in WPA2) forcing clients to disconnect. Attackers use this to capture the WPA2 4-way handshake when the client reconnects (used to attempt offline password cracking). WPA3 SAE is resistant to this attack. 802.11w (Management Frame Protection) also mitigates it.</p>
+<h4>WPS PIN Attack</h4>
+<p>WPS (Wi-Fi Protected Setup) PIN method has a design flaw: the 8-digit PIN is validated in two 4-digit halves separately, reducing the search space to ~11,000 combinations. Tools like Reaver can crack WPS PIN in hours. Some routers rate-limit or lock after failures, but many do not. Solution: disable WPS entirely on every router/AP.</p>
+<h4>Wireless Security Best Practices</h4>
+<ul>
+<li>Use WPA3 where supported; WPA2-AES minimum</li>
+<li>Disable WPS on all APs</li>
+<li>Use 802.1X for enterprise authentication (RADIUS)</li>
+<li>Isolate IoT devices on separate VLAN/SSID</li>
+<li>Disable SSID broadcast (minor protection — tools find hidden SSIDs)</li>
+<li>Use MAC filtering only as additional layer (easily bypassed by MAC spoofing)</li>
+<li>Segment guest Wi-Fi from corporate network</li>
+</ul>`,
+
+57: `<h3>Physical Security</h3>
+<p>Physical security prevents unauthorized physical access to systems and facilities. Even the best network security is defeated if an attacker can walk up to a server and insert a USB drive.</p>
+<h4>Physical Access Controls</h4>
+<ul>
+<li><strong>Mantrap (access control vestibule)</strong>: Two-door system where the first door must close and lock before the second opens. Prevents tailgating in high-security areas (data centers, server rooms).</li>
+<li><strong>Badge/card reader</strong>: Proximity cards (RFID/NFC) or smart cards for entry. Access logs every entry. Easy to revoke when someone leaves.</li>
+<li><strong>Biometric entry</strong>: Fingerprint, iris, or palm vein scanners. Cannot be borrowed or lost. Higher cost; false rejection rate (FRR) can frustrate users.</li>
+<li><strong>CCTV/surveillance cameras</strong>: Deterrence and forensic evidence. Cover all entry/exit points and server room access.</li>
+<li><strong>Security guards</strong>: Perform visitor checks, monitor CCTV, respond to incidents. Only human control that can exercise judgment.</li>
+<li><strong>Locking cable (Kensington lock)</strong>: Steel cable loop securing laptops to desk. Deters opportunistic theft; not resistant to tools.</li>
+</ul>
+<h4>Hardware Security</h4>
+<p><strong>Locked server racks</strong>: Servers should be in locked cages or cabinets with key or card access logged.</p>
+<p><strong>Chassis intrusion detection</strong>: Some desktop/server cases have a switch that triggers an alert if the case is opened. BIOS can log chassis intrusion events.</p>
+<p><strong>BIOS/UEFI password</strong>: Supervisor password prevents unauthorized boot configuration changes. Hard drive password (stored in drive firmware) prevents mounting drive in another system.</p>
+<h4>Mobile Device Physical Security</h4>
+<p>Screen lock: enforce via MDM. GPS tracking/remote wipe for lost/stolen devices. Encrypted storage so data is inaccessible without unlock code. Avoid public charging stations (juice jacking attack — malicious charging cables can install malware). Use USB data blockers when charging from unknown sources.</p>`,
+
+58: `<h3>Troubleshooting Operating System Issues</h3>
+<p>OS troubleshooting follows the standard 7-step methodology applied to Windows-specific symptoms. Knowing which tool to use for each symptom is directly tested on the exam.</p>
+<h4>Slow Performance</h4>
+<p>Check Task Manager (Performance tab) and Resource Monitor. Diagnose: CPU pinned at 100% (identify process, disable startup programs, scan for malware), RAM exhausted (add RAM or identify memory leak, check commit charge), Disk 100% (check for excessive pagefile use = insufficient RAM, or failing drive), check for unnecessary startup programs (Task Manager → Startup tab).</p>
+<h4>Blue Screen of Death (BSOD)</h4>
+<p>Windows kernel error causing system halt. The stop code (IRQL_NOT_LESS_OR_EQUAL, PAGE_FAULT_IN_NONPAGED_AREA, CRITICAL_PROCESS_DIED, MEMORY_MANAGEMENT) indicates the general cause. Check Event Viewer → Windows Logs → System for Event ID 1001 (BugCheck). Minidump files in C:\Windows\Minidump contain crash details for analysis with WinDbg. Common causes: bad RAM (run MemTest86), bad driver (roll back in Device Manager), overheating, storage failure.</p>
+<h4>Windows Won't Boot</h4>
+<ol>
+<li>Check BIOS boot order (most common cause after hardware changes)</li>
+<li>Boot to Windows Recovery Environment (WinRE) — hold Shift during restart</li>
+<li>Try Startup Repair (automatic boot issue resolution)</li>
+<li>Try System Restore (if restore points exist)</li>
+<li>Run bootrec /fixmbr, /fixboot, /rebuildbcd for MBR/boot corruption</li>
+<li>Consider DISM + SFC for system file corruption</li>
+<li>Last resort: Reset this PC (keeps files) or reinstall Windows</li>
+</ol>
+<h4>Application Crashes</h4>
+<p>Check Event Viewer → Application log for error details. Reinstall application or repair installation. Check compatibility mode (Properties → Compatibility) for older applications. Run as administrator if UAC-related. Check for conflicting software (AV false positives, DLL conflicts).</p>`,
+
+59: `<h3>Troubleshooting Mobile Devices</h3>
+<p>Mobile device issues are common help desk requests. Many are resolved by simple procedures — knowing the correct sequence prevents unnecessary resets.</p>
+<h4>Battery and Power Issues</h4>
+<p><strong>Poor battery life</strong>: Check battery health (iOS: Settings → Battery → Battery Health; Android: varies). Identify battery-draining apps (Settings → Battery → App usage). Common culprits: location services, screen brightness, push email, background refresh. A battery below 80% capacity should be replaced.</p>
+<p><strong>Device not charging</strong>: Check: cable, charger wattage, charging port debris (use compressed air, wooden toothpick — NOT metal). Test with different cable and charger. Clean USB-C port with compressed air. If port damaged, professional repair required.</p>
+<h4>Connectivity Issues</h4>
+<p><strong>Wi-Fi drops</strong>: Forget network and reconnect. Toggle airplane mode. Check if other devices affected (router/AP issue vs device issue). Reset network settings (erases all saved Wi-Fi passwords — warn user).</p>
+<p><strong>Bluetooth not pairing</strong>: Ensure both devices are in pairing mode simultaneously. Clear paired devices list and re-pair. 2.4 GHz Wi-Fi and Bluetooth can interfere — move away from router.</p>
+<p><strong>No cellular signal</strong>: Check SIM card is fully seated. Test in different location. Reset network settings. Contact carrier if problem persists.</p>
+<h4>App and OS Issues</h4>
+<p><strong>App keeps crashing</strong>: Force close → reopen. Clear app cache (not data first). Clear app data (lose saved info). Uninstall and reinstall. Check for OS update or app update.</p>
+<p><strong>Phone is slow</strong>: Available storage below 10% causes slowdowns — delete photos/apps. Restart device. Check for OS update. Factory reset as last resort (back up first).</p>
+<h4>Touchscreen Issues</h4>
+<p>Unresponsive digitizer: remove screen protector (can interfere with capacitive touch). Clean screen. Restart device. If specific areas dead = hardware failure. If erratic = moisture or damage. Some repairs require full screen assembly replacement.</p>`,
+
+60: `<h3>Operational Procedures — Documentation and Policies</h3>
+<p>Professional IT support requires proper documentation, adherence to policies, and consistent procedures. These operational practices are 22% of Core 2.</p>
+<h4>Documentation Types</h4>
+<ul>
+<li><strong>Network diagram</strong>: Visual map of network topology — devices, connections, IP ranges, VLANs. Essential for troubleshooting and planning. Keep updated after every change.</li>
+<li><strong>Asset inventory (CMDB)</strong>: Records all IT assets — hardware, software, licenses, warranty status, assigned users. Configuration Management Database tracks relationships between CIs (Configuration Items).</li>
+<li><strong>Knowledge base article</strong>: Documented solution to a known problem. Written after resolving an issue so future technicians can resolve it faster.</li>
+<li><strong>Standard Operating Procedures (SOPs)</strong>: Step-by-step instructions for routine tasks — how to onboard a new employee, how to deploy a workstation, how to respond to a malware incident.</li>
+<li><strong>Acceptable Use Policy (AUP)</strong>: Defines permitted and prohibited use of company IT systems. Employees sign at onboarding. Legal protection for the organization.</li>
+</ul>
+<h4>Change Management</h4>
+<p>Changes to production systems follow a formal process to minimize unplanned outages:</p>
+<ol>
+<li>Submit RFC (Request for Change) — description, justification, risk assessment, implementation steps, rollback plan</li>
+<li>CAB (Change Advisory Board) review and approval</li>
+<li>Test in non-production environment</li>
+<li>Schedule during change window (approved maintenance time)</li>
+<li>Implement with rollback plan ready</li>
+<li>Verify success and document outcome</li>
+</ol>
+<h4>Ticketing Systems</h4>
+<p>Help desk platforms (ServiceNow, Jira, Freshdesk, Zendesk) track issues from creation to resolution. Key fields: description, priority (P1=critical, P2=high, P3=medium, P4=low), assigned technician, SLA timer, status, resolution notes. Always document: what was reported, what was found, what was done, time spent.</p>`,
+61: `<h3>Backup Types and Disaster Recovery</h3>
+<p>Backups protect against data loss from hardware failure, ransomware, accidental deletion, and disasters. Understanding backup strategies and the math behind them is directly tested on the exam.</p>
+<h4>Backup Types</h4>
+<ul>
+<li><strong>Full backup</strong>: Backs up ALL selected data every time. Longest backup time; uses most storage; but fastest restore (only one backup set needed). Clears the archive bit on backed-up files.</li>
+<li><strong>Incremental backup</strong>: Backs up only data that changed since the LAST BACKUP OF ANY TYPE. Fastest backup (least data to copy); smallest storage per session; slowest restore (need full + every incremental in sequence). Clears archive bit.</li>
+<li><strong>Differential backup</strong>: Backs up only data that changed since the LAST FULL BACKUP. Medium backup time; medium storage; moderate restore (need full + one differential). Does NOT clear archive bit (so it grows with each differential).</li>
+</ul>
+<h4>The 3-2-1 Backup Rule</h4>
+<p><strong>3</strong> copies of data (original + 2 backups), <strong>2</strong> different media types (e.g., local NAS + cloud), <strong>1</strong> copy offsite (protects against fire, flood, theft of premises). The 3-2-1 rule is the industry gold standard for protecting against all common failure scenarios.</p>
+<h4>RTO and RPO</h4>
+<p><strong>RTO (Recovery Time Objective)</strong>: Maximum acceptable downtime — how long can the business tolerate being without the system? If RTO = 4 hours, systems must be restored within 4 hours of an outage.</p>
+<p><strong>RPO (Recovery Point Objective)</strong>: Maximum acceptable data loss — how much data can be lost measured in time? RPO = 1 hour means no more than 1 hour of data can be lost. This determines backup frequency: RPO of 1 hour requires hourly backups or continuous replication.</p>
+<h4>Backup Storage Locations</h4>
+<ul>
+<li><strong>Local backup</strong>: External HDD, NAS — fast restore, no internet needed; destroyed in same fire/flood as originals</li>
+<li><strong>Offsite backup</strong>: Tape transported to secure offsite facility, or cloud backup</li>
+<li><strong>Cloud backup</strong>: Amazon S3, Azure Blob, Backblaze B2; geo-redundant; accessible from anywhere; ongoing cost</li>
+</ul>`,
+
+62: `<h3>RAID Levels and Storage Redundancy</h3>
+<p>RAID (Redundant Array of Independent Disks) combines multiple physical drives to provide performance, redundancy, or both. <strong>Critical rule: RAID is NOT a backup.</strong> RAID protects against drive hardware failure only — not ransomware, accidental deletion, fire, or theft.</p>
+<h4>RAID 0 — Striping</h4>
+<p>Data is split across all drives simultaneously. Minimum 2 drives. Maximum performance (parallel read/write). Zero fault tolerance — if any drive fails, ALL data is lost. Capacity = sum of all drives. Use only for non-critical data needing maximum speed (video scratch disk, game storage).</p>
+<h4>RAID 1 — Mirroring</h4>
+<p>Identical data written to two drives simultaneously. Minimum 2 drives. 1 drive can fail with no data loss. Read performance improved (read from either drive); write performance same as single drive. Capacity = 50% (only half the drives store unique data). Use for OS drives and critical single databases.</p>
+<h4>RAID 5 — Striping with Parity</h4>
+<p>Data and parity (XOR checksum) distributed across all drives. Minimum 3 drives. 1 drive can fail — data rebuilt from parity. Capacity = (n-1) drives. Good balance of performance, redundancy, and storage efficiency. Common in NAS and small servers. Risk: during rebuild, high stress on remaining drives increases chance of second failure.</p>
+<h4>RAID 6 — Dual Parity</h4>
+<p>Two independent parity blocks distributed across all drives. Minimum 4 drives. 2 drives can fail simultaneously. Capacity = (n-2). Slower writes than RAID 5 due to double parity calculation. Used for large arrays where long rebuild times increase vulnerability window.</p>
+<h4>RAID 10 (1+0) — Stripe of Mirrors</h4>
+<p>Mirrors first (RAID 1 pairs), then stripes the mirrors (RAID 0). Minimum 4 drives. Can survive up to n/2 drive failures (one per mirrored pair). Capacity = 50%. Best performance + redundancy combination. Most expensive. Preferred for databases and high-I/O applications.</p>`,
+
+63: `<h3>Environmental Controls and Data Center Safety</h3>
+<p>Data center and server room environments require controlled temperature, humidity, power, and fire suppression to protect equipment reliability and personnel safety.</p>
+<h4>Temperature and Cooling</h4>
+<p>Servers generate significant heat. ASHRAE recommends 65–80°F (18–27°C) for server room inlet air. Cooling strategies:</p>
+<ul>
+<li><strong>Hot aisle/cold aisle containment</strong>: Alternating rows of server racks oriented so: cold aisle faces server intakes (cold air supplied here), hot aisle faces server exhausts (hot air returned to AC). Prevents hot and cold air mixing, dramatically improving cooling efficiency.</li>
+<li><strong>CRAC units (Computer Room Air Conditioning)</strong>: Precision cooling systems in raised-floor data centers</li>
+<li><strong>In-row cooling</strong>: Cooling units positioned between server racks for targeted cooling</li>
+</ul>
+<h4>Power Protection</h4>
+<p><strong>UPS (Uninterruptible Power Supply)</strong>: Battery backup providing power during outages:</p>
+<ul>
+<li><strong>Standby/Offline UPS</strong>: Switches to battery on power failure (~10ms transfer time); basic protection</li>
+<li><strong>Line-interactive UPS</strong>: Always conditions power quality; faster transfer (2–4ms); handles brownouts and surges</li>
+<li><strong>Double-conversion (Online) UPS</strong>: Load always runs from battery (AC→DC→AC); zero transfer time; protects against all power anomalies; most expensive; generates heat</li>
+</ul>
+<p><strong>Generator</strong>: Provides long-term power during extended outages. Takes 30–60 seconds to start — UPS bridges this gap.</p>
+<p><strong>PDU (Power Distribution Unit)</strong>: Rack-mounted power strip for servers. Smart PDUs measure per-outlet consumption and allow remote power cycling.</p>
+<h4>Fire Suppression</h4>
+<p><strong>FM-200 (HFC-227ea)</strong>: Clean agent gas; safe for electronics and personnel; does not leave residue; replaced halon. Displaces oxygen to suppress fire; space must be evacuated but gas is not immediately harmful.</p>
+<p><strong>Halon</strong>: Highly effective ozone-depleting suppression agent; banned by Montreal Protocol 1994; legacy systems still exist but cannot be recharged.</p>
+<p><strong>Water sprinklers</strong>: Not ideal for data centers — destroys equipment. Pre-action systems require both smoke detector AND thermal trigger to prevent accidental discharge.</p>`,
+
+64: `<h3>Regulatory Compliance and Data Privacy</h3>
+<p>IT professionals must understand the major regulations that govern data handling. Compliance failures result in massive fines, legal liability, and reputational damage.</p>
+<h4>GDPR — General Data Protection Regulation</h4>
+<p>EU regulation effective May 2018, applies to any organization handling EU residents' data regardless of where the organization is located. Key requirements:</p>
+<ul>
+<li>Data minimization — collect only what is necessary</li>
+<li>Purpose limitation — use data only for stated purposes</li>
+<li>Right to erasure ("right to be forgotten") — must delete data on request</li>
+<li>Data breach notification within 72 hours to supervisory authority</li>
+<li>DPA (Data Protection Agreement) with vendors processing data on your behalf</li>
+<li>Fines: up to 4% of global annual revenue or €20 million, whichever is higher</li>
+</ul>
+<h4>HIPAA — Health Insurance Portability and Accountability Act (US)</h4>
+<p>Protects PHI (Protected Health Information) — any individually identifiable health information. The Security Rule requires: access controls, audit logs, encryption in transit and at rest, workforce training, business associate agreements (BAAs) with vendors. Breach notification within 60 days. Penalties: $100–$50,000 per violation, up to $1.9 million per violation category per year.</p>
+<h4>PCI-DSS — Payment Card Industry Data Security Standard</h4>
+<p>Applies to any organization that stores, processes, or transmits cardholder data. 12 requirements including: firewall implementation, no default passwords, protect stored cardholder data, encrypt transmission, use antivirus, secure systems, restrict access to need-to-know, assign unique user IDs, restrict physical access, log access, test security, maintain security policy. Annual compliance assessment required.</p>
+<h4>SOX — Sarbanes-Oxley Act (US)</h4>
+<p>Applies to publicly traded US companies. Requires accurate financial reporting and internal controls. IT relevance: financial records must be retained 7 years, IT controls over financial systems must be audited annually, CEO and CFO personally certify financial statements.</p>`,
+
+65: `<h3>Windows Troubleshooting — System Recovery Tools</h3>
+<p>Windows provides multiple recovery options for systems that fail to boot or are otherwise unresponsive. Knowing which tool to use for each scenario is tested on the exam.</p>
+<h4>Windows Recovery Environment (WinRE)</h4>
+<p>WinRE is a minimal Windows PE environment that loads from a recovery partition when the system fails to boot (or when you press F8/F11 during boot, or hold Shift+Restart). Tools available:</p>
+<ul>
+<li><strong>Startup Repair</strong>: Automatically diagnoses and fixes common boot issues (corrupt BCD, missing boot files). Best first step for unexplained boot failures.</li>
+<li><strong>System Restore</strong>: Reverts system files, registry, and drivers to a previous restore point without affecting user data. Best for recent driver or update failures causing boot issues.</li>
+<li><strong>System Image Recovery</strong>: Restores complete Windows from a Windows system image (wbAdmin backup). Overwrites entire OS drive.</li>
+<li><strong>Command Prompt</strong>: Full access to repair commands: bootrec, sfc, DISM, chkdsk, diskpart, bcdedit.</li>
+<li><strong>Reset this PC</strong>: Reinstalls Windows while optionally keeping personal files. Use when other options fail.</li>
+</ul>
+<h4>Safe Mode</h4>
+<p>Windows boots with minimal drivers and services. Useful for: removing malware that runs in normal mode, diagnosing driver-caused BSODs, fixing software issues. Access: hold F8 at boot (unreliable on UEFI), or msconfig → Boot → Safe Boot, or from WinRE.</p>
+<p>Safe Mode variants: Safe Mode (minimal), Safe Mode with Networking (includes network drivers — allows downloading tools), Safe Mode with Command Prompt (command-line only).</p>
+<h4>Last Known Good Configuration</h4>
+<p>Loads Windows using the registry backup from the last successful startup. Available in legacy BIOS systems only. Less relevant in modern Windows but concept still tested.</p>
+<h4>Reset vs Repair</h4>
+<p><strong>Reset this PC → Keep my files</strong>: Reinstalls Windows, removes all installed apps, keeps user files in C:\Users. Good for malware-infected or heavily corrupted systems.</p>
+<p><strong>Reset this PC → Remove everything</strong>: Full factory reset — removes everything. Required before selling or donating a computer.</p>`,
+
+66: `<h3>Virtualization Security and Cloud Security</h3>
+<p>Virtualized and cloud environments introduce new security considerations. The isolation between VMs, and the security of the hypervisor and cloud APIs, are critical to understand.</p>
+<h4>VM Isolation</h4>
+<p>VMs on the same host are logically isolated from each other — one VM cannot read another VM's memory under normal circumstances. The hypervisor enforces this isolation. Hypervisor vulnerabilities (VM escape) are rare but critical — an attacker breaking out of a VM into the hypervisor gains access to all VMs on the host. Keeping hypervisors patched is therefore critical.</p>
+<h4>VM Security Best Practices</h4>
+<ul>
+<li>Disable unused VM features (shared clipboard, drag-and-drop between host and VM — attack surface)</li>
+<li>Use VM templates with security baseline configurations for consistent deployment</li>
+<li>Apply patches to VM guest OSes just like physical machines</li>
+<li>Monitor for VM sprawl — unmanaged/forgotten VMs may be unpatched and vulnerable</li>
+<li>Encrypt VM files (VMDK/VHD) at rest</li>
+<li>Control who can create/delete/access VMs — principle of least privilege</li>
+</ul>
+<h4>Cloud Security Controls</h4>
+<p><strong>IAM (Identity and Access Management)</strong>: Cloud provider IAM systems (AWS IAM, Azure AD) control who can access which cloud resources and what they can do. Use least-privilege IAM policies — never use root/admin accounts for day-to-day operations.</p>
+<p><strong>Security groups</strong>: Virtual firewall rules controlling inbound/outbound traffic to cloud instances. Default-deny; explicitly allow only required ports.</p>
+<p><strong>Encryption in cloud</strong>: Encrypt data at rest (storage encryption) and in transit (TLS). Most cloud providers offer managed encryption key services (AWS KMS, Azure Key Vault).</p>
+<p><strong>Shared responsibility model</strong>: Cloud provider is responsible for security OF the cloud (hardware, hypervisor, global network). Customer is responsible for security IN the cloud (OS, apps, data, IAM configuration, encryption settings).</p>`,
+
+67: `<h3>Scripting and Automation Basics</h3>
+<p>A+ technicians increasingly need scripting skills for automation. Understanding the purpose and basic syntax of common scripting languages is part of the Core 2 exam.</p>
+<h4>Windows Command Shell (.bat / .cmd)</h4>
+<p>Batch files run series of CMD commands. Limited but present on every Windows machine without installation. Useful for simple automated tasks: mapping drives, running backups, configuring settings. Variables: %VARIABLE%. Conditionals: IF EXIST, IF ERRORLEVEL. Loops: FOR /F.</p>
+<h4>PowerShell (.ps1)</h4>
+<p>Microsoft's powerful scripting language built on .NET. Accesses: Windows API, Active Directory, WMI, COM objects, REST APIs. The administrative language of choice for Windows. Key concepts:</p>
+<ul>
+<li>Cmdlets: verb-noun format (Get-Process, Set-Service, Remove-Item)</li>
+<li>Pipeline: <code>Get-Process | Where-Object {$_.CPU -gt 10} | Select-Object Name,CPU</code></li>
+<li>Execution policy: must set to RemoteSigned or Unrestricted to run scripts (<code>Set-ExecutionPolicy RemoteSigned</code>)</li>
+<li>Remoting: <code>Invoke-Command -ComputerName PC01,PC02 -ScriptBlock {Restart-Service Spooler}</code> — run commands on remote machines</li>
+</ul>
+<h4>Python (.py)</h4>
+<p>Cross-platform scripting language. Used for: automation, data processing, API interaction, network tooling. Runs on Windows, macOS, Linux without modification. Not installed by default on Windows (installed separately). Widely used in IT operations and DevOps.</p>
+<h4>Bash (.sh)</h4>
+<p>Default shell on Linux and macOS. Pipes, redirects, cron jobs. Essential for Linux server administration. Available on Windows via WSL (Windows Subsystem for Linux).</p>
+<h4>When to Use Which</h4>
+<ul>
+<li>Windows-only AD/management task → PowerShell</li>
+<li>Quick Windows automation without installation → Batch/CMD</li>
+<li>Cross-platform automation → Python</li>
+<li>Linux server administration → Bash</li>
+</ul>`,
+
+68: `<h3>Professionalism and Communication</h3>
+<p>Technical skills get you the job; professional behavior keeps it and advances your career. CompTIA tests soft skills because they're essential in a customer-facing role.</p>
+<h4>Communication Skills</h4>
+<ul>
+<li><strong>Active listening</strong>: Let users finish explaining before responding. Restate the problem to confirm understanding. Ask clarifying questions one at a time.</li>
+<li><strong>Avoid jargon</strong>: Use plain language with users who aren't technical. "Your network connection isn't working" rather than "your NIC isn't getting a DHCP lease."</li>
+<li><strong>Set expectations</strong>: Tell users what you're going to do and when. If it will take 2 hours, say so. If the timeline changes, update them.</li>
+<li><strong>Follow up</strong>: After resolving an issue, check back with the user to ensure the fix is holding and they're satisfied.</li>
+</ul>
+<h4>Professional Behavior</h4>
+<ul>
+<li>Be on time. If you'll be late, call ahead.</li>
+<li>Professional appearance appropriate to the workplace environment</li>
+<li>Avoid personal phone calls while with a customer</li>
+<li>Respect workspace — put things back where you found them, ask permission before moving items</li>
+<li>Maintain confidentiality — don't discuss one customer's issues with another, don't share what you see on screens</li>
+<li>Be honest about your limitations — escalate rather than guess</li>
+<li>Never argue with customers. If they're wrong, correct them diplomatically.</li>
+</ul>
+<h4>Privacy Awareness</h4>
+<p>While troubleshooting, you may encounter: personal files, private emails, confidential business data. Do not read, copy, or discuss this information. If you accidentally see sensitive data, behave as if you did not. Accessing data you're not authorized to access, even during a repair, may be a criminal offense.</p>
+<h4>Licensing Compliance</h4>
+<p>IT technicians must enforce software licensing: EULA (End User License Agreement) restricts installation to licensed count; installing more copies than licensed = piracy. Types: per-device, per-user, concurrent use, site license, OEM (tied to hardware). Open-source licenses: GPL (copyleft — modifications must also be GPL), MIT (permissive — use anywhere), Apache 2.0 (permissive with patent grant).</p>`,
+
+69: `<h3>Safety Procedures and Environmental Controls</h3>
+<p>Working with electrical equipment and chemicals requires adherence to safety procedures. OSHA and company policies mandate these practices.</p>
+<h4>Electrical Safety</h4>
+<ul>
+<li><strong>ESD (Electrostatic Discharge)</strong>: Static electricity can permanently damage components even without visible sparks. Use ESD wrist strap when working inside computers — connect to unpainted metal chassis. Anti-static mat on workbench. Store components in anti-static bags. Avoid working on carpet.</li>
+<li><strong>Disconnect power before servicing</strong>: Always unplug before opening a PC. PSUs retain charge — press power button after unplugging to discharge capacitors.</li>
+<li><strong>High-voltage components</strong>: CRT monitors (legacy) and laser printer fuser/HV power supply retain lethal voltage even when unplugged. Do not open these without proper training.</li>
+<li><strong>Never work alone on powered equipment</strong>: Have someone nearby who can summon help in case of electrical shock.</li>
+</ul>
+<h4>Fire Safety</h4>
+<p>Electrical fires: use CO2, halon, or FM-200 extinguisher (Class C in US). NEVER water on electrical fire. Know the location of fire extinguishers and emergency power cutoffs in the server room.</p>
+<h4>Chemical Safety — SDS/MSDS</h4>
+<p>Safety Data Sheets (SDS, formerly MSDS) document: chemical composition, health hazards, handling requirements, first aid measures, disposal requirements for chemical products. Required for: cleaning solvents, toner (laser printer toner is a fine particle — respirator required if toner spills), isopropyl alcohol, thermal paste. OSHA requires SDS availability for all workplace chemicals.</p>
+<h4>Proper Disposal — E-Waste</h4>
+<p>Electronics contain hazardous materials: lead (solder), mercury (CCFL backlights), cadmium, arsenic, beryllium. Cannot be thrown in regular trash in most jurisdictions. Proper disposal: certified e-waste recycler, manufacturer take-back program, retail electronics recycling drop-off. CRTs require special handling due to lead glass. Batteries: lithium-ion must be recycled (fire hazard in trash).</p>`,
+
+70: `<h3>Windows Security Policies and Hardening</h3>
+<p>System hardening reduces the attack surface by removing unnecessary software, disabling unused features, and applying security configurations. Policy-based controls ensure consistent security across many systems.</p>
+<h4>Local Security Policy (secpol.msc)</h4>
+<p>Configures security settings on standalone machines:</p>
+<ul>
+<li><strong>Account policies → Password policy</strong>: Minimum length (8+), complexity requirements, maximum age (90 days), history (prevent last 5 reuse)</li>
+<li><strong>Account lockout policy</strong>: Lock after 3–5 failed attempts; lockout duration 30 minutes; reset counter after 30 minutes. Balance security vs. denial-of-service risk (attacker intentionally locks accounts)</li>
+<li><strong>Audit policy</strong>: Log successful/failed logons, policy changes, object access</li>
+</ul>
+<h4>System Hardening Checklist</h4>
+<ul>
+<li>Keep OS and applications patched and updated</li>
+<li>Remove/disable unused software and services</li>
+<li>Rename or disable built-in Administrator account</li>
+<li>Ensure all accounts have unique strong passwords</li>
+<li>Enable Windows Firewall on all profiles</li>
+<li>Enable Windows Defender with real-time protection</li>
+<li>Disable AutoRun/AutoPlay (prevents USB malware execution)</li>
+<li>Enable Secure Boot and TPM in BIOS</li>
+<li>Enable BitLocker on all drives containing sensitive data</li>
+<li>Configure screensaver with password lock after inactivity</li>
+</ul>
+<h4>Group Policy Hardening</h4>
+<p>In domain environments, apply security baselines via GPO. Microsoft Security Compliance Toolkit provides pre-built security baselines for Windows, Office, and Edge. CIS (Center for Internet Security) benchmarks provide detailed hardening guidance with justifications for each control.</p>`,
+
+71: `<h3>Incident Response and Digital Forensics Basics</h3>
+<p>When a security incident occurs, the response process determines how much damage is limited and whether prosecution is possible. A+ technicians must know the correct first steps.</p>
+<h4>Incident Response Steps</h4>
+<ol>
+<li><strong>Preparation</strong>: Incident response plan, trained team, tools in place before an incident occurs</li>
+<li><strong>Identification</strong>: Detect and confirm the incident. Determine scope — what systems are affected?</li>
+<li><strong>Containment</strong>: Limit the damage — isolate affected systems from network, change credentials</li>
+<li><strong>Eradication</strong>: Remove the threat — malware removal, close vulnerabilities, patch systems</li>
+<li><strong>Recovery</strong>: Restore systems from clean backups, verify systems are clean before reconnecting</li>
+<li><strong>Lessons learned</strong>: Post-incident review — what happened, what worked, what to improve</li>
+</ol>
+<h4>Digital Forensics Basics</h4>
+<p><strong>Order of volatility</strong>: Collect evidence in order from most volatile (lost first) to least volatile: CPU registers/cache → RAM → Network connections/routing tables → Running processes → Disk → Logs → Archived media. RAM is lost when system powers off — capture first if possible.</p>
+<p><strong>Chain of custody</strong>: Document every person who handled evidence and when. Critical for legal admissibility. Any break in chain of custody may make evidence inadmissible in court.</p>
+<p><strong>Write blockers</strong>: Hardware devices that prevent any writes to the evidence drive while it's being analyzed. Preserves original evidence integrity.</p>
+<p><strong>Forensic copy</strong>: Bit-for-bit copy of an entire drive including slack space, deleted files, and unallocated space. Different from a regular file copy. Created with tools like FTK Imager, dd, or Autopsy.</p>
+<h4>First Responder Actions (A+ Level)</h4>
+<p>As a first responder: <strong>do not turn off the system</strong> (RAM is lost, disk state changes), <strong>do not run removal tools</strong> (modifies evidence), <strong>do not log off or restart</strong>. Isolate from network (remove Ethernet, disable Wi-Fi). Take photos of screen and document everything visible. Contact your incident response team or supervisor immediately.</p>`,
+
+72: `<h3>Network Hardware — Switches, Routers, Patch Panels</h3>
+<p>Enterprise networks use structured cabling with patch panels, organized cable management, and managed switches. Understanding this infrastructure helps in both installation and troubleshooting.</p>
+<h4>Managed vs Unmanaged Switches</h4>
+<p><strong>Unmanaged switches</strong>: Plug-and-play; no configuration; no VLANs; no SNMP monitoring; home/SOHO use.</p>
+<p><strong>Managed switches</strong>: Full configuration via CLI or web interface; support VLANs, trunks, port monitoring, SNMP, spanning tree, port security; required for enterprise networks. Cisco IOS, Juniper Junos, HP Comware are common enterprise switch OS platforms.</p>
+<h4>VLANs</h4>
+<p>VLANs (Virtual Local Area Networks) logically segment a switch into multiple independent networks. Different VLANs cannot communicate directly — traffic must go through a router (Layer 3) to cross VLANs. Uses:</p>
+<ul>
+<li>Separate guest Wi-Fi from corporate network on same switches</li>
+<li>Isolate IoT devices</li>
+<li>Separate VoIP phones (QoS priority)</li>
+<li>Segment sensitive systems (financial, HR) from general users</li>
+</ul>
+<p><strong>Trunk ports</strong>: Switch-to-switch and switch-to-router links carry multiple VLANs tagged with 802.1Q tags. Access ports connect end devices and carry only one untagged VLAN.</p>
+<h4>Patch Panels</h4>
+<p>A patch panel is a rack-mounted panel with RJ-45 ports on the front and 110-block IDC (Insulation Displacement Connector) punchdown connections on the back. Horizontal cable from wall jacks terminates at the patch panel back. Short patch cables on the front connect to the switch. Benefits: neat cable management, easy port changes without moving cables in walls.</p>
+<p><strong>Punchdown tool</strong>: Terminates wire pairs into IDC connectors with a spring-loaded tool. Use the 110-block setting for standard patch panels. Blade cuts excess wire. Follow T568B color code.</p>`,
+
+73: `<h3>Troubleshooting Network Connectivity</h3>
+<p>Network troubleshooting uses a systematic approach moving from physical layer upward. The OSI model provides the structure — diagnose Layer 1 before assuming Layer 3 issues.</p>
+<h4>Bottom-Up Troubleshooting</h4>
+<ol>
+<li><strong>Layer 1 — Physical</strong>: Check cable connection, link lights on NIC and switch port. Swap cable. Test with cable tester. Check if switch port is enabled.</li>
+<li><strong>Layer 2 — Data Link</strong>: Check MAC address and ARP table (<code>arp -a</code>). Verify VLAN assignment for the switch port. Check for duplex mismatch (link light on but very slow = duplex mismatch).</li>
+<li><strong>Layer 3 — Network</strong>: Verify IP address, subnet mask, default gateway (<code>ipconfig /all</code>). Ping default gateway — confirms Layer 3 on local subnet is working.</li>
+<li><strong>Layer 4+ — Transport/Application</strong>: Can you ping by IP but not by hostname? → DNS problem. Can you ping the destination but application fails? → Application, firewall, or port issue.</li>
+</ol>
+<h4>Common Scenarios and Solutions</h4>
+<p><strong>169.254.x.x address</strong>: DHCP server unreachable. Check: DHCP server is running, switch port VLAN correct, DHCP scope has available leases, physical connection. Fix: ipconfig /renew after resolving issue.</p>
+<p><strong>Can ping IP, can't ping hostname</strong>: DNS failure. Check: DNS server address, run nslookup, flush DNS cache with <code>ipconfig /flushdns</code>.</p>
+<p><strong>Intermittent connectivity</strong>: Check for duplex mismatch (auto-negotiation failure), loose/damaged cable, failing switch port, Wi-Fi interference.</p>
+<p><strong>Slow network</strong>: Run iperf or file transfer benchmark. Check: switch port utilization (SNMP), cable quality (Cat5e vs Cat6a for 10G), duplex mismatch, Wi-Fi vs wired, DNS latency vs data latency.</p>`,
+
+74: `<h3>Printers — Network Printers and MFP Configuration</h3>
+<p>Network printers are shared resources requiring proper IP configuration, driver installation, and port configuration. Multi-Function Printers (MFPs) add scanning and sometimes fax capability.</p>
+<h4>Network Printer Setup</h4>
+<ol>
+<li>Configure a static IP address on the printer (or DHCP reservation) — dynamic IP causes "printer offline" errors when the IP changes</li>
+<li>Install the printer driver from manufacturer's website (not Windows generic driver) for full feature support</li>
+<li>Add printer via IP address: Settings → Bluetooth &amp; devices → Printers → Add → The printer I want isn't listed → Add a printer using TCP/IP address → enter IP → select protocol (RAW/9100 for HP JetDirect, IPP/631 for standards-based)</li>
+<li>Print a test page to verify</li>
+<li>Share the printer if users will connect via the print server (Printers → Printer Properties → Sharing)</li>
+</ol>
+<h4>Printer Port Troubleshooting</h4>
+<p>If the printer IP changes: open Printer Properties → Ports tab → find the TCP/IP port → Configure Port → update the IP address. This is the most common cause of "printer offline" errors — the IP changed but the Windows driver still points to the old IP.</p>
+<h4>MFP Features</h4>
+<ul>
+<li><strong>Scan to email</strong>: Requires SMTP server configuration (IP, port, credentials) in the printer's web interface. Port 587 (authenticated) preferred over 25.</li>
+<li><strong>Scan to network folder</strong>: Requires shared folder path (UNC path) and credentials that have write access</li>
+<li><strong>Scan to cloud</strong>: Built-in Google Drive/OneDrive integration on modern MFPs</li>
+<li><strong>Fax</strong>: Phone line connection required; configure fax number and transmission settings</li>
+</ul>
+<h4>Print Management</h4>
+<p>Print Management console (printmanagement.msc) on Windows Server manages all shared printers centrally: view all printers and their status, monitor active print jobs, deploy printers to clients via GPO (Users/Computers automatically get printers based on location or group membership).</p>`,
+
+75: `<h3>Operational Security — Physical and Logical Access</h3>
+<p>Comprehensive security combines physical controls preventing unauthorized physical access with logical controls restricting digital access to systems and data.</p>
+<h4>Access Control Models</h4>
+<ul>
+<li><strong>DAC (Discretionary Access Control)</strong>: Resource owner determines who has access. NTFS file permissions — you own a file and decide who can read/write it. Flexible but depends on owner making good decisions.</li>
+<li><strong>MAC (Mandatory Access Control)</strong>: Access determined by labels (classification levels) — Top Secret, Secret, Confidential, Unclassified. Used in government/military environments. Users cannot change access levels themselves.</li>
+<li><strong>RBAC (Role-Based Access Control)</strong>: Access based on job role. "Sales" role gets access to CRM; "HR" role gets access to HR system. Adding users to a role grants all that role's access. Most common in enterprise environments — Active Directory security groups implement RBAC.</li>
+<li><strong>ABAC (Attribute-Based Access Control)</strong>: Fine-grained; access based on attributes of user, resource, and environment (time of day, location, device type). Used in zero-trust architectures.</li>
+</ul>
+<h4>Physical Token Types</h4>
+<ul>
+<li><strong>Smart card</strong>: Contact or contactless card with embedded microchip storing certificate/credentials; used for CAC (Common Access Card) in US government</li>
+<li><strong>Hardware key (FIDO2)</strong>: USB/NFC device (YubiKey) providing passwordless authentication; phishing-resistant; requires physical possession</li>
+<li><strong>Key fob</strong>: RFID token for physical door access; generates TOTP codes for software authentication</li>
+</ul>
+<h4>Zero Trust Security Model</h4>
+<p>"Never trust, always verify." Traditional perimeter security trusted everything inside the network. Zero trust requires: continuous authentication, device health verification, least-privilege access for every request, micro-segmentation to limit lateral movement. Becoming the standard as remote work makes the network perimeter meaningless.</p>`,
+
+76: `<h3>Change Management and ITIL Framework</h3>
+<p>IT departments manage changes through formal processes to prevent unplanned outages. ITIL (IT Infrastructure Library) provides the framework used by most enterprise IT organizations.</p>
+<h4>ITIL Service Management</h4>
+<p>ITIL distinguishes between: <strong>Incident</strong> (unplanned interruption to service — a server is down now), <strong>Problem</strong> (root cause investigation — why does this server keep going down?), and <strong>Change</strong> (planned modification — upgrading the server OS to prevent recurrence).</p>
+<h4>Change Types</h4>
+<ul>
+<li><strong>Standard change</strong>: Pre-approved, low-risk, routine procedure. No CAB review needed each time (approved once as a process). Example: user password reset, adding RAM to a laptop.</li>
+<li><strong>Normal change</strong>: Planned change following full RFC and CAB process. Example: deploying a new application, upgrading network switches.</li>
+<li><strong>Emergency change</strong>: Urgent change to restore service or mitigate critical security threat. Bypasses normal CAB process with expedited approval (designated emergency approver). Documented retroactively. Higher risk — must have rollback plan. Example: emergency security patch for active exploit.</li>
+</ul>
+<h4>RFC — Request for Change</h4>
+<p>Complete RFC must include: description of change, business justification, risk assessment, implementation plan (exact steps), test plan, rollback procedure (exact steps to undo), requested change window, post-change verification steps. The rollback plan is mandatory — every change must be reversible.</p>
+<h4>Change Window</h4>
+<p>Pre-approved time periods for making changes (typically Saturday 2–6 AM, Sunday maintenance windows). Changes outside windows require emergency approval. The window limits the blast radius — if a change goes wrong, it happens at a time when minimal users are affected and staff are available to implement rollback.</p>`,
+
+77: `<h3>Disaster Recovery Planning</h3>
+<p>Disaster recovery (DR) plans ensure business continuity when major failures occur — data center fires, hurricanes, ransomware attacks that encrypt all servers, or ISP outages.</p>
+<h4>Business Continuity vs Disaster Recovery</h4>
+<p><strong>Business Continuity Planning (BCP)</strong>: How does the business continue operating during and after a disaster? Includes: manual processes if systems are down, alternate work locations, communication plans, vendor relationships.</p>
+<p><strong>Disaster Recovery (DR)</strong>: Technical plan for restoring IT systems after a disaster. Subset of BCP focused specifically on IT infrastructure recovery.</p>
+<h4>DR Site Types</h4>
+<ul>
+<li><strong>Cold site</strong>: Physical space with power and connectivity but no hardware. Cheapest. Longest recovery time (days to weeks to procure and set up hardware).</li>
+<li><strong>Warm site</strong>: Physical space with hardware and network configured but not running primary applications. Moderate cost. Recovery time: hours to days.</li>
+<li><strong>Hot site</strong>: Fully operational duplicate of production site. Highest cost. Recovery time: minutes to hours (failover when primary fails).</li>
+<li><strong>Cloud DR</strong>: Use cloud provider to host DR environment. Pay only when activated. Growing standard for cost-effective DR.</li>
+</ul>
+<h4>DR Testing Types</h4>
+<ul>
+<li><strong>Tabletop exercise</strong>: Discuss the plan in a conference room; no systems involved; cheap; identify plan gaps</li>
+<li><strong>Walkthrough</strong>: Review procedures step by step; verify documentation is current</li>
+<li><strong>Simulation</strong>: Test specific components without full failover</li>
+<li><strong>Parallel test</strong>: Bring up DR site while production still running; verify DR site can handle load</li>
+<li><strong>Full failover test</strong>: Actually fail over to DR site; most realistic; most disruptive and risky</li>
+</ul>`,
+
+78: `<h3>Networking Troubleshooting — Advanced Scenarios</h3>
+<p>Advanced network troubleshooting requires understanding protocol behavior and correlating symptoms to specific failure points in the network stack.</p>
+<h4>DNS Troubleshooting</h4>
+<p>DNS failures cause: websites unreachable by name (but IP works), slow internet (DNS resolution delays), internal resources unreachable. Diagnosis flow:</p>
+<ol>
+<li><code>nslookup google.com</code> — does it resolve? If timeout → DNS server unreachable</li>
+<li><code>nslookup google.com 8.8.8.8</code> — use Google DNS directly. Works? → Your DNS server is the problem</li>
+<li><code>ipconfig /flushdns</code> — clear cache and retry</li>
+<li>Check DNS server settings: <code>ipconfig /all</code> — correct DNS server listed?</li>
+</ol>
+<h4>DHCP Troubleshooting</h4>
+<p>169.254.x.x address = DHCP failure. Checklist: physical connection good? DHCP service running on server? Switch port in correct VLAN? DHCP scope has available addresses? IP helper-address configured (if DHCP server is on different subnet)? Relay agent logs? After fix: <code>ipconfig /release</code> then <code>ipconfig /renew</code>.</p>
+<h4>Routing Issues</h4>
+<p><code>tracert</code> shows where packets stop. An asterisk (*) at a hop means that router doesn't respond to ICMP TTL exceeded — not necessarily a failure. If all further hops are * → packets are being dropped at that point. Check: default gateway correct? Route to destination in routing table (<code>route print</code>)?</p>
+<h4>Wireless Troubleshooting</h4>
+<p>Wi-Fi analyzer shows signal strength and channel utilization. Steps: signal strength adequate (-70 dBm or better)? Correct SSID/password? IP address obtained via DHCP? Can ping gateway? Forget network and reconnect? Driver updated? Try 5 GHz if on 2.4 GHz congested. Channel congestion → change AP channel. Near microwave → use 5 GHz.</p>`,
+
+79: `<h3>Hardware Troubleshooting — Memory, Storage, Power</h3>
+<p>Hardware failures produce distinctive symptoms. Systematic diagnosis using the right tools saves time and prevents unnecessary component replacement.</p>
+<h4>Memory (RAM) Problems</h4>
+<p><strong>Symptoms</strong>: Random BSODs, system instability, spontaneous restarts, corrupted files, applications crashing, POST beep codes (AMI: continuous = RAM failure).</p>
+<p><strong>Diagnosis</strong>: Windows Memory Diagnostic (<code>mdsched.exe</code> — runs on next reboot) or MemTest86 (bootable USB, more thorough). Test each stick individually in slot A2 to isolate faulty stick. Check that RAM is fully seated (re-seat by pressing firmly until clips click). Verify RAM is on the motherboard's QVL (Qualified Vendor List). XMP can cause instability — test at stock JEDEC speeds.</p>
+<h4>Storage Problems</h4>
+<p><strong>HDD symptoms</strong>: Clicking or grinding sounds (head crash — back up immediately), slow access, CrystalDiskInfo showing reallocated sectors or uncorrectable errors. Run <code>chkdsk /r</code> from WinRE. A drive with reallocated sectors is failing — replace before total failure.</p>
+<p><strong>SSD symptoms</strong>: System stutter (drive throttling due to heat or wear), drive not recognized, slow writes (drive approaching TBW limit). Check health with manufacturer tools (Samsung Magician, Intel SSD Toolbox) or CrystalDiskInfo. NVMe drives can overheat without heatsinks — add heatsink if temperatures exceed 70°C.</p>
+<h4>Power Supply Problems</h4>
+<p><strong>Symptoms</strong>: System won't start, spontaneous shutdowns under load (PSU can't deliver rated power), random restarts, component damage.</p>
+<p><strong>Diagnosis</strong>: PSU tester (paperclip test — short PS_ON to COM on 24-pin to test standalone), monitor voltages with HWMonitor under load. +12V should be within 5% (11.4V–12.6V). +5V within 5%. Voltage sag under load = PSU is failing or undersized. Always suspect the PSU when multiple components fail simultaneously.</p>`,
+
+80: `<h3>Professionalism in IT — Ethics, Privacy, Licensing</h3>
+<p>IT professionals have privileged access to sensitive data and systems. Ethical behavior, legal compliance, and respect for privacy are non-negotiable professional standards.</p>
+<h4>Ethical Responsibilities</h4>
+<ul>
+<li><strong>Confidentiality</strong>: Information encountered during work (patient records, financial data, personal communications) stays confidential. No discussing with friends, family, or other customers.</li>
+<li><strong>Integrity</strong>: Be honest about capabilities and outcomes. Don't claim you fixed something you didn't. Don't charge for work not performed.</li>
+<li><strong>Respect for privacy</strong>: Don't access data beyond what's needed to fix the problem. Close documents/emails you accidentally see. If you see evidence of illegal activity, follow your company's escalation procedure — don't investigate yourself.</li>
+<li><strong>Report concerns through proper channels</strong>: If you observe: illegal content, harassment, corporate fraud, or other misconduct — report to HR, legal, or authorities as appropriate. Never destroy or modify evidence.</li>
+</ul>
+<h4>Regulatory Compliance for Technicians</h4>
+<p>Technicians working in regulated environments must understand the applicable regulations: healthcare = HIPAA (never leave PHI visible on screen, log off when done), financial = SOX/PCI-DSS (log all access to financial systems), government = FISMA/NIST frameworks, EU clients = GDPR (data minimization, breach notification obligations).</p>
+<h4>Software Licensing</h4>
+<ul>
+<li><strong>OEM license</strong>: Tied to specific hardware; cannot be transferred; typically cheaper; comes pre-installed</li>
+<li><strong>Retail license</strong>: Can be transferred to new hardware; most flexible</li>
+<li><strong>Volume license</strong>: Multiple activations under one agreement; large organizations; Key Management Service (KMS) or Active Directory-based activation</li>
+<li><strong>Subscription</strong>: Annual/monthly payment; latest version always included; Microsoft 365, Adobe Creative Cloud</li>
+</ul>`,
+
+81: `<h3>Core 2 Review — Operating Systems Deep Dive</h3>
+<p>Operating Systems represents 31% of the Core 2 exam — the largest single domain. This review covers the most frequently tested concepts.</p>
+<h4>Must-Know Windows Tools (memorize all)</h4>
+<ul>
+<li><code>gpedit.msc</code> — Group Policy Editor (Pro+)</li>
+<li><code>secpol.msc</code> — Local Security Policy</li>
+<li><code>lusrmgr.msc</code> — Local Users and Groups (Pro+)</li>
+<li><code>compmgmt.msc</code> — Computer Management (umbrella tool)</li>
+<li><code>diskmgmt.msc</code> — Disk Management</li>
+<li><code>devmgmt.msc</code> — Device Manager</li>
+<li><code>eventvwr.msc</code> — Event Viewer</li>
+<li><code>perfmon.msc</code> — Performance Monitor</li>
+<li><code>services.msc</code> — Services</li>
+<li><code>taskschd.msc</code> — Task Scheduler</li>
+<li><code>resmon.exe</code> — Resource Monitor</li>
+<li><code>msconfig.exe</code> — System Configuration</li>
+<li><code>msinfo32.exe</code> — System Information</li>
+<li><code>regedit.exe</code> — Registry Editor</li>
+</ul>
+<h4>Windows File System Must-Knows</h4>
+<ul>
+<li>NTFS: permissions, journaling, EFS, max file 16TB — use for Windows drives</li>
+<li>FAT32: 4GB max file, 32GB max volume — USB compatibility</li>
+<li>exFAT: large files, cross-platform — large USB drives</li>
+<li>MBR: 2.2TB limit, 4 primary partitions, legacy BIOS</li>
+<li>GPT: 9.4ZB, 128 partitions, required for UEFI boot and Win11</li>
+</ul>
+<h4>Windows Recovery Priority Order</h4>
+<ol>
+<li>Startup Repair (automatic)</li>
+<li>System Restore (fastest if restore points exist)</li>
+<li>Driver rollback (for recent driver-caused issues)</li>
+<li>bootrec commands (for MBR/BCD corruption)</li>
+<li>DISM + SFC (for system file corruption)</li>
+<li>Reset this PC → Keep my files</li>
+<li>Clean reinstall</li>
+</ol>`,
+
+82: `<h3>Core 2 Review — Security Concepts Deep Dive</h3>
+<p>Security is 25% of Core 2. This review targets the highest-frequency exam topics.</p>
+<h4>Malware Removal — 8 Steps (in order)</h4>
+<ol>
+<li>Investigate and identify symptoms</li>
+<li>Quarantine — disconnect from network</li>
+<li>Disable System Restore</li>
+<li>Remediate — scan and remove</li>
+<li>Schedule scans and apply updates</li>
+<li>Re-enable System Restore, create restore point</li>
+<li>Document findings</li>
+<li>Educate the user</li>
+</ol>
+<h4>Encryption Must-Knows</h4>
+<ul>
+<li>BitLocker: Full disk; AES-128/256; requires TPM 2.0; recovery key = 48 digits; Windows Pro+</li>
+<li>EFS: Per-file NTFS; uses user certificate; breaks if certificate deleted; less common than BitLocker</li>
+<li>AES: Symmetric; best for bulk data; AES-256 = strongest</li>
+<li>RSA: Asymmetric; key exchange and digital signatures; 2048-bit minimum</li>
+<li>TLS: Asymmetric for key exchange → AES for session data; port 443</li>
+</ul>
+<h4>Authentication Must-Knows</h4>
+<ul>
+<li>MFA = 2+ different factor categories (know + have + are)</li>
+<li>TOTP = Time-based OTP (authenticator app) = something you have</li>
+<li>RADIUS = centralized AAA for 802.1X; UDP 1812</li>
+<li>Kerberos = AD authentication protocol; UDP/TCP 88; 5-minute clock skew tolerance</li>
+<li>LDAP = directory queries; TCP/UDP 389; LDAPS = 636</li>
+</ul>
+<h4>Physical Security Must-Knows</h4>
+<ul>
+<li>Mantrap = two-door system preventing tailgating</li>
+<li>Badge reader + CCTV = standard server room access</li>
+<li>Kensington lock = laptop physical security</li>
+<li>Locking server racks = data center hardware protection</li>
+</ul>`,
+
+83: `<h3>Core 2 Review — Troubleshooting and Operational Procedures</h3>
+<p>Software troubleshooting (22%) and operational procedures (22%) together make up nearly half of Core 2. This review focuses on the most testable items.</p>
+<h4>Troubleshooting Methodology (7 Steps)</h4>
+<ol>
+<li>Identify the problem</li>
+<li>Establish theory of probable cause</li>
+<li>Test the theory</li>
+<li>Establish plan of action</li>
+<li>Implement solution or escalate</li>
+<li>Verify full functionality</li>
+<li>Document findings</li>
+</ol>
+<h4>Operational Procedures Must-Knows</h4>
+<ul>
+<li><strong>Change management</strong>: RFC → CAB approval → test → change window → implement → verify → document</li>
+<li><strong>Backup types</strong>: Full (all data), Incremental (since last backup), Differential (since last full)</li>
+<li><strong>3-2-1 rule</strong>: 3 copies, 2 media types, 1 offsite</li>
+<li><strong>RTO</strong>: Maximum acceptable downtime</li>
+<li><strong>RPO</strong>: Maximum acceptable data loss (drives backup frequency)</li>
+<li><strong>RAID not a backup</strong>: RAID protects hardware failure only</li>
+</ul>
+<h4>Data Destruction</h4>
+<ul>
+<li>HDD: overwrite (DoD 7-pass) or degauss or physical destroy</li>
+<li>SSD: crypto-erase (ATA Secure Erase) or physical destroy — NOT overwrite</li>
+<li>Degaussing: magnetic only — destroys HDDs/tapes; DOES NOT work on SSDs</li>
+<li>CoD (Certificate of Destruction): legal document for compliance</li>
+</ul>
+<h4>Safety and Environmental</h4>
+<ul>
+<li>ESD: wrist strap, anti-static mat, anti-static bag for components</li>
+<li>Fire: CO2/FM-200 for electrical fires; NEVER water</li>
+<li>Hot aisle/cold aisle: intake faces cold aisle, exhaust faces hot aisle</li>
+<li>UPS types: standby &lt; line-interactive &lt; double-conversion (best)</li>
+</ul>`,
+
+84: `<h3>Full Simulation — Practice Exam Strategy</h3>
+<p>Day 84 begins the final exam preparation phase. At this point, daily practice exams are more valuable than reading new content. This session covers exam strategy and time management.</p>
+<h4>Exam Format Reminder</h4>
+<ul>
+<li>90 minutes, up to 90 questions, passing score 675 (Core 1) / 700 (Core 2)</li>
+<li>PBQs (Performance Based Questions) appear at the START — typically 3–7 per exam</li>
+<li>PBQs are complex simulations worth more points — don't panic, read carefully</li>
+<li>If stuck on a PBQ after 5 minutes, mark it and move on; return with remaining time</li>
+</ul>
+<h4>Multiple Choice Strategy</h4>
+<ul>
+<li>Read the entire question before looking at answers</li>
+<li>Identify the exact task: "which command," "which setting," "first step," "most likely cause"</li>
+<li>Eliminate obviously wrong answers first — usually 1–2 can be eliminated immediately</li>
+<li>Watch for absolutes: "always," "never," "only" — these are often wrong (real IT has exceptions)</li>
+<li>Watch for "best," "most likely," "first step" — these require prioritization, not just knowledge</li>
+<li>When two answers seem correct, identify the difference and ask which one directly answers the question's specific scenario</li>
+</ul>
+<h4>Time Management</h4>
+<p>90 minutes for 90 questions = 1 minute per question average. PBQs may take 5–10 minutes each. With 5 PBQs, you have ~45 minutes for 85 multiple choice questions. Pace: glance at question count at 30 and 60 minutes. Don't spend more than 2 minutes on any single question — mark and return.</p>
+<h4>What to Review This Week</h4>
+<p>Take a full practice exam, score it, and review only the wrong answers by objective number. Spend time on whatever objective has the most wrong answers. Avoid cramming entirely new topics in the last 48 hours — reinforce what you know. Get good sleep the night before the exam.</p>`,
+
+85: `<h3>PBQ Strategies — Performance Based Questions</h3>
+<p>PBQs simulate real-world tasks in a virtual environment. They test whether you can actually DO the things the exam covers, not just recite facts about them.</p>
+<h4>Common PBQ Types</h4>
+<ul>
+<li><strong>Network diagram</strong>: Drag devices into correct positions (modem → router → firewall → switch → end devices; AP on switch; wireless clients on AP)</li>
+<li><strong>Firewall rules</strong>: Add/modify rules to allow/block specific traffic (allow HTTPS inbound, block Telnet, allow RDP from specific subnet)</li>
+<li><strong>Cable selection</strong>: Choose correct cable for scenario (Cat6a for new 10G, SMF for long runs, LC connector for modern fiber)</li>
+<li><strong>IP addressing</strong>: Assign IPs, identify subnet, gateway — verify all are on same subnet</li>
+<li><strong>NTFS permissions</strong>: Set correct permissions for scenario (user needs read-only: Allow Read; manager needs full: Full Control; deny overrides allow)</li>
+<li><strong>Troubleshooting scenario</strong>: Interpret logs or outputs and identify the correct next step</li>
+</ul>
+<h4>PBQ Tips</h4>
+<ul>
+<li>Read the entire question and ALL objectives before touching anything</li>
+<li>In network diagrams: always place the ISP/modem at the internet edge, firewall between internet and internal, DHCP server on internal network</li>
+<li>For security PBQs: default-deny is always safer than default-allow</li>
+<li>For IP PBQs: verify all IPs are in the same /24 or appropriate subnet; gateway must be in same subnet as clients</li>
+<li>If you can't complete a PBQ: guess the remaining items and move on — partial credit is better than zero</li>
+<li>Come back with leftover time to review and refine PBQ answers</li>
+</ul>`,
+
+86: `<h3>Final Review — Core 1 Weak Areas</h3>
+<p>This session targets the most commonly missed Core 1 topics based on typical exam performance patterns.</p>
+<h4>Commonly Missed: Storage</h4>
+<ul>
+<li>M.2 slot supports SATA OR NVMe — check the key type (B-key=SATA, M-key=NVMe, B+M=both)</li>
+<li>NVMe is a PROTOCOL (PCIe), not a connector shape — M.2 is the form factor</li>
+<li>SATA max speed: 600 MB/s; NVMe PCIe 3.0: 3,500 MB/s; PCIe 4.0: 7,000 MB/s</li>
+<li>eMMC is SOLDERED — cannot be upgraded; only on budget tablets/laptops</li>
+</ul>
+<h4>Commonly Missed: Networking</h4>
+<ul>
+<li>APIPA = 169.254.x.x = DHCP failed — not an assigned address, a symptom</li>
+<li>ARP maps IP→MAC (not the other way); operates at Layer 2</li>
+<li>A router separates broadcast domains; a switch does NOT</li>
+<li>Wi-Fi 6 = 802.11ax; Wi-Fi 5 = 802.11ac; Wi-Fi 4 = 802.11n</li>
+<li>WPS PIN is always a vulnerability — disable it regardless of other security</li>
+</ul>
+<h4>Commonly Missed: Printers</h4>
+<ul>
+<li>7-step laser process order: Processing → Charging → Exposing → Developing → Transferring → Fusing → Cleaning</li>
+<li>Ghost image = drum (residual toner); Smear = fuser (not bonding); Blank = corona/toner</li>
+<li>Thermal printer = no ink, uses heat-sensitive paper only</li>
+<li>Impact/dot matrix = only type that creates carbon copies</li>
+</ul>
+<h4>Commonly Missed: Cloud</h4>
+<ul>
+<li>IaaS: you manage OS up; PaaS: you manage app+data; SaaS: you manage data only</li>
+<li>CapEx = buy hardware upfront; OpEx = monthly cloud cost</li>
+<li>Type 1 hypervisor runs on bare metal; Type 2 runs on a host OS</li>
+</ul>`,
+
+87: `<h3>Final Review — Core 2 Weak Areas</h3>
+<p>These are the Core 2 topics most commonly missed on practice exams. Focus your final review here.</p>
+<h4>Commonly Missed: Windows</h4>
+<ul>
+<li>Windows Home: NO BitLocker, NO gpedit.msc, NO domain join, NO Hyper-V</li>
+<li>Windows 11 requires TPM 2.0 — this is the most commonly tested requirement</li>
+<li>NTFS Deny overrides Allow — ALWAYS, regardless of group membership</li>
+<li>Network access: effective = MORE RESTRICTIVE of NTFS and Share permissions</li>
+<li>Sysprep /generalize: removes SID and hardware-specific settings before imaging</li>
+<li>sfc /scannow repairs system files; DISM /RestoreHealth repairs the component store</li>
+<li>Run DISM before SFC when both are needed</li>
+</ul>
+<h4>Commonly Missed: Security</h4>
+<ul>
+<li>Malware removal step 2 = QUARANTINE (disconnect network) — NOT run AV scan</li>
+<li>Social engineering = exploits humans, not technical vulnerabilities</li>
+<li>BitLocker without TPM: requires USB startup key OR pre-boot PIN</li>
+<li>EFS is tied to user certificate — deleting account = permanent data loss without DRA</li>
+<li>WPA3 uses SAE (Simultaneous Authentication of Equals) — prevents offline attacks</li>
+<li>RADIUS uses UDP 1812 for auth; Kerberos uses TCP/UDP 88</li>
+</ul>
+<h4>Commonly Missed: Operational</h4>
+<ul>
+<li>RPO = how much data you can LOSE; RTO = how long you can be DOWN</li>
+<li>Differential grows with each backup; Incremental is smallest per session</li>
+<li>Change management: RFC → CAB → test → change window → implement → verify → document</li>
+<li>Rollback plan is MANDATORY in every RFC — non-negotiable</li>
+<li>SDS (Safety Data Sheet) required for all workplace chemicals including toner</li>
+</ul>`,
+
+88: `<h3>Final Practice Exam Day</h3>
+<p>Day 88 is dedicated to a timed, simulated practice exam. Treat it exactly like the real exam — no pausing, no looking things up, strict 90-minute timer.</p>
+<h4>Pre-Exam Checklist</h4>
+<ul>
+<li>Good night's sleep before the real exam — sleep consolidates memory better than cramming</li>
+<li>Eat a real meal — avoid excessive caffeine (jitters affect concentration)</li>
+<li>Arrive or log in 15 minutes early</li>
+<li>For remote proctored exam: test your webcam, microphone, and internet connection the day before</li>
+<li>Clear your desk — only allowed materials (scratch paper, ID) on the desk</li>
+<li>ID ready (government-issued photo ID)</li>
+</ul>
+<h4>What to Do If You Blank</h4>
+<p>If you blank on a question: (1) skip and mark for review, (2) answer remaining questions to warm up, (3) come back fresh. Often reading other questions triggers recall. If you still can't remember, use process of elimination to get to 50/50 and make an educated guess. Never leave a question blank — there's no penalty for guessing on CompTIA exams.</p>
+<h4>Test Anxiety Management</h4>
+<ul>
+<li>Take three slow deep breaths before starting</li>
+<li>Remember: you've prepared for 88 days — you know this material</li>
+<li>If you feel anxious during the exam, pause for 10 seconds and breathe</li>
+<li>Trust your first instinct — your first answer is usually correct; only change if you have strong reason</li>
+<li>Treat each question independently — a hard question doesn't mean the whole exam is hard</li>
+</ul>
+<h4>After the Exam</h4>
+<p>CompTIA exams score 100–900. Passing: Core 1 = 675+, Core 2 = 700+. You'll receive your result immediately. If you pass — celebrate! If you fail — note which domains had lower scores and focus there for your retake. CompTIA allows retakes with no mandatory waiting period after the first attempt.</p>`,
+
+89: `<h3>Study Habits and Long-Term IT Career Skills</h3>
+<p>Earning your A+ is the beginning, not the end. This session covers study techniques that work, and skills that will serve you throughout your IT career.</p>
+<h4>What Works for Technical Study</h4>
+<ul>
+<li><strong>Active recall</strong>: Close the notes and try to write down everything you remember about a topic. This is more effective than re-reading. Use flashcards (physical or Anki).</li>
+<li><strong>Spaced repetition</strong>: Review material at increasing intervals (1 day, 3 days, 7 days, 14 days). Forgetting slightly before reviewing strengthens long-term retention.</li>
+<li><strong>Practice exams</strong>: The most effective study tool for certification exams. Learn from every wrong answer by reading the explanation and identifying the specific objective.</li>
+<li><strong>Hands-on labs</strong>: VirtualBox or Hyper-V → install Windows Server, configure Active Directory, set up RAID, practice command-line tools. Hands-on practice is irreplaceable for PBQ preparation.</li>
+<li><strong>Teach the material</strong>: Explain concepts out loud or write notes as if teaching someone else. The Feynman Technique reveals gaps in your understanding immediately.</li>
+</ul>
+<h4>IT Career Path</h4>
+<p>After A+, natural progressions:</p>
+<ul>
+<li><strong>CompTIA Network+</strong>: Deeper networking (routing protocols, WAN, network troubleshooting)</li>
+<li><strong>CompTIA Security+</strong>: Cybersecurity fundamentals (DoD baseline for security roles)</li>
+<li><strong>Microsoft Certifications</strong>: MD-102 (Endpoint Administrator), AZ-104 (Azure Administrator)</li>
+<li><strong>Cisco CCNA</strong>: Networking specialization for router/switch roles</li>
+</ul>
+<h4>On-the-Job Success</h4>
+<p>Technical knowledge is necessary but not sufficient. Most IT promotions come from: excellent communication (translating technical issues for non-technical people), reliability (showing up, following through), documentation (making yourself and your team more effective), and continuous learning (technology changes constantly — build the habit now).</p>`,
+
+90: `<h3>Day 90 — You Made It. Exam Day. Go Crush It.</h3>
+<p>This is the final day of the 90-day program. Everything you've studied over the past 89 days has been building to this. You are ready.</p>
+<h4>Last-Minute Quick Reference</h4>
+<p><strong>Critical numbers to remember:</strong></p>
+<ul>
+<li>Core 1 pass score: 675/900 | Core 2 pass score: 700/900</li>
+<li>TPM 2.0 required for Windows 11</li>
+<li>RDP = TCP 3389 | SSH = TCP 22 | HTTPS = TCP 443 | DNS = TCP/UDP 53</li>
+<li>DHCP DORA: Discover → Offer → Request → Acknowledge</li>
+<li>Laser printing 7 steps: Processing → Charging → Exposing → Developing → Transferring → Fusing → Cleaning</li>
+<li>Malware removal 8 steps: Investigate → Quarantine → Disable SR → Remediate → Scan+Update → Re-enable SR → Document → Educate</li>
+<li>Troubleshooting 7 steps: Identify → Theorize → Test → Plan → Implement → Verify → Document</li>
+<li>3-2-1 backup: 3 copies, 2 media, 1 offsite</li>
+<li>RAID 5: 1 fault tolerance, min 3 drives | RAID 6: 2 fault tolerance, min 4 drives | RAID 10: best performance+redundancy, min 4 drives</li>
+</ul>
+<h4>Final Mindset</h4>
+<p>You have spent 90 days building a foundation of IT knowledge that will serve you for years. The A+ certification opens doors to help desk roles, on-site support, IT generalist positions, and further specialization. Wherever your IT career takes you, the fundamentals you learned here — how computers work, how networks communicate, how to troubleshoot methodically, how to keep systems secure — apply everywhere.</p>
+<p>Take a breath. Read every question carefully. Trust your preparation.</p>
+<p><strong>Good luck. You earned this.</strong></p>`};
+
+// ── STATE ─────────────────────────────────────────────────────────────────
+
+
+// ============================================================
+// NEW CONTENT: 220-1201/1202 Additions
+// Topics: AI Basics, Zero Trust, eSIM, Mini-LED, Display Attrs,
+//         Cloud Productivity, Windows 11, ReFS/XFS, SOHO config,
+//         Internet Connection Types, Browser Security, 6GHz Wi-Fi
+// ============================================================
+
+// ── NEW TEST SETS (220-1201/1202 Specific) ────────────────────
+const NEW_TESTS = {
+  core1_new: [
+    {
+      title: "Core 1 (220-1201) — Set 6: New Objectives",
+      questions: [
+        {q:"What is eSIM and how does it differ from a physical SIM card?",
+         opts:["eSIM is faster than physical SIM","eSIM is embedded in the device and activated remotely — no physical card needed","eSIM only works on Android","eSIM cannot store carrier credentials"],
+         ans:1,exp:"eSIM (Embedded SIM) is a programmable SIM soldered directly onto the device. Carriers activate it remotely via software — no physical swap required. Supported in iPhone XS+ and modern Android flagships."},
+        {q:"A user's display shows good colors but the movement looks blurry when scrolling. Which display attribute needs improvement?",
+         opts:["Color gamut","Pixel density","Refresh rate","Screen resolution"],
+         ans:2,exp:"Refresh rate (measured in Hz) determines how many times per second the screen updates. Low refresh rate (60Hz) causes motion blur. High refresh rate displays (120Hz, 144Hz) eliminate this."},
+        {q:"What is Mini-LED display technology and what advantage does it offer?",
+         opts:["A smaller OLED panel for laptops","A backlight technology using thousands of tiny LEDs for precise local dimming and better contrast than standard LED-LCD","A replacement for HDMI","A type of screen protector"],
+         ans:1,exp:"Mini-LED uses thousands of small LEDs in the backlight, enabling local dimming zones. This achieves near-OLED contrast ratios and black levels while using the LCD panel type — better than standard edge-lit LED-LCD."},
+        {q:"What does pixel density (PPI) measure and how does it affect display quality?",
+         opts:["How fast pixels refresh","The number of pixels per inch — higher PPI = sharper image at the same viewing distance","The maximum brightness of the display","The color accuracy of the display"],
+         ans:1,exp:"PPI (Pixels Per Inch) determines sharpness. Apple's Retina standard (≥227 PPI) ensures individual pixels are indistinguishable at normal viewing distance. Higher PPI = sharper text and images."},
+        {q:"What is color gamut in the context of displays?",
+         opts:["The maximum refresh rate","The screen resolution","The range of colors a display can reproduce, usually expressed as % of sRGB, DCI-P3, or Adobe RGB","The maximum brightness level"],
+         ans:2,exp:"Color gamut describes the range of colors a display can produce. sRGB covers typical web content. DCI-P3 (~25% wider than sRGB) is used for professional photo/video work. Higher gamut coverage = more vivid, accurate colors."},
+        {q:"A customer wants to set up a small office/home office network. They have a modem from their ISP. What device do they need to share the internet connection among multiple wired and wireless devices?",
+         opts:["A hub","A switch only","A router (or combined modem-router)","A repeater"],
+         ans:2,exp:"A router shares one ISP connection among multiple devices using NAT. For SOHO use, a combined modem-router-WAP device is typical. A switch alone cannot route between the ISP and LAN."},
+        {q:"What internet connection type uses existing telephone lines but provides much faster speeds than dial-up?",
+         opts:["Fiber","Satellite","DSL","Cable"],
+         ans:2,exp:"DSL (Digital Subscriber Line) uses existing copper telephone lines. ADSL provides asymmetric speeds (faster download than upload). Speed depends heavily on distance from the telephone exchange."},
+        {q:"Which internet connection type provides the highest potential speeds and lowest latency for residential users?",
+         opts:["DSL","Satellite","Cable (DOCSIS)","Fiber-to-the-Premises (FTTP)"],
+         ans:3,exp:"Fiber-to-the-Premises delivers dedicated fiber optic connections directly to the building. It provides symmetrical gigabit speeds and latency under 5ms — far superior to copper-based or wireless alternatives."},
+        {q:"A remote user has no other options available. Which internet connection type works anywhere with a clear sky view but has high latency?",
+         opts:["DSL","Fiber","Cable","Satellite"],
+         ans:3,exp:"Satellite internet (e.g., traditional geostationary) works anywhere but has 600+ ms latency due to the 35,786 km orbit. Low-Earth Orbit (LEO) satellites like Starlink reduce this to ~20-40ms."},
+        {q:"What is a Wireless Internet Service Provider (WISP) and when would it be used?",
+         opts:["A VPN provider","An ISP that delivers internet via wireless radio towers to areas without cable/fiber infrastructure","A mobile data provider","A satellite internet company"],
+         ans:1,exp:"WISPs deliver broadband wirelessly via radio frequencies (often licensed microwave bands) to homes/businesses in rural areas where DSL, cable, or fiber aren't available. Typical speeds: 10–100 Mbps."},
+        {q:"What is the 6 GHz Wi-Fi band (Wi-Fi 6E) and what advantage does it provide over 5 GHz?",
+         opts:["The 6 GHz band has worse range but no legacy device interference and 59 non-overlapping 20MHz channels","The 6 GHz band has the same specs as 5 GHz","The 6 GHz band replaces 5 GHz entirely","The 6 GHz band is only for enterprise networks"],
+         ans:0,exp:"Wi-Fi 6E extends 802.11ax into the 6 GHz band (5.925-7.125 GHz). It has 59 non-overlapping 20 MHz channels (vs 24 on 5 GHz), zero legacy interference (only Wi-Fi 6E devices can use it), but shorter range than 5 GHz."},
+        {q:"When configuring a SOHO router, what IP address range is typically recommended for DHCP clients to avoid conflicts with static devices?",
+         opts:["10.0.0.1–10.0.0.100","192.168.1.100–192.168.1.200 (leaving low range for static devices like printers)","Any range is fine","Only use APIPA"],
+         ans:1,exp:"Best practice: assign static IPs to devices that need them (routers, printers, servers) using low addresses (e.g., .1–.99), and configure DHCP pool for dynamic clients (.100–.200). This prevents conflicts."},
+        {q:"A SOHO network uses NAT. Which address range is used internally?",
+         opts:["Any public IP range","RFC 1918 private ranges: 10.x, 172.16–31.x, or 192.168.x.x","Only 192.168.1.x is allowed","Only IPv6 addresses"],
+         ans:1,exp:"RFC 1918 private addresses (10.0.0.0/8, 172.16.0.0/12, 192.168.0.0/16) are used internally. NAT translates these to one public IP at the router. ISPs block private addresses on the internet."},
+        {q:"What channel width setting provides maximum 802.11ax (Wi-Fi 6) throughput on the 5 GHz band?",
+         opts:["20 MHz","40 MHz","80 MHz","160 MHz"],
+         ans:3,exp:"160 MHz channel width provides maximum single-stream throughput on 5 GHz for 802.11ac/ax. However, fewer non-overlapping channels are available. 80 MHz is often a better balance for dense environments."},
+        {q:"A SOHO router's admin panel shows 'DHCP Exclusions.' What does this configure?",
+         opts:["IP addresses blocked from the internet","IP addresses within the DHCP scope that should NOT be auto-assigned (reserved for static devices)","Devices banned from the network","DNS filtering rules"],
+         ans:1,exp:"DHCP Exclusions reserve specific IP addresses within the DHCP scope from being automatically assigned. Use this to give a printer or server a fixed IP within the DHCP range without configuring static IP on the device."},
+        {q:"What server role provides accurate time synchronization across a network?",
+         opts:["DNS server","DHCP server","NTP (Network Time Protocol) server — UDP port 123","FTP server"],
+         ans:2,exp:"NTP servers (UDP port 123) synchronize clocks across network devices. Accurate time is critical for authentication (Kerberos tickets expire), log correlation, certificates, and scheduled tasks."},
+        {q:"A database server is being added to a network. What additional DNS record type is recommended for this server?",
+         opts:["Only an A record is needed","An A record plus a CNAME for a human-readable alias (e.g., db.company.com)","Only a PTR record","Only an MX record"],
+         ans:1,exp:"Database servers typically get an A record (IP mapping) plus a CNAME alias (e.g., db.company.com → actual-hostname.company.com). The CNAME allows the underlying server to change without updating all connection strings."},
+        {q:"Which display technology offers the best contrast ratio with per-pixel lighting control, making blacks appear truly black?",
+         opts:["IPS LCD","TN LCD","VA LCD","OLED"],
+         ans:3,exp:"OLED (Organic Light-Emitting Diode) uses per-pixel illumination — pixels that display black are completely off. This creates an infinite contrast ratio. IPS, TN, and VA all use a backlight, causing light bleed."},
+        {q:"What is the difference between 4G LTE and 5G Sub-6GHz in practical deployment?",
+         opts:["5G Sub-6GHz is completely different infrastructure from LTE","5G Sub-6GHz uses the same towers as LTE but with software upgrades and new spectrum, providing 2-10x speed improvement with similar coverage","5G Sub-6GHz requires mmWave","5G Sub-6GHz has worse battery life"],
+         ans:1,exp:"5G NR (New Radio) on Sub-6GHz frequencies can be deployed on existing tower infrastructure. Typical speed improvements: 4G LTE = 50-100 Mbps → 5G Sub-6 = 200-500 Mbps, similar coverage area."},
+        {q:"A company issues mobile devices to employees using the COPE model. What does COPE allow that BYOD does not?",
+         opts:["COPE devices have better cameras","Corporate IT has full MDM control including wiping the entire device, while still allowing personal use","COPE devices are cheaper","COPE allows personal app purchases"],
+         ans:1,exp:"COPE (Corporate-Owned, Personally-Enabled): the company owns and fully manages the device, including full wipe capability. BYOD (Bring Your Own Device): personal ownership limits IT control — selective wipe of corporate data only."}
+      ]
+    }
+  ],
+  core2_new: [
+    {
+      title: "Core 2 (220-1202) — Set 6: AI, Zero Trust & New Security",
+      questions: [
+        {q:"What is Artificial Intelligence (AI) in the context of IT support tools?",
+         opts:["A robot that replaces IT technicians","Software that learns from data to perform tasks like pattern recognition, prediction, and decision-making — used in chatbots, automated ticket routing, and threat detection","A type of firewall","A hardware component"],
+         ans:1,exp:"AI systems learn from large datasets to perform tasks autonomously. In IT support contexts: AI chatbots handle common requests, ML models classify threats, AI-powered tools predict hardware failures and auto-remediate issues."},
+        {q:"What is a key limitation of AI that IT professionals must understand when using AI diagnostic tools?",
+         opts:["AI is always 100% accurate","AI can hallucinate — confidently provide incorrect information — so AI-generated answers must be verified against authoritative sources","AI never makes mistakes","AI cannot be used in cybersecurity"],
+         ans:1,exp:"AI 'hallucination' occurs when the model generates plausible-sounding but factually incorrect output. IT techs must verify AI suggestions against vendor docs, test in lab environments, and not blindly apply AI-recommended fixes."},
+        {q:"What is a Zero Trust security model?",
+         opts:["A model where no firewall is used","A model that trusts internal networks implicitly","A model that trusts no one by default — every access request is verified regardless of location (inside or outside the network perimeter)","A model that blocks all internet access"],
+         ans:2,exp:"Zero Trust (NIST SP 800-207) eliminates implicit trust based on network location. Core principle: 'never trust, always verify.' Every user, device, and application request is authenticated, authorized, and continuously validated."},
+        {q:"In a Zero Trust architecture, what replaces the traditional network perimeter?",
+         opts:["A larger firewall","The user's identity and device compliance state as the primary access control boundary","VPN for all users","A DMZ for all resources"],
+         ans:1,exp:"Zero Trust shifts from 'trust the network perimeter' to 'trust the identity.' Access is granted based on: who the user is (identity), what device they use (compliance), and least-privilege access to specific resources."},
+        {q:"What is Micro-segmentation in a Zero Trust environment?",
+         opts:["Physically cutting network cables","Dividing the network into small zones so that even authorized users can only access the specific resources they need, limiting lateral movement","Segmenting hard drives","Splitting Wi-Fi channels"],
+         ans:1,exp:"Micro-segmentation creates granular network zones around individual workloads. If an attacker compromises one segment, they cannot move laterally to other segments. Tools: VMware NSX, Cisco Tetration, AWS Security Groups."},
+        {q:"A user asks your AI-powered IT support chatbot whether they can store patient records in a shared cloud folder. The AI says it's fine. What should you do?",
+         opts:["Trust the AI — it is always correct","Implement what the AI says immediately","Verify against your organization's HIPAA policies and consult your compliance team before proceeding — AI does not know your specific policies","Ask the AI again to confirm"],
+         ans:2,exp:"AI tools provide general information but do not know your organization's specific compliance posture, custom policies, or regulatory context. For compliance decisions involving PHI, PII, or other sensitive data, always consult authoritative human experts."},
+        {q:"What does 'Continuous verification' mean in a Zero Trust model?",
+         opts:["Users must log in every 30 seconds","After initial authentication, access is continuously re-evaluated based on device health, user behavior, and risk signals — not just a one-time login check","Passwords must be changed continuously","Network cables must be continuously tested"],
+         ans:1,exp:"Zero Trust implements continuous verification: device compliance is checked in real-time, unusual behavior triggers step-up authentication, and access tokens have short lifespans requiring frequent re-validation (vs. traditional single login sessions)."},
+        {q:"Windows 11 requires which hardware components that Windows 10 does not mandate? (Select best answer)",
+         opts:["At least 4GB RAM","TPM 2.0, Secure Boot-capable UEFI, and a compatible 64-bit CPU","A Thunderbolt port","An NVMe drive"],
+         ans:1,exp:"Windows 11 minimum requirements beyond Windows 10: TPM 2.0 chip, UEFI firmware with Secure Boot enabled, and a CPU from the supported list (generally 8th gen Intel+ or Ryzen 2000+). These enforce baseline security hardware."},
+        {q:"What new Windows 11 feature replaces Control Panel's Device Security tab for BitLocker management?",
+         opts:["Windows Defender Firewall","Windows Security app (unified security hub combining Device Security, Virus Protection, Firewall, and App & Browser Control)","Task Manager","Device Manager"],
+         ans:1,exp:"Windows 11 consolidates security management into the Windows Security app (formerly Windows Defender Security Center). It provides a unified view of: BitLocker, Defender AV, Firewall, SmartScreen, Device Security (TPM/Secure Boot status)."},
+        {q:"What is ReFS (Resilient File System) and when is it used?",
+         opts:["A file system for USB drives","A Windows Server file system with built-in integrity checksums, auto-correction, and support for extremely large volumes — used for storage spaces and VMs","A Linux file system","A file system for SSDs only"],
+         ans:1,exp:"ReFS (Windows Server 2012+) adds block-level checksums on all data and metadata, enabling automatic corruption detection and repair. Used for Storage Spaces Direct, VM storage, and large-scale file servers. Not supported for Windows OS drives."},
+        {q:"What is XFS and where is it commonly used?",
+         opts:["A Windows file system","A high-performance 64-bit journaling Linux file system — default on RHEL, CentOS, and used for large-scale storage including cloud servers","A file system for optical discs","A macOS file system"],
+         ans:1,exp:"XFS is a 64-bit journaling file system originally created by SGI. It's the default for Red Hat Enterprise Linux (RHEL) 7+ and supports files up to 8 EiB. Its B-tree directory structure excels at large file I/O and parallel access."},
+        {q:"What are cloud-based productivity tools and how do they change IT support responsibilities?",
+         opts:["They eliminate IT support entirely","Applications like Microsoft 365 and Google Workspace delivered from the cloud — IT must manage licenses, conditional access policies, MDM enrollment, and data residency compliance","They are the same as on-premises apps","They only work on mobile devices"],
+         ans:1,exp:"Cloud productivity tools (M365, Google Workspace) shift IT from managing on-premises servers to: license management, Azure AD/Entra conditional access, MDM integration for corporate device policies, data loss prevention (DLP), and compliance/eDiscovery."},
+        {q:"A user is having trouble accessing Microsoft 365 apps on a new device. IT has enabled Conditional Access. What might be blocking them?",
+         opts:["Their internet is too slow","The device is not enrolled in Intune MDM or does not meet compliance requirements (e.g., no BitLocker, old OS version)","The password is wrong","M365 is down"],
+         ans:1,exp:"Microsoft Conditional Access evaluates access requests against policies: device must be compliant (Intune-enrolled, up-to-date, BitLocker enabled), user must pass MFA, location must be trusted. Non-compliant devices are blocked even with correct credentials."},
+        {q:"How does browser security configuration affect organizational security posture?",
+         opts:["Browser settings have no security impact","Hardening browsers (disabling dangerous extensions, enabling safe browsing, certificate verification, blocking mixed content, and managing cookies) significantly reduces the attack surface for phishing and malware delivery","Only HTTPS matters","Browser firewalls provide complete protection"],
+         ans:1,exp:"Browsers are the primary attack surface for modern threats. Key hardening: disable insecure content (Flash, Java applets), enable HTTPS-only mode, configure certificate error handling, control extensions via GPO, implement web filtering, and manage cookie/tracker settings."},
+        {q:"What is the purpose of configuring browser security settings in a corporate environment via Group Policy?",
+         opts:["To prevent employees from using browsers","To enforce consistent, hardened browser configurations across all corporate devices — preventing individual users from weakening security settings","To increase browser performance","To block all websites"],
+         ans:1,exp:"Browser GPO settings (Chrome Enterprise, Edge Group Policy) centrally enforce: homepage settings, extension whitelist/blacklist, security zones, certificate behavior, proxy configuration, and disabling developer tools. Prevents users from bypassing corporate security policies."},
+        {q:"An AI tool suggests changing a server configuration to fix a problem. Before implementing, what should the technician do?",
+         opts:["Implement it immediately since AI is reliable","Test in a lab/staging environment first, verify the recommendation against official vendor documentation, and create a rollback plan","Ask the AI to confirm twice","Email the AI vendor"],
+         ans:1,exp:"AI recommendations must be treated as suggestions, not authoritative instructions. Best practice: verify against vendor docs, test in non-production environment, document the change, create a rollback plan, and get appropriate approvals per change management procedures."},
+        {q:"What privacy consideration applies when using AI tools for IT support tasks?",
+         opts:["No privacy concerns exist with AI tools","Sensitive data (PII, PHI, credentials, proprietary code) entered into AI prompts may be used for training or stored by the AI provider — technicians must avoid entering sensitive information into public AI tools","AI tools always keep data private","Only financial data is sensitive"],
+         ans:1,exp:"Major AI providers (ChatGPT, Copilot, etc.) may use input data for model training or store it in their infrastructure. IT policies should prohibit inputting: passwords, PHI, PII, financial data, or proprietary source code into external AI tools without an enterprise agreement with appropriate DPA."},
+        {q:"What is the ethical consideration of AI-generated IT documentation?",
+         opts:["AI documentation is always accurate and can be published directly","AI-generated content may contain errors, outdated information, or confidently incorrect statements — all AI output must be reviewed and verified by a knowledgeable technician before being used as official documentation","AI can never be used for documentation","AI documentation is legally binding"],
+         ans:1,exp:"AI hallucinations in technical documentation can cause serious harm — incorrect procedures, wrong commands, or outdated security advice. All AI-generated technical content must be reviewed by qualified personnel, cross-referenced with vendor docs, and approved before publishing."},
+        {q:"Windows 11 introduced Snap Layouts and Snap Groups. How do these affect IT support?",
+         opts:["They break all existing applications","They allow users to arrange windows into predefined grid layouts and save window groupings — IT may need to train users and verify compatibility with legacy apps","They require hardware upgrades","They only work with Microsoft apps"],
+         ans:1,exp:"Snap Layouts (click maximize button to see grid options) and Snap Groups (taskbar shows related app groups) are Windows 11 productivity features. IT support impact: user training, verifying legacy full-screen apps don't conflict, and noting these features may be restricted by some MDM policies."},
+        {q:"What Zero Trust principle addresses the risk of over-privileged service accounts?",
+         opts:["Least privilege — service accounts should have only the minimum permissions required for their specific function, not domain admin rights","Defense in depth","Security through obscurity","Separation of duties"],
+         ans:0,exp:"The least-privilege principle (core to Zero Trust) requires service accounts to have only permissions needed for their specific tasks. Common mistake: giving service accounts Domain Admin rights 'for simplicity.' This means a compromised service account can compromise the entire domain."}
+      ]
+    }
+  ]
+};
+
+// Merge new tests into TESTS
+TESTS.core1.push(...NEW_TESTS.core1_new);
+TESTS.core2.push(...NEW_TESTS.core2_new);
+
+// ── NEW ABBREVIATIONS (220-1201/1202 additions) ───────────────
+const NEW_ABBREVS = [
+  {
+    title: "220-1201 — New Core 1 Topics",
+    items: [
+      ["eSIM","Embedded SIM — programmable SIM soldered into device; activated remotely by carrier via software"],
+      ["Mini-LED","Backlight technology using thousands of tiny LEDs for local dimming; better contrast than standard LED-LCD"],
+      ["PPI","Pixels Per Inch — pixel density metric; higher = sharper; Apple Retina = ≥227 PPI"],
+      ["Color gamut","Range of colors a display can reproduce; sRGB (web), DCI-P3 (pro video), Adobe RGB (photography)"],
+      ["Refresh rate","How many times per second the display updates (Hz); 60Hz standard, 120Hz/144Hz for gaming"],
+      ["Wi-Fi 6E","802.11ax extension into 6 GHz band; 59 non-overlapping channels; zero legacy device interference"],
+      ["6 GHz band","5.925–7.125 GHz; Wi-Fi 6E/7 only; lowest interference; 59 non-overlapping 20 MHz channels in US"],
+      ["SOHO","Small Office/Home Office — network environment with basic router, NAT, DHCP, and wireless AP"],
+      ["DSL","Digital Subscriber Line — internet over copper phone lines; speed degrades with distance from exchange"],
+      ["FTTP","Fiber to the Premises — dedicated fiber to building; highest residential speeds; lowest latency"],
+      ["WISP","Wireless Internet Service Provider — delivers broadband via radio to areas without wired infrastructure"],
+      ["LEO","Low Earth Orbit — satellite internet (e.g., Starlink) at ~550km altitude; 20-40ms latency vs 600ms geostationary"],
+      ["NTP","Network Time Protocol — UDP port 123; synchronizes clocks across network devices"],
+      ["CNAME","Canonical Name — DNS alias record pointing one hostname to another hostname"],
+      ["DHCP Exclusion","IP addresses within a DHCP scope reserved from auto-assignment; used for static devices"],
+      ["Channel width","Wi-Fi bandwidth setting: 20/40/80/160 MHz; wider = faster but fewer non-overlapping channels"],
+      ["Database server","Server providing structured data storage and query services (SQL/NoSQL); DNS CNAME alias recommended"],
+    ]
+  },
+  {
+    title: "220-1202 — New Core 2 Topics",
+    items: [
+      ["AI","Artificial Intelligence — software that learns from data to perform tasks; used in IT for automation, threat detection, diagnostics"],
+      ["ML","Machine Learning — AI subset; systems learn patterns from data without explicit programming"],
+      ["AI hallucination","AI confidently providing incorrect information; all AI output must be verified against authoritative sources"],
+      ["Zero Trust","Security model: never trust, always verify — no implicit trust based on network location"],
+      ["Micro-segmentation","Dividing network into granular zones so lateral movement is blocked even for authenticated users"],
+      ["Conditional Access","Policy engine (Azure AD/Entra) that evaluates device compliance and user identity before granting resource access"],
+      ["Continuous verification","Zero Trust principle: access re-evaluated in real-time, not just at login — device health monitored ongoing"],
+      ["NIST SP 800-207","NIST Zero Trust Architecture standard — defines seven ZTA tenets"],
+      ["Least privilege (ZT)","Zero Trust core: every user/service gets minimum permissions required; no permanent admin rights"],
+      ["M365","Microsoft 365 — cloud productivity suite (Exchange Online, Teams, SharePoint, OneDrive, Office apps)"],
+      ["Google Workspace","Cloud productivity suite (Gmail, Drive, Docs, Sheets, Meet) — managed via Google Admin Console"],
+      ["DLP","Data Loss Prevention — policies that prevent sensitive data from leaving the organization via email/cloud/USB"],
+      ["Entra ID","Microsoft Entra ID (formerly Azure AD) — cloud identity provider; integrates with Conditional Access and Intune"],
+      ["ReFS","Resilient File System — Windows Server file system with block-level checksums and auto-repair; for Storage Spaces/VMs"],
+      ["XFS","64-bit journaling Linux file system — default on RHEL 7+; high performance for large files and parallel I/O"],
+      ["Windows 11","Latest Windows OS requiring TPM 2.0, Secure Boot UEFI, and compatible 64-bit CPU"],
+      ["TPM 2.0","Trusted Platform Module version 2.0 — required for Windows 11; stores keys, enables Secure Boot and BitLocker"],
+      ["Snap Layouts","Windows 11 feature: predefined window arrangement grids (hover over maximize button)"],
+      ["Windows Security app","Windows 11 unified security hub: Defender AV, Firewall, BitLocker, Device Security (TPM/Secure Boot)"],
+      ["Browser hardening","Configuring browser security settings via GPO: HTTPS-only, extension control, certificate behavior, web filtering"],
+    ]
+  }
+];
+
+// Append new abbreviations to ALL_NOTES
+ALL_NOTES.push(...NEW_ABBREVS);
+
+// ── NEW DAY NOTES (injected into DAY_NOTES) ───────────────────
+// These supplement existing day notes or add context for new exam topics
+// They are referenced from updated DAYS entries
+
+// Extend DAY_NOTES with new 220-1201/1202 specific notes
+Object.assign(DAY_NOTES, {
+
+  // Day 11 — Updated with Mini-LED and display attributes (new 220-1201 content)
+  11: DAY_NOTES[11] + `
+<div class="ai-note">
+<strong>🆕 220-1201 Addition — Display Attributes:</strong><br>
+The new syllabus explicitly tests display attributes beyond panel type:<br>
+• <strong>Pixel Density (PPI)</strong>: Pixels Per Inch — higher = sharper image. Apple Retina = ≥227 PPI<br>
+• <strong>Refresh Rate (Hz)</strong>: How many frames per second the display can show. 60Hz standard; 120Hz/144Hz+ for gaming/smooth scrolling<br>
+• <strong>Color Gamut</strong>: Range of colors reproducible. sRGB (web standard), DCI-P3 (25% wider, video production), Adobe RGB (photography)<br>
+• <strong>Mini-LED</strong>: Backlight with thousands of tiny LEDs enabling local dimming zones — near-OLED contrast without OLED burn-in risk<br>
+• <strong>Screen Resolution</strong>: Total pixel count (e.g., 1920×1080 FHD, 2560×1440 QHD, 3840×2160 4K)
+</div>`,
+
+  // Day 21 — Updated with 6 GHz band and channel selection
+  21: DAY_NOTES[21] + `
+<div class="ai-note">
+<strong>🆕 220-1201 Addition — 6 GHz Band (Wi-Fi 6E):</strong><br>
+• <strong>802.11ax (Wi-Fi 6E)</strong>: Extends Wi-Fi 6 into the 6 GHz band (5.925–7.125 GHz)<br>
+• <strong>59 non-overlapping 20 MHz channels</strong> in the 6 GHz band (vs. 24 on 5 GHz) — far less congestion<br>
+• <strong>No legacy device interference</strong>: Only Wi-Fi 6E devices can use 6 GHz — no old devices polluting the band<br>
+• <strong>Shorter range</strong> than 5 GHz — higher frequency attenuates faster through walls<br>
+• <strong>Channel selection best practice</strong>: Use non-overlapping channels (1, 6, 11 for 2.4 GHz; any 20MHz channel on 5 GHz or 6 GHz)<br>
+• <strong>802.11be (Wi-Fi 7)</strong>: 320 MHz channels, up to 46 Gbps theoretical, Multi-Link Operation
+</div>`,
+
+  // Day 32 — Mobile devices: add eSIM
+  32: DAY_NOTES[32] + `
+<div class="ai-note">
+<strong>🆕 220-1201 Addition — eSIM:</strong><br>
+• <strong>eSIM (Embedded SIM)</strong>: Programmable SIM chip soldered into the device (not removable)<br>
+• Carriers activate eSIM remotely via QR code or push — no physical card swap<br>
+• Supported in iPhone XS (2018)+, Samsung Galaxy S20+, most modern flagships<br>
+• Benefits: Carrier switching without physical SIM, dual SIM support, thinner device design, no SIM tray<br>
+• MDM implication: eSIM profiles can be pushed/removed remotely via MDM<br>
+• <strong>SIM vs eSIM</strong>: Physical SIM stores carrier credentials on removable card; eSIM stores them in device firmware
+</div>`,
+
+  // Day 34 — Mobile sync: add cloud storage sync for business apps
+  34: DAY_NOTES[34] + `
+<div class="ai-note">
+<strong>🆕 220-1201 Addition — Business App Cloud Sync:</strong><br>
+• Modern MDM manages synchronization of business application data (M365, Google Workspace, Salesforce)<br>
+• <strong>Microsoft Intune + M365</strong>: Enforces that OneDrive/SharePoint sync only to compliant devices<br>
+• <strong>Selective sync</strong>: MDM can block sync of corporate data to personal cloud accounts (Google Drive, iCloud)<br>
+• <strong>BYOD sync policy</strong>: Corporate email can sync via EAS but corporate docs may be restricted from personal apps<br>
+• <strong>COPE sync policy</strong>: Full device management allows complete control over all sync destinations
+</div>`,
+
+  // Day 29 — Cloud: add cloud productivity tools
+  29: DAY_NOTES[29] + `
+<div class="ai-note">
+<strong>🆕 220-1202 Addition — Cloud Productivity Tools:</strong><br>
+• <strong>Microsoft 365 (M365)</strong>: Exchange Online (email), Teams (collaboration), SharePoint (file sharing), OneDrive (personal storage), Office apps (web + desktop)<br>
+• <strong>Google Workspace</strong>: Gmail, Google Drive, Docs/Sheets/Slides, Meet, Chat<br>
+• <strong>IT management differences vs on-premises</strong>:<br>
+  – Licenses managed via admin portals (M365 Admin Center / Google Admin Console)<br>
+  – Identity: Azure AD/Entra ID or Google Identity<br>
+  – Access control: Conditional Access policies based on device compliance<br>
+  – Data protection: DLP policies, Information Protection labels, eDiscovery<br>
+• <strong>Exam tip</strong>: Know that M365 Apps for Business includes desktop Office installs (up to 5 devices) + cloud services
+</div>`,
+
+  // New entry for AI Basics (day 66 repurposed area or added as note to Day 1)
+  1: DAY_NOTES[1] + `
+<div class="exam-version-banner">
+  <span class="evb-icon">🆕</span>
+  <div class="evb-text"><strong>You are studying for 220-1201 (Core 1) & 220-1202 (Core 2)</strong> — the current active A+ exam series. The old 220-1101/1102 retired September 25, 2025.</div>
+</div>
+<div class="ai-note">
+<strong>New in 220-1202: AI Basics</strong><br>
+The 2025 A+ update adds AI fundamentals as a Core 2 topic. Key concepts to understand:<br>
+• <strong>What AI is</strong>: Software that learns from data — not magic, not infallible<br>
+• <strong>AI limitations</strong>: Hallucinations (confident wrong answers), training data cutoffs, no real-time knowledge<br>
+• <strong>AI in IT</strong>: Chatbots, automated ticket routing, predictive maintenance, threat detection<br>
+• <strong>Privacy/ethics</strong>: Never input PII, PHI, or credentials into external AI tools without enterprise DPA<br>
+• <strong>AI output</strong>: Always verify against authoritative vendor documentation before implementing
+</div>
+<div class="zt-note">
+<strong>New in 220-1202: Zero Trust Security</strong><br>
+Zero Trust is a core new topic. Key concepts:<br>
+• <strong>Principle</strong>: "Never trust, always verify" — no implicit trust based on network location<br>
+• <strong>Pillars</strong>: Identity verification, device compliance, least privilege, micro-segmentation, continuous monitoring<br>
+• <strong>vs Traditional</strong>: Old model trusted internal network; ZT treats internal and external the same<br>
+• <strong>NIST SP 800-207</strong>: The foundational Zero Trust Architecture standard
+</div>`,
+
+});
